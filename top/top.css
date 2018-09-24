@@ -1,0 +1,90 @@
+body{
+	background-color: #F1F1F1;
+	color: #333
+}
+.dn{
+	display: none;
+}
+
+/* 返回顶部 */
+.go-top{
+	position: fixed;
+	bottom: 40px;
+	right: 20px;
+	width: 46px;
+}
+.go-top a{
+	display: block;
+	width: 46px;
+	height: 46px;
+	margin-bottom: 10px;
+	background-image: url(go-top.png?);
+}
+.go-top a:last-child{
+	margin-bottom: 0;
+}
+.go-top .go{
+	background-position: 0 -150px;
+}
+.go-top .go:hover{
+	background-position: 0 -250px;
+}
+.go-top .feedback{
+	background-position: 0 -100px;
+}
+.go-top .feedback:hover{
+	background-position: 0 -300px;
+}
+.go-top .uc-2vm{
+	background-position: 0 0;
+}
+.go-top .uc-2vm:hover{
+	background-position: 0 -350px;
+}
+/*
+.go-top .share{background-position: 0 -50px;}
+.go-top .share:hover{background-position: 0 -200px;}
+*/
+.go-top .uc-2vm-pop{
+	position: absolute;right: 60px; bottom: 10px;
+	width: 240px;box-shadow: 0px 1px 4px rgba(0,0,0,.1);
+	background: #fff;
+	padding-top: 10px;
+	border: 1px solid #7BC0FF;
+	display: none;
+}
+.go-top .uc-2vm-pop .title-2wm{
+	width: 238px;
+	font-size: 14px;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	/*border:1px solid #ccc;*/
+}
+.go-top .uc-2vm-pop .title-2wm div{
+	font-size: 16px;
+	padding-top: 5px;
+}
+.go-top .uc-2vm-pop .logo-2wm-box{
+	margin: 0;
+	padding: 0;
+	position: relative;
+}
+.go-top .uc-2vm-pop .logo-2wm-box img{
+	margin: 0;
+	padding: 0;
+}
+.go-top .uc-2vm-pop .title-2wm .qrcode-scan-tip{
+	font-weight: bold;
+}
+
+.go-top .uc-2vm, .go-top .feedback, .go-top .go{
+	border: 1px solid #9DB1D6;
+}
+
+.logoqrcodeimg {
+	position: absolute;
+	width: 50px;
+	top: 90px;
+	left: 100px;
+}

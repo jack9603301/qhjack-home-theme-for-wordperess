@@ -1,0 +1,151 @@
+/*
+Theme Name:     起航天空
+Theme URI:      http://www.qhjack.cn
+Description:    起航天空主题，继承于nisarg
+Author:         杰克
+Author URI:     http://www.qhjack.cn
+Template:       nisarg
+Version:        1.0
+*/
+
+@import url("../nisarg/style.css");
+
+.post-copyright {
+	margin-bottom: 2em;
+}
+
+.page-links {
+	text-align:center;
+	font-weight: bold;
+}
+.page-links span {
+	background-color:rgb(255,0,255);
+	color:rgb(0,255,255);
+	font-weight: bold;
+	padding:0px 2px;
+	border:2px solid rgb(255,0,255);
+}
+.page-links a span {
+	background-color:white;
+	font-weight: bold;
+	color: rgb(0,0,0);
+}
+
+.page-links a:hover span {
+	background-color:rgb(100,100,255);
+	color: white;
+}
+
+html,body{ 
+	overflow-y:scroll;
+}
+html,body{ 
+	overflow:scroll;
+	min-height:101%;
+} 
+html{ 
+	overflow:auto;
+}
+
+.entry-header{
+    padding-top: 1em;
+    padding-bottom: 1em;
+    text-align: center;
+	text-transform: none;
+    letter-spacing: 2px;
+}
+
+table caption {
+    text-align: center;
+    text-transform: none;
+}
+
+.main-navigation {
+    background-color: white;
+    box-shadow: 0px 1px 1px rgba(100,100,100, 0.2);
+    clear: both;
+    display: block;
+    float: left;
+    margin-bottom: 0px;
+    width: 100%;
+    text-transform: none;
+}
+
+#geetest {
+	width:272px;
+}
+
+#comment-geetest {
+	width:100%;
+}
+
+@media (min-width: 1200px) {
+    .container {
+        width: 1370px;
+    }
+    .search-submit {
+        width: 42px;
+    }
+}
+
+@media (max-width: 900px) {
+    .search-submit {
+        width: 42px;
+    }
+    .menu-search {
+	    margin-top:10px;
+	    display:inline-block;
+	    width: 300px;
+	    margin-bottom: 20px;
+		text-align: center;
+    }
+}
+
+li p{
+    text-indent: 0em;
+}
+
+p{
+    text-indent: 2em;
+}
+
+.menu-search {
+	margin-top:10px;
+	display:inline-block;
+	width: 300px;
+	margin-bottom: 10px;
+}
+
+.btn-default {
+	border-radius:10px;
+}
+
+p .btn-default {
+	text-indent: 0em;
+}
+
+.entry-content, .entry-header, .entry-meta, .entry-title, .entry-summary, .entry-footer {
+	width: 100%;
+	word-wrap: break-word;
+	overflow: initial;
+}
+
+.origin {
+	background-image: url("/wp-content/themes/home/images/Original.png");
+	background-size: 25%;
+	background-repeat: no-repeat;
+	background-position-x: right;
+	background-position-y: 5%;
+}
+
+.origin-archive {
+	background-image: url("/wp-content/themes/home/images/Original.png");
+	background-size: 25%;
+	background-repeat: no-repeat;
+	background-position-x: right;
+	background-position-y: bottom;
+}
+
+.menu-search .search-submit::before {
+	top: -5px;
+}

@@ -1,0 +1,108 @@
+/* 显示二维码的弹窗、浮窗 */
+.reward-container {
+    position: relative;
+    text-align: center;
+    margin-top: 50px;
+}
+
+/* 尖角 */
+.reward-container .popup::after {
+    border-color: #fff transparent transparent;
+    border-style: solid;
+    border-width: 10px;
+    content: "";
+    height: 0;
+    left: 50%;
+    margin-left: -7.5px;
+    position: absolute;
+    top: 100%;
+    width: 0;
+}
+
+/* 打赏二维码容器 */
+.reward-container .popup {
+    position: absolute;
+    left: 47%;
+    bottom: 100%;
+    width: 400px;
+    padding: 10px;
+    margin-left: -192px;
+    box-shadow: 0 0 30px #B8BBB7;
+    color: #68b3de;
+    display: none;
+    font-size: 13px;
+    box-sizing: content-box;
+    background: #fff none repeat scroll 0 0;
+    border-radius: 5px;
+    text-align: center;
+}
+
+@media (max-width: 900px) {
+    .reward-container .popup {
+        position: absolute;
+        left: 44%;
+        bottom: 100%;
+        width: 400px;
+        padding: 10px;
+        margin-left: -192px;
+        box-shadow: 0 0 30px #B8BBB7;
+        color: #68b3de;
+        display: none;
+        font-size: 13px;
+        box-sizing: content-box;
+        background: #fff none repeat scroll 0 0;
+        border-radius: 5px;
+        text-align: center;
+    }
+}
+
+/* 打赏图片二维码图片 */
+.reward-container .popup > img {
+    width: 150px;
+    max-width: 100%;
+    /*border: 1px solid #CCCCCC;*/
+    margin: 0;
+    padding: 0;
+    border: 1px solid #B3B1B3;
+    display: inline-block;
+}
+.reward-container .popup .qrcode-left {
+    margin-right: 28px;
+}
+.reward-container .popup .qrcode-right {
+    margin-left: 28px;
+}
+
+/* 打赏按钮 */
+.reward-container .reward-btn {
+    width: 75px;
+    height: 75px;
+    line-height: 75px;
+    border-radius: 50%;
+    display: inline-block;
+    background: #f06363 none repeat scroll 0 0;
+    color: #fff !important;
+    font-size: 18px;
+    text-align: center;
+    text-decoration: none;
+    cursor: default;
+}
+
+/* 提示文本 */
+.reward-container .popup .reward-tips{
+    font-size: 15px;
+    font-weight: bold;
+    color: #626262;
+    padding-top: 10px;
+    line-height: 30px;
+}
+
+/* 禁止选中文字 */
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently not supported by any browser */
+}
