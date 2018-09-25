@@ -89,10 +89,6 @@ add_filter( 'manage_edit-post_sortable_columns', 'add_post_page_sortable_columns
 
 add_filter( 'manage_edit-page_sortable_columns', 'add_post_page_sortable_columns' );
 
-# 屏蔽WP Editor.md 插件更新提示
-
-add_filter( 'site_transient_update_plugins', 'home_disable_plugin_updates' );
-
 function isMobile() { 
     // 如果有HTTP_X_WAP_PROFILE则一定是移动设备
     if (isset($_SERVER['HTTP_X_WAP_PROFILE'])) {
