@@ -76,8 +76,6 @@ jQuery(function($){
 		delayhighID = setInterval(delayhigh, DelayTime);
 	}
 	
-	delayhighID = setInterval(delayhigh, DelayTime);
-	
 	$(window).scrollEnd(scrollEndEvent,ShakeOffTime);
 	
 	$('#go-top').hover(hoverEventIn,hoverEventOut);
