@@ -10,7 +10,7 @@
 ?>
 	</div><!-- #content -->
     <link href="<?php echo get_stylesheet_directory_uri()?>/top/top.css" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" rel="stylesheet" src="<?php echo get_stylesheet_directory_uri()?>/top/top.js" ></script>
+    <script type="text/javascript" rel="stylesheet" src="<?php echo get_stylesheet_directory_uri(); ?>/top/top.js" ></script>
     <div class="go-top dn" id="go-top">
 <?php
 	    if(!isMobile()):

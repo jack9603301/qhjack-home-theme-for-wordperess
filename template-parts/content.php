@@ -100,7 +100,13 @@
 					]
 				}
 			};
-			with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+			var ishttps = 'https:' == document.location.protocol ? true: false;
+			if (ishttps) {
+				with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='<?php echo get_stylesheet_directory_uri(); ?>/share/static/api/js/share.js?v=89860593.js?'];
+			}
+			else {
+				with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='https://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+			}
 		</script>
 		<br />
 	</div>
