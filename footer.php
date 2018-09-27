@@ -60,6 +60,7 @@
 			<a target="_blank" href="http://webscan.360.cn/index/checkwebsite/url/www.qhjack.cn">
 				<img border="0" src="http://webscan.360.cn/status/pai/hash/16936cc7181e9f338e3f8c3a5cd47cb9"/>
 			</a>
+			| <a target="_blank" href="https://myssl.com/<?php echo $_SERVER['HTTP_HOST']; ?>">SSL认证</a>
 			<br />
 			<?php echo 'Copyright &copy; '.date( 'Y' ).' 起航天空 版权所有'; ?>
 			<br />
