@@ -3,6 +3,9 @@
 /**
  * Custom template tags for this theme.
  */
+
+use home\phpqrcode\QRcode;
+
 require get_theme_root().'/home/inc/template-tags.php';
 
 
@@ -294,6 +297,16 @@ function add_admin_css() {
 function home_disable_plugin_updates($value) {
 	unset($value->response['WP-Editor.md/wp-editormd.php']);
 	return $value;
+}
+
+function GenerateQrcode($data,$level=3,$size=3) {
+	require_once(get_stylesheet_directory() . '/phpqrcode/phpqrcode.php');
+	$filePath = WP_CONTENT_DIR.'/cache/tmp.png';
+	QRcode::png($data,$filePath,$level,$size);
+	$imageString = base64_encode(file_get_contents($filePath));
+	@unlink($filePath);
+	$dataUrl = 'data:image/png;base64,'.$imageString;
+	return $dataUrl;
 }
 
 function output_filter($content) {
