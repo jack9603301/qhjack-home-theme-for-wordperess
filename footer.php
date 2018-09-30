@@ -21,7 +21,7 @@
 			    <div class="qrcode-scan-tip">扫码二维码快速访问本页</div>
 		    </h2>
 		    <div class="logo-2wm-box">
-			    <img src="http://qr.liantu.com/api.php?w=238&text=<?php echo home_url(add_query_arg(array(),$wp->request)); ?>" alt="<?php echo wp_get_document_title(); ?>"  width="238" height="238" alt="扫码在手机上查看" title="扫码在手机上查看">
+			    <img src="<?php echo GenerateQrcode(home_url(add_query_arg(array(),$wp->request))); ?>" alt="<?php echo wp_get_document_title(); ?>"  width="238" height="238" alt="扫码在手机上查看" title="扫码在手机上查看">
 				<img src="/wp-content/uploads/2018/09/logo.png" class="logoqrcodeimg">
 		    </div>
 	    </div>
@@ -58,7 +58,7 @@
 			</strong>
 			| 网站安全：
 			<a target="_blank" href="http://webscan.360.cn/index/checkwebsite/url/www.qhjack.cn">
-				<img border="0" src="http://webscan.360.cn/status/pai/hash/16936cc7181e9f338e3f8c3a5cd47cb9"/>
+				<img border="0" src="https://webscan.360.cn/status/pai/hash/16936cc7181e9f338e3f8c3a5cd47cb9"/>
 			</a>
 			| <a target="_blank" href="https://myssl.com/<?php echo $_SERVER['HTTP_HOST']; ?>">SSL认证</a>
 			<br />
@@ -78,6 +78,9 @@
 					s.parentNode.insertBefore(bp, s);
 				})();
 		</script>
+			<div id="cc-myssl-id" style="position: fixed;right: 0;bottom: 0;width: 65px;height: 65px;z-index: 99;">
+    			<a href="https://myssl.com/www.qhjack.cn?from=mysslid"><img src="https://static.myssl.com/res/images/myssl-id.png" alt="" style="width:100%;height:100%"></a>
+			</div>
 		</div><!-- .site-info -->
 	</footer><!-- #colophon -->
 </div><!-- #page -->

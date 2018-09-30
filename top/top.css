@@ -9,7 +9,7 @@ body{
 /* 返回顶部 */
 .go-top{
 	position: fixed;
-	bottom: 40px;
+	bottom: 100px;
 	right: 20px;
 	width: 46px;
 }
