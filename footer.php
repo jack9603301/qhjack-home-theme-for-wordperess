@@ -79,7 +79,7 @@
 				})();
 		</script>
 			<div id="cc-myssl-id" style="position: fixed;right: 0;bottom: 0;width: 65px;height: 65px;z-index: 99;">
-    			<a href="https://myssl.com/www.qhjack.cn?from=mysslid"><img src="https://static.myssl.com/res/images/myssl-id.png" alt="" style="width:100%;height:100%"></a>
+    			<a target="_blank" href="https://myssl.com/www.qhjack.cn?from=mysslid"><img src="https://static.myssl.com/res/images/myssl-id.png" alt="" style="width:100%;height:100%"></a>
 			</div>
 		</div><!-- .site-info -->
 	</footer><!-- #colophon -->
