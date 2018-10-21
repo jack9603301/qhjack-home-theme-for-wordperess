@@ -123,7 +123,7 @@ function qh_emaill_report_users($post_ID) {
 		$message .= '<p style="FONT-SIZE: 14px; PADDING-TOP: 6px">您曾经来访过的博客《'.$blogname.'》有文章更新了。</p>';
 		$message .= '<p style="FONT-SIZE: 14px; PADDING-TOP: 6px">文章标题：<a title="'.$post_title.'" href="'.$post_link.'" target="_top">'.$post_title.'</a>';
 		$message .= '<br />文章摘要：'.$output.'</p>';
-		$message .= '<p style="FONT-SIZE: 14px; PADDING-TOP: 6px">您可以点击链接<a href="'.$blogurl.'" style="line-height: 1.5;">'.$blogname.'</a>';
+		$message .= '<p style="FONT-SIZE: 14px; PADDING-TOP: 6px">您可以点击';
 		$message .= '<a title="'.$post_title.'" href="'.$post_link.'" target="_top">'.$post_title.'</a>详细查看</p>';
 		$message .= '<p style="font-size: 14px; padding-top: 6px; text-align: left;">';
 		$message .= '<span style="line-height: 1.5; color: rgb(153, 153, 153);">来自：</span>';
@@ -178,7 +178,7 @@ function qh_publish_post_report_email($post_ID) {
 		$message .= '<p style="FONT-SIZE: 14px; PADDING-TOP: 6px">您曾经来访过的博客《'.$blogname.'》有新文章发表了。</p>';
 		$message .= '<p style="FONT-SIZE: 14px; PADDING-TOP: 6px">文章标题：<a title="'.$post_title.'" href="'.$post_link.'" target="_top">'.$post_title.'</a>';
 		$message .= '<br />文章摘要：'.$output.'</p>';
-		$message .= '<p style="FONT-SIZE: 14px; PADDING-TOP: 6px">您可以点击链接<a href="'.$blogurl.'" style="line-height: 1.5;">'.$blogname.'</a>';
+		$message .= '<p style="FONT-SIZE: 14px; PADDING-TOP: 6px">您可以点击';
 		$message .= '<a title="'.$post_title.'" href="'.$post_link.'" target="_top">'.$post_title.'</a>详细查看</p>';
 		$message .= '<p style="font-size: 14px; padding-top: 6px; text-align: left;">';
 		$message .= '<span style="line-height: 1.5; color: rgb(153, 153, 153);">来自：</span>';
