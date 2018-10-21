@@ -126,7 +126,7 @@ function qh_emaill_report_users($post_ID) {
 		$message .= '<br />文章摘要：'.$output.'</p>';
 		$message .= '<p style="FONT-SIZE: 14px; PADDING-TOP: 6px">您可以点击';
 		$message .= '<a title="'.$post_title.'" href="'.$post_link.'" target="_top">'.$post_title.'</a>详细查看</p>';
-		$message .= '<p>&emsp;&emsp;您可以扫描以下二维码关注公众号和网站：</p>';
+		$message .= '<p>您可以扫描以下二维码关注公众号和网站：</p>';
         $message .= '<p>扫描以下二维码，关注公众号：</p>';
         $message .= '<p><img src=\''.network_site_url("wp-content/uploads/2018/09/weixin.jpg","https").'\' /></p>';
         $message .= '<p>扫描以下二维码，快速访问网站：</p>';
@@ -186,7 +186,7 @@ function qh_publish_post_report_email($post_ID) {
 		$message .= '<br />文章摘要：'.$output.'</p>';
 		$message .= '<p style="FONT-SIZE: 14px; PADDING-TOP: 6px">您可以点击';
 		$message .= '<a title="'.$post_title.'" href="'.$post_link.'" target="_top">'.$post_title.'</a>详细查看</p>';
-		$message .= '<p>&emsp;&emsp;您可以扫描以下二维码关注公众号和网站：</p>';
+		$message .= '<p>您可以扫描以下二维码关注公众号和网站：</p>';
         $message .= '<p>扫描以下二维码，关注公众号：</p>';
         $message .= '<p><img src=\''.network_site_url("wp-content/uploads/2018/09/weixin.jpg","https").'\' /></p>';
         $message .= '<p>扫描以下二维码，快速访问网站：</p>';
