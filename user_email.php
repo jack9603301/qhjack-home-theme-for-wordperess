@@ -35,9 +35,6 @@ if ( !function_exists('wp_new_user_notification') ) {
         }
 
         //自定义新用户欢迎邮件
-        $headers .= 'MIME-Version: 1.0';
-        $headers .= 'Content-type: text/html; charset=uft-8';
-        $headers .= 'Content-Transfer-Encoding: 8bit';
         $message = '<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body><div>';
         if(!empty($user_name)) {
             $message .= '<p>&emsp;&emsp;'.$user_name.'，恭喜您提出用户注册申请。</p>';
@@ -55,7 +52,7 @@ if ( !function_exists('wp_new_user_notification') ) {
         $message .= '<p><img src=\''.network_site_url("wp-content/uploads/2018/02/weixin.jpg","http").'\' /></p>';
         $message .= '<p>扫描以下二维码，快速访问网站：</p>';
         $message .= '<p><img src=\''.network_site_url("wp-content/uploads/2018/03/logo_qr.png","http").'\' /></p></div></body></html>';
-        if(!wp_mail($user_email, '['. $blog_name.'] 注册用户确认邮件', $message , $headers)) {
+        if(!wp_mail($user_email, '['. $blog_name.'] 注册用户确认邮件', $message)) {
             wp_die('用户注册确认邮件发送故障。<br />\nPossible reason: your host may have disabled the mail() function.');
         }
         return;
