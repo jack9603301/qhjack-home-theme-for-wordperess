@@ -30,11 +30,21 @@
 		"@context": "https://zhanzhang.baidu.com/contexts/cambrian.jsonld",
 		"@id": "<?php echo get_the_permalink(); ?>",
 		"appid": "1593262731483703",
-		"title": "<?php echo wp_get_document_title(); ?>",
+		"title": "<?php echo wp_title('|',false,'right')."起航天空"; ?>",
 		"images": ["<?php echo home_post_imgs(); ?>"],
 		"description": "<?php echo home_excerpt(); ?>",
 		"pubDate": "<?php echo get_the_time('Y-m-d\TH:i:s'); ?>",
 		"isOriginal":"<?php echo home_Post_isOriginal(); ?>"
+	}
+</script>
+<?php elseif(is_archive()): ?>
+<script type="application/ld+json">
+	{
+		"@context": "https://zhanzhang.baidu.com/contexts/cambrian.jsonld",
+		"@id": "<?php echo get_the_permalink(); ?>",
+		"appid": "1593262731483703",
+		"title": "<?php echo wp_title('|',false,'right')."起航天空"; ?>",
+		"images": ["<?php echo home_post_imgs(); ?>"]
 	}
 </script>
 <?php else: ?>
@@ -43,7 +53,7 @@
 		"@context": "https://zhanzhang.baidu.com/contexts/cambrian.jsonld",
 		"@id": "<?php echo get_the_permalink(); ?>",
 		"appid": "1593262731483703",
-		"title": "<?php echo wp_get_document_title(); ?>",
+		"title": "<?php echo "首页 | ".get_bloginfo('name'); ?>",
 		"images": ["<?php echo home_post_imgs(); ?>"]
 	}
 </script>

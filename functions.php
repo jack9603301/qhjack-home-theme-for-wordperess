@@ -14,6 +14,7 @@ require get_theme_root().'/home/push.php';  //push.php
 require get_theme_root().'/home/user_email.php';  //user_email
 require get_theme_root().'/home/other.php';  //other
 require get_theme_root().'/home/geetest.php'; //geetest
+require get_theme_root().'/home/widget/widget_user.php'; //widget_user
 
 //百度提交
 
@@ -63,8 +64,11 @@ add_action('wp_head','disable_feed_url',1);
 
 //user_email.php
 
-add_filter( 'wp_mail_content_type', 'home_html_content_type' );
+add_filter( 'wp_mail_content_type', 'qh_html_content_type' );
 add_filter('retrieve_password_message', 'reset_password_message', null, 2);
+add_action( 'submitpost_box', 'qh_submit_box');
+add_action( 'publish_post', 'qh_emaill_report_users' );
+add_action( 'publish_post', 'qh_publish_post_report_email' );
 
 //other
 
@@ -87,6 +91,8 @@ add_filter('manage_pages_columns','home_page_columns');
 add_action('manage_pages_custom_column','home_page_column_value',10, 2);
 
 add_action('admin_head','add_admin_css',2);
+
+add_action( 'widgets_init', 'home_widget_init' );
 
 add_filter( 'manage_edit-post_sortable_columns', 'add_post_page_sortable_columns' );
 
@@ -117,24 +123,6 @@ function isMobile() {
   return false;
 }
 
-
-function home_excerpt($len=220){
-    if ( is_single() || is_page() ){
-        global $post;
-        if ($post->post_excerpt) {
-            $excerpt  = $post->post_excerpt;
-        } else {
-            if(preg_match('/<p>(.*)<\/p>/iU',trim(strip_tags($post->post_content,"<p>")),$result)){
-                $post_content = $result['1'];
-            } else {
-                $post_content_r = explode("\n",trim(strip_tags($post->post_content)));
-                $post_content = $post_content_r['0'];
-            }
-            $excerpt = preg_replace('#^(?:[\x00-\x7F]|[\xC0-\xFF][\x80-\xBF]+){0,0}'.'((?:[\x00-\x7F]|[\xC0-\xFF][\x80-\xBF]+){0,'.$len.'}).*#s','$1',$post_content);
-        }
-        return str_replace(array("\r\n", "\r", "\n"), "", $excerpt);
-    }
-}
 //优先获取文章中的三张图，否则依次获取自定义图片/特色缩略图/文章首图 last update 2017/11/23
 function home_post_imgs(){
     global $post;
@@ -156,6 +144,24 @@ function home_post_imgs(){
         }
     }
     return $src;
+}
+
+function home_excerpt($len=220){
+    if ( is_single() || is_page() ){
+        global $post;
+        if ($post->post_excerpt) {
+            $excerpt  = $post->post_excerpt;
+        } else {
+            if(preg_match('/<p>(.*)<\/p>/iU',trim(strip_tags($post->post_content,"<p>")),$result)){
+                $post_content = $result['1'];
+            } else {
+                $post_content_r = explode("\n",trim(strip_tags($post->post_content)));
+                $post_content = $post_content_r['0'];
+            }
+            $excerpt = preg_replace('#^(?:[\x00-\x7F]|[\xC0-\xFF][\x80-\xBF]+){0,0}'.'((?:[\x00-\x7F]|[\xC0-\xFF][\x80-\xBF]+){0,'.$len.'}).*#s','$1',$post_content);
+        }
+        return str_replace(array("\r\n", "\r", "\n"), "", $excerpt);
+    }
 }
 
 function home_Post_isOriginal() {
@@ -307,6 +313,13 @@ function GenerateQrcode($data,$level=3,$size=3) {
 	@unlink($filePath);
 	$dataUrl = 'data:image/png;base64,'.$imageString;
 	return $dataUrl;
+}
+
+function home_widget_init() {
+    /*移除Wordpress自带的Meta小工具*/
+    unregister_widget('WP_Widget_Meta');
+    /*注册自己的Meta小工具*/
+    register_widget('WP_Widget_User_Meta');
 }
 
 function output_filter($content) {
