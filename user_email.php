@@ -49,9 +49,13 @@ if ( !function_exists('wp_new_user_notification') ) {
         $message .= '<p>如果您要重新设置密码，请<a href=\''.network_site_url("wp-login.php?action=rp&key=$key&login=" . rawurlencode($user_login), 'login').'\'>单击此处重置密码</a>。';
         $message .= '<p>&emsp;&emsp;您可以扫描以下二维码关注公众号和网站：</p>';
         $message .= '<p>扫描以下二维码，关注公众号：</p>';
-        $message .= '<p><img src=\''.network_site_url("wp-content/uploads/2018/02/weixin.jpg","http").'\' /></p>';
+        $message .= '<p><img src=\''.network_site_url("wp-content/uploads/2018/09/weixin.jpg","https").'\' /></p>';
         $message .= '<p>扫描以下二维码，快速访问网站：</p>';
-        $message .= '<p><img src=\''.network_site_url("wp-content/uploads/2018/03/logo_qr.png","http").'\' /></p></div></body></html>';
+        $message .= '<p><img src=\''.network_site_url("wp-content/uploads/2018/09/qrcode.png","https").'\' /></p>';
+		$message .= '<span style="line-height: 1.5; color: rgb(153, 153, 153);">来自：</span>';
+		$message .= '<a href="'.$blogurl.'" style="line-height: 1.5;">'.$blog_name.'</a></p>';
+		$message .= '<div style="font-size: 12px; border-top-color: rgb(204, 204, 204); border-top-width: 1px; border-top-style: solid; height: 35px; width: 500px; color: rgb(102, 102, 102); line-height: 35px; background-color: rgb(245, 245, 245);">';
+		$message .= '该邮件为系统发送邮件，请勿直接回复！如有打扰，请向博主留言反映。灰常感谢您的阅读！</div></div></body></html>';
         if(!wp_mail($user_email, '['. $blog_name.'] 注册用户确认邮件', $message)) {
             wp_die('用户注册确认邮件发送故障。<br />\nPossible reason: your host may have disabled the mail() function.');
         }
@@ -122,6 +126,11 @@ function qh_emaill_report_users($post_ID) {
 		$message .= '<br />文章摘要：'.$output.'</p>';
 		$message .= '<p style="FONT-SIZE: 14px; PADDING-TOP: 6px">您可以点击';
 		$message .= '<a title="'.$post_title.'" href="'.$post_link.'" target="_top">'.$post_title.'</a>详细查看</p>';
+		$message .= '<p>&emsp;&emsp;您可以扫描以下二维码关注公众号和网站：</p>';
+        $message .= '<p>扫描以下二维码，关注公众号：</p>';
+        $message .= '<p><img src=\''.network_site_url("wp-content/uploads/2018/09/weixin.jpg","https").'\' /></p>';
+        $message .= '<p>扫描以下二维码，快速访问网站：</p>';
+        $message .= '<p><img src=\''.network_site_url("wp-content/uploads/2018/09/qrcode.png","https").'\' /></p>';
 		$message .= '<p style="font-size: 14px; padding-top: 6px; text-align: left;">';
 		$message .= '<span style="line-height: 1.5; color: rgb(153, 153, 153);">来自：</span>';
 		$message .= '<a href="'.$blogurl.'" style="line-height: 1.5;">'.$blogname.'</a></p>';
@@ -177,6 +186,11 @@ function qh_publish_post_report_email($post_ID) {
 		$message .= '<br />文章摘要：'.$output.'</p>';
 		$message .= '<p style="FONT-SIZE: 14px; PADDING-TOP: 6px">您可以点击';
 		$message .= '<a title="'.$post_title.'" href="'.$post_link.'" target="_top">'.$post_title.'</a>详细查看</p>';
+		$message .= '<p>&emsp;&emsp;您可以扫描以下二维码关注公众号和网站：</p>';
+        $message .= '<p>扫描以下二维码，关注公众号：</p>';
+        $message .= '<p><img src=\''.network_site_url("wp-content/uploads/2018/09/weixin.jpg","https").'\' /></p>';
+        $message .= '<p>扫描以下二维码，快速访问网站：</p>';
+        $message .= '<p><img src=\''.network_site_url("wp-content/uploads/2018/09/qrcode.png","https").'\' /></p>';
 		$message .= '<p style="font-size: 14px; padding-top: 6px; text-align: left;">';
 		$message .= '<span style="line-height: 1.5; color: rgb(153, 153, 153);">来自：</span>';
 		$message .= '<a href="'.$blogurl.'" style="line-height: 1.5;">'.$blogname.'</a></p>';
