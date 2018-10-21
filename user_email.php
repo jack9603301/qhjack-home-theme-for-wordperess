@@ -149,7 +149,7 @@ function qh_publish_post_report_email($post_ID) {
 	
 	//获取wp数据操作类
 	global $wpdb;
-	$usersarray = $wpdb->get_results("SELECT DISTINCT user_nicename,user_email FROM $wpdb->users WHERE TRIM(user_email) IS NOT NULL AND TRIM(user_email) != ''");
+	$usersarray = $wpdb->get_results("SELECT DISTINCT ID,user_nicename,user_email FROM $wpdb->users WHERE TRIM(user_email) IS NOT NULL AND TRIM(user_email) != ''");
 	// 获取博客名称
 	$blogname = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
 	// 获取博客URL
@@ -169,10 +169,12 @@ function qh_publish_post_report_email($post_ID) {
  
 	foreach ( $usersarray as $user )
 	{
+		// 获取用户的称呼
+		$nicename = get_usermeta($user->ID,'nickname');
 		// 邮件内容
 		$message = '<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body>';
 		$message .= '<div style="MARGIN-RIGHT: auto; MARGIN-LEFT: auto;">';
-		$message .= '<strong style="line-height: 1.5; font-family:Microsoft YaHei;">亲爱的'.$user->user_nicename.'：</strong>';
+		$message .= '<strong style="line-height: 1.5; font-family:Microsoft YaHei;">亲爱的'.$nicename.'：</strong>';
 		$message .= '<p style="FONT-SIZE: 14px; PADDING-TOP: 6px">您曾经来访过的博客《'.$blogname.'》有新文章发表了。</p>';
 		$message .= '<p style="FONT-SIZE: 14px; PADDING-TOP: 6px">文章标题：<a title="'.$post_title.'" href="'.$post_link.'" target="_top">'.$post_title.'</a>';
 		$message .= '<br />文章摘要：'.$output.'</p>';
