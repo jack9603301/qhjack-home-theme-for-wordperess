@@ -343,7 +343,7 @@ function qh_comment_mail_notify_approve($comment_id, $comment_status) {
 		// 评论内容
 		$comment_data = trim($comment->comment_date);
 		$comment_content = nl2br($comment->comment_content);
-		$comment_link = get_comment_link($comment->comment_parent);
+		$comment_link = get_comment_link($comment->comment_ID);
 		// 邮件内容
 		$message = '<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body>';
 		$message .= '<div style="MARGIN-RIGHT: auto; MARGIN-LEFT: auto;">';
@@ -443,7 +443,7 @@ function qh_comment_mail_notify_unapprove($comment_id, $comment_status) {
 		// 评论内容
 		$comment_data = trim($comment->comment_date);
 		$comment_content = nl2br($comment->comment_content);
-		$comment_link = get_comment_link($comment->comment_parent);
+		$comment_link = get_comment_link($comment->comment_ID);
 		// 邮件内容
 		$message = '<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body>';
 		$message .= '<div style="MARGIN-RIGHT: auto; MARGIN-LEFT: auto;">';
