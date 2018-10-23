@@ -426,7 +426,7 @@ function qh_comment_mail_notify_unapprove($comment_id, $comment_status) {
 		wp_mail($to, $subject, $message);
 	} else {
 		$comment_author = trim($comment->comment_author);
-		$subject = $comment_author.'在[' . $blog_name . ']的留言有了新的回复等待审核';
+		$subject = $comment_author.'在[' . $blog_name . ']的留言等待审核';
 		// 获取用户的称呼
 		$nicename = trim($comment->comment_author);
 		// 日期
