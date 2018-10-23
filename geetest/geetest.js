@@ -65,3 +65,71 @@ jQuery("#geetest").ready(function() {
         });
 	}
 });
+
+jQuery("#geetest-reg").ready(function() {
+	if(jQuery("#geetest-reg").length > 0) {
+		var handlerEmbed = function (captchaObj) {
+            captchaObj.appendTo("#geetest-reg");
+            captchaObj.onReady(function () {
+                jQuery("#wp-submit").attr('disabled',"true");
+            });
+		    captchaObj.onSuccess(function() {
+			    jQuery("#wp-submit").removeAttr("disabled");
+		    })
+        };
+	    jQuery.ajax({
+            url: "/wp-content/themes/home/geetest/web/StartCaptchaServlet.php?t=" + (new Date()).getTime(), // 加随机数防止缓存
+            type: "get",
+            dataType: "json",
+            success: function (data) {
+                // 使用initGeetest接口
+                // 参数1：配置参数
+                // 参数2：回调，回调的第一个参数验证码对象，之后可以使用它做appendTo之类的事件
+                initGeetest({
+                    gt: data.gt,
+				    area: '#registerform',
+				    next_width: '272px',
+				    width: '272px',
+                    challenge: data.challenge,
+                    new_captcha: data.new_captcha,
+                    product: "custom",
+                    offline: !data.success
+                }, handlerEmbed);
+            }
+        });
+	}
+});
+
+jQuery("#geetest-lostpasswordform").ready(function() {
+	if(jQuery("#geetest-lostpasswordform").length > 0) {
+		var handlerEmbed = function (captchaObj) {
+            captchaObj.appendTo("#geetest-lostpasswordform");
+            captchaObj.onReady(function () {
+                jQuery("#wp-submit").attr('disabled',"true");
+            });
+		    captchaObj.onSuccess(function() {
+			    jQuery("#wp-submit").removeAttr("disabled");
+		    })
+        };
+	    jQuery.ajax({
+            url: "/wp-content/themes/home/geetest/web/StartCaptchaServlet.php?t=" + (new Date()).getTime(), // 加随机数防止缓存
+            type: "get",
+            dataType: "json",
+            success: function (data) {
+                // 使用initGeetest接口
+                // 参数1：配置参数
+                // 参数2：回调，回调的第一个参数验证码对象，之后可以使用它做appendTo之类的事件
+                initGeetest({
+                    gt: data.gt,
+				    area: '#lostpasswordform',
+				    next_width: '272px',
+				    width: '272px',
+                    challenge: data.challenge,
+                    new_captcha: data.new_captcha,
+                    product: "custom",
+                    offline: !data.success
+                }, handlerEmbed);
+            }
+        });
+	}
+});

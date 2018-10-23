@@ -5,7 +5,7 @@ Description:    起航天空主题，继承于nisarg
 Author:         杰克
 Author URI:     http://www.qhjack.cn
 Template:       nisarg
-Version:        2.4
+Version:        3.0
 */
 
 @import url("../nisarg/style.css");
@@ -148,4 +148,7 @@ p .btn-default {
 
 .menu-search .search-submit::before {
 	top: -5px;
+}
+.login_input {
+	width: 50%;
 }

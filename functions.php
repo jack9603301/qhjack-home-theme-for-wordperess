@@ -13,7 +13,7 @@ require  get_theme_root().'/home/url.php';  //url.php
 require get_theme_root().'/home/push.php';  //push.php
 require get_theme_root().'/home/user_email.php';  //user_email
 require get_theme_root().'/home/other.php';  //other
-require get_theme_root().'/home/geetest.php'; //geetest
+require get_theme_root().'/home/wp-login-ext.php'; //login-ext
 require get_theme_root().'/home/widget/widget_user.php'; //widget_user
 
 //百度提交
@@ -64,17 +64,24 @@ add_action('wp_head','disable_feed_url',1);
 
 //user_email.php
 
-add_filter( 'wp_mail_content_type', 'qh_html_content_type' );
 add_filter('retrieve_password_message', 'reset_password_message', null, 2);
 add_action( 'submitpost_box', 'qh_submit_box');
 add_action( 'publish_post', 'qh_emaill_report_users' );
 add_action( 'publish_post', 'qh_publish_post_report_email' );
+add_filter('wp_new_user_notification_email','qh_new_user_notification_email',2,3);
+add_filter('wp_new_user_notification_email_admin','qh_new_user_notification_email_admin',2,3);
+add_filter('email_change_email','qh_password_change_email',2,3);
+add_filter( 'wp_mail_content_type', 'qh_html_content_type' );
 
 //other
 
 add_filter('get_the_archive_title','home_get_the_archive_title',1);
 
-add_action( 'login_form', 'geetest_login');
+add_action( 'login_form', 'login');
+add_action( 'register_form', 'register');
+add_action( 'register_post', 'register_field_validate', 10, 3 );
+add_action( 'user_register', 'update_register_fields' );
+add_action( 'lostpassword_form', 'lostpassword');
 
 add_filter('wp_nav_menu_items','add_search_to_wp_menu',10,2);
 
