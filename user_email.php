@@ -173,11 +173,9 @@ function qh_emaill_report_users($post_ID) {
 	$post_title = strip_tags($post->post_title);
 	//文章摘要
 	$output = get_the_excerpt($post);
-	if((!empty($post)) && empty($output)) {
-		$post_content = $post->post_content;
-		if ( preg_match( '#<p>((\w|\d|[^x00-xff]).+?)</p>#', $post_content, $mc ) ) {
-			$output = $mc[1];
-		}
+	if(empty($output)) {
+		$post_content = strip_tags($post->post_content);
+		$output = preg_replace('/^(?:[\x00-\x7F]|[\xC0-\xFF][\x80-\xBF]+){0,0}((?:[\x00-\x7F]|[\xC0-\xFF][\x80-\xBF]+){0,200}).*/s','\1',$post_content).'......';
 	}
 	
 	// 邮件标题
@@ -236,11 +234,9 @@ function qh_publish_post_report_email($post_ID) {
 	$post_title = strip_tags($post->post_title);
 	//文章摘要
 	$output = get_the_excerpt($post);
-	if((!empty($post)) && empty($output)) {
-		$post_content = $post->post_content;
-		if ( preg_match( '#<p>((\w|\d|[^x00-xff]).+?)</p>#', $post_content, $mc ) ) {
-			$output = $mc[1];
-		}
+	if(empty($output)) {
+		$post_content = strip_tags($post->post_content);
+		$output = preg_replace('/^(?:[\x00-\x7F]|[\xC0-\xFF][\x80-\xBF]+){0,0}((?:[\x00-\x7F]|[\xC0-\xFF][\x80-\xBF]+){0,200}).*/s','\1',$post_content).'......';
 	}
 	
 	// 邮件标题
@@ -295,11 +291,9 @@ function qh_comment_mail_notify_approve($comment_id, $comment_status) {
 		$post_title = $post->post_title;
 		$post_link = get_permalink($parent_comment->comment_post_ID);
 		$output = get_the_excerpt($post);
-		if((!empty($post)) && empty($output)) {
-			$post_content = $post->post_content;
-			if ( preg_match( '#<p>((\w|\d|[^x00-xff]).+?)</p>#', $post_content, $mc ) ) {
-				$output = $mc[1];
-			}
+		if(empty($output)) {
+			$post_content = strip_tags($post->post_content);
+			$output = preg_replace('/^(?:[\x00-\x7F]|[\xC0-\xFF][\x80-\xBF]+){0,0}((?:[\x00-\x7F]|[\xC0-\xFF][\x80-\xBF]+){0,200}).*/s','\1',$post_content).'......';
 		}
 		// 评论内容
 		$comment_parent_content = nl2br($parent_comment->comment_content);
@@ -342,11 +336,9 @@ function qh_comment_mail_notify_approve($comment_id, $comment_status) {
 		$post_title = $post->post_title;
 		$post_link = get_permalink($comment->comment_post_ID);
 		$output = get_the_excerpt($post);
-		if((!empty($post)) && empty($output)) {
-			$post_content = $post->post_content;
-			if ( preg_match( '#<p>((\w|\d|[^x00-xff]).+?)</p>#', $post_content, $mc ) ) {
-				$output = $mc[1];
-			}
+		if(empty($output)) {
+			$post_content = strip_tags($post->post_content);
+			$output = preg_replace('/^(?:[\x00-\x7F]|[\xC0-\xFF][\x80-\xBF]+){0,0}((?:[\x00-\x7F]|[\xC0-\xFF][\x80-\xBF]+){0,200}).*/s','\1',$post_content).'......';
 		}
 		// 评论内容
 		$comment_data = trim($comment->comment_date);
@@ -399,11 +391,9 @@ function qh_comment_mail_notify_unapprove($comment_id, $comment_status) {
 		$post_title = $post->post_title;
 		$post_link = get_permalink($parent_comment->comment_post_ID);
 		$output = get_the_excerpt($post);
-		if((!empty($post)) && empty($output)) {
-			$post_content = $post->post_content;
-			if ( preg_match( '#<p>((\w|\d|[^x00-xff]).+?)</p>#', $post_content, $mc ) ) {
-				$output = $mc[1];
-			}
+		if(empty($output)) {
+			$post_content = strip_tags($post->post_content);
+			$output = preg_replace('/^(?:[\x00-\x7F]|[\xC0-\xFF][\x80-\xBF]+){0,0}((?:[\x00-\x7F]|[\xC0-\xFF][\x80-\xBF]+){0,200}).*/s','\1',$post_content).'......';
 		}
 		// 评论内容
 		$comment_parent_content = nl2br($parent_comment->comment_content);
@@ -446,11 +436,9 @@ function qh_comment_mail_notify_unapprove($comment_id, $comment_status) {
 		$post_title = $post->post_title;
 		$post_link = get_permalink($comment->comment_post_ID);
 		$output = get_the_excerpt($post);
-		if((!empty($post)) && empty($output)) {
-			$post_content = $post->post_content;
-			if ( preg_match( '#<p>((\w|\d|[^x00-xff]).+?)</p>#', $post_content, $mc ) ) {
-				$output = $mc[1];
-			}
+		if(empty($output)) {
+			$post_content = strip_tags($post->post_content);
+			$output = preg_replace('/^(?:[\x00-\x7F]|[\xC0-\xFF][\x80-\xBF]+){0,0}((?:[\x00-\x7F]|[\xC0-\xFF][\x80-\xBF]+){0,200}).*/s','\1',$post_content).'......';
 		}
 		// 评论内容
 		$comment_data = trim($comment->comment_date);
