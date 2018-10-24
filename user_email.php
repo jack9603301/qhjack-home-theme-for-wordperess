@@ -159,7 +159,7 @@ function qh_emaill_report_users($post_ID) {
 	//获取wp数据操作类
 	global $wpdb;
 	// 读数据库，获取所有用户的email
-	$wp_user_emails = $wpdb->get_results("SELECT DISTINCT comment_author, comment_author_email FROM $wpdb->comments WHERE TRIM(comment_author_email) IS NOT NULL AND TRIM(comment_author_email) != ''");
+	$wp_user_emails = $wpdb->get_results("SELECT DISTINCT comment_author, comment_author_email FROM $wpdb->comments WHERE comment_author_email IS NOT NULL AND comment_author_email != ''");
  
 	// 获取博客名称
 	$blogname = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
@@ -221,7 +221,7 @@ function qh_publish_post_report_email($post_ID) {
 	
 	//获取wp数据操作类
 	global $wpdb;
-	$usersarray = $wpdb->get_results("SELECT DISTINCT ID,user_nicename,user_email FROM $wpdb->users WHERE TRIM(user_email) IS NOT NULL AND TRIM(user_email) != ''");
+	$usersarray = $wpdb->get_results("SELECT DISTINCT ID,user_nicename,user_email FROM $wpdb->users WHERE user_email IS NOT NULL AND user_email != ''");
 	// 获取博客名称
 	$blogname = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
 	// 获取博客URL
