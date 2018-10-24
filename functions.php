@@ -109,6 +109,12 @@ add_filter( 'manage_edit-post_sortable_columns', 'add_post_page_sortable_columns
 
 add_filter( 'manage_edit-page_sortable_columns', 'add_post_page_sortable_columns' );
 
+add_action('after_setup_theme', 'home_theme_setup');
+
+function home_theme_setup(){
+    load_theme_textdomain('home', get_template_directory() . '/languages');
+}
+
 function isMobile() { 
     // 如果有HTTP_X_WAP_PROFILE则一定是移动设备
     if (isset($_SERVER['HTTP_X_WAP_PROFILE'])) {
@@ -257,7 +263,7 @@ function home_post_columns($columns) {
 	$newcolumns['cb'] = $columns['cb'];
 	$newcolumns['id'] = __('ID');
 	$newcolumns['title'] = $columns['title'];
-	$newcolumns['original'] = '原创文章';
+	$newcolumns['original'] = __('Original article','home');
 	$newcolumns['categories'] = $columns['categories'];
 	$newcolumns['tags'] = $columns['tags'];
 	$newcolumns['comments'] = $columns['comments'];
@@ -283,9 +289,9 @@ function home_post_column_value($column_name, $id) {
 			$custom = get_post_custom($id);
 			$CopyrightType = $custom['CopyrightType'][0];
 			if($CopyrightType == "Original") {
-				echo "是";
+				echo __("Yes",'home');
 			} else {
-				echo "否";
+				echo __("No",'home');
 			}
 		}
 		break;
