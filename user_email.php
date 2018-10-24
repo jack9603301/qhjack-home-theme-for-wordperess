@@ -159,7 +159,7 @@ function qh_emaill_report_users($post_ID) {
 	//获取wp数据操作类
 	global $wpdb;
 	// 读数据库，获取所有用户的email
-	$wp_user_emails = $wpdb->get_results("SELECT DISTINCT comment_author, comment_author_email FROM $wpdb->comments WHERE comment_author_email IS NOT NULL AND comment_author_email != ''");
+	$wp_user_emails = $wpdb->get_results("SELECT comment_author, comment_author_email FROM $wpdb->comments WHERE comment_author_email IS NOT NULL AND comment_author_email != '' GROUP BY comment_author_email");
  
 	// 获取博客名称
 	$blogname = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
