@@ -447,7 +447,7 @@ function qh_comment_mail_notify_unapprove($comment_id, $comment_status) {
 		// 邮件内容
 		$message = '<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body>';
 		$message .= '<div style="MARGIN-RIGHT: auto; MARGIN-LEFT: auto;">';
-		$message .= '<strong style="line-height: 1.5; font-family:Microsoft YaHei;">亲爱的管理员：</strong>';
+		$message .= '<strong style="line-height: 1.5; font-family:Microsoft YaHei;">尊敬的管理员：</strong>';
 		$message .= '<p style="FONT-SIZE: 14px; PADDING-TOP: 6px">博客《'.$blog_name.'》由'.$comment_author.'于'.$data.'进行了评论。</p>';
 		$message .= '<p style="FONT-SIZE: 14px; PADDING-TOP: 6px">文章标题：<a title="'.$post_title.'" href="'.$post_link.'" target="_top">'.$post_title.'</a>';
 		$message .= '<br />文章摘要：'.$output.'</p>';
