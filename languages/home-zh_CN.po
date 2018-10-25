@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 起航天空\n"
 "POT-Creation-Date: 2018-10-25 00:11+0800\n"
-"PO-Revision-Date: 2018-10-25 00:12+0800\n"
+"PO-Revision-Date: 2018-10-25 13:06+0800\n"
 "Last-Translator: jack9603301 <jack9603301@163.com>\n"
 "Language-Team: jack9603301 <jack9603301@163.com>\n"
 "Language: zh\n"
@@ -53,7 +53,7 @@ msgstr "否"
 
 #: header.php:56
 msgid "home page"
-msgstr "主页"
+msgstr "首页"
 
 #: inc/template-tags.php:19
 msgid "Pages:"
