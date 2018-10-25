@@ -111,6 +111,15 @@ add_filter( 'manage_edit-page_sortable_columns', 'add_post_page_sortable_columns
 
 add_action('after_setup_theme', 'home_theme_setup');
 
+// Load Google Font
+
+add_action( 'wp_enqueue_scripts', 'home_google_fonts' );
+
+function home_google_fonts() {
+	wp_register_style( 'nisarggooglefonts', '/wp-content/themes/home/google_font/css/google_font.css', array(), null );
+	wp_enqueue_style( 'homegooglefonts' );
+}
+
 function home_theme_setup(){
     load_theme_textdomain('home', get_template_directory() . '/languages');
 }
