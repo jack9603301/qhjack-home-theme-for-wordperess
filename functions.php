@@ -117,7 +117,6 @@ add_action( 'wp_enqueue_scripts', 'home_google_fonts' );
 
 function home_google_fonts() {
 	wp_register_style( 'nisarggooglefonts', '/wp-content/themes/home/google_font/css/google_font.css', array(), null );
-	wp_enqueue_style( 'homegooglefonts' );
 }
 
 function home_theme_setup(){
