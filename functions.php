@@ -128,7 +128,7 @@ auto_loader_predis();
 
 function auto_loader_predis() {
 	if(!class_exists('Predis\Client')) {
-		require_once __DIR__ . 'predis/autoload.php';
+		require_once __DIR__ . '/predis/autoload.php';
 	}
 }
 
