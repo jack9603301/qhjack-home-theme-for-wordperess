@@ -133,3 +133,38 @@ jQuery("#geetest-lostpasswordform").ready(function() {
         });
 	}
 });
+
+
+jQuery("#geetest-subscribe").ready(function() {
+	if(jQuery("#geetest-subscribe").length > 0) {
+		var handlerEmbed = function (captchaObj) {
+            captchaObj.appendTo("#geetest-subscribe");
+            captchaObj.onReady(function () {
+                jQuery("#submit").attr('disabled',"true");
+            });
+		    captchaObj.onSuccess(function() {
+			    jQuery("#submit").removeAttr("disabled");
+		    })
+        };
+	    jQuery.ajax({
+            url: "/wp-content/themes/home/geetest/web/StartCaptchaServlet.php?t=" + (new Date()).getTime(), // 加随机数防止缓存
+            type: "get",
+            dataType: "json",
+            success: function (data) {
+                // 使用initGeetest接口
+                // 参数1：配置参数
+                // 参数2：回调，回调的第一个参数验证码对象，之后可以使用它做appendTo之类的事件
+                initGeetest({
+                    gt: data.gt,
+				    area: '#subscribe-form',
+				    next_width: '272px',
+				    width: '272px',
+                    challenge: data.challenge,
+                    new_captcha: data.new_captcha,
+                    product: "custom",
+                    offline: !data.success
+                }, handlerEmbed);
+            }
+        });
+	}
+});
