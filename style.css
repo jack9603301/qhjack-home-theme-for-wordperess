@@ -79,6 +79,12 @@ table caption {
 	width:100%;
 }
 
+#subscribe-form {
+	display:inline-block;
+	text-align:left;
+	width: 270px;
+}
+
 @media (min-width: 1200px) {
     .container {
         width: 1370px;
@@ -99,6 +105,11 @@ table caption {
 	    margin-bottom: 20px;
 		text-align: center;
     }
+	#subscribe-form {
+		display:inline-block;
+		text-align:left;
+		width: 100%;
+	}
 }
 
 li p{

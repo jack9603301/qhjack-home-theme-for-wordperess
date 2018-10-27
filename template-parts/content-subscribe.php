@@ -22,42 +22,21 @@
 <?php 
     	wp_get_current_user();
 		if(is_user_logged_in()) {
-			header("location:/wp-admin/profile.php");
+			//header("location:/wp-admin/profile.php");
 		}
 ?>
 		<form action="" method="post">
-			<table id="subscribe-form" style="margin:auto;width:50%;">
-				<tr>
-					<th>
-						<label>网名：</label>
-					</th>
-					<td>
-						<input type="input" name="nickname" id="nickname" />
-					</td>
-				</tr>
-				<tr>
-					<th>
-						<label>电子邮箱：</label>
-					</th>
-					<td>
-						<input type="input" name="email" id="email" />
-					</td>
-				</tr>
-				<tr>
-					<th>
-						<label>人机验证：</label>
-					</th>
-					<td>
-						<div id="geetest-subscribe"></div>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2" style="text-align:right;">
-						<input type="reset" name="reset" id="reset" value="重置" />
-						<input type="submit" name="submit" id="submit" value="订阅" />
-					</td>
-				</tr>
-			</table>
+			<div id="subscribe-form">
+				<h3>网名：</h3>
+				<input type="text" name="nickname" id="nickname" style="width:100%;" required="required" placeholder="请输入一个网名" />
+				<h3>电子邮箱：</h3>
+				<input type="text" name="email" id="email" style="width:100%;" required="required" placeholder="请输入一个合法有效的电子邮箱" pattern="^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$" />
+				<h3>人机验证：</h3>
+				<div id="geetest-subscribe"></div><br />
+				<div style="text-align:right" style="width:100%;" >
+					<input type="submit" name="submit" id="submit" value="订阅" />
+				</div>
+			</div>
 		</form>
 		<?php else: ?>
 			<?php home_subscribe_no_author($wp_query->query_vars['key']); ?>
