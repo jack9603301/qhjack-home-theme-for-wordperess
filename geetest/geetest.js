@@ -157,8 +157,8 @@ jQuery("#geetest-subscribe").ready(function() {
                 initGeetest({
                     gt: data.gt,
 				    area: '#subscribe-form',
-				    next_width: '272px',
-				    width: '272px',
+				    next_width: '100%',
+				    width: '100%',
                     challenge: data.challenge,
                     new_captcha: data.new_captcha,
                     product: "custom",

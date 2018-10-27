@@ -25,17 +25,32 @@
 			header("location:/wp-admin/profile.php");
 		}
 ?>
-		<form action="" method="post">
-			<div id="subscribe-form">
-				<h3>网名：</h3>
-				<input type="text" name="nickname" id="nickname" style="width:100%;" required="required" placeholder="请输入一个网名" />
-				<h3>电子邮箱：</h3>
-				<input type="text" name="email" id="email" style="width:100%;" required="required" placeholder="请输入一个合法有效的电子邮箱" pattern="^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$" />
-				<h3>人机验证：</h3>
-				<div id="geetest-subscribe"></div><br />
-				<div style="text-align:right" style="width:100%;" >
+		<form action="" method="post" id="subscribe-form">
+			<p>
+				<label for="nickname">
+					网名：
+					<br />
+					<input type="text" name="nickname" id="nickname" required="required" placeholder="请输入一个网名" />
+				</label>
+			</p>
+			<p>
+				<label for="email">
+					电子邮箱：
+					<br />
+					<input type="text" name="email" id="email" required="required" placeholder="请输入一个合法有效的电子邮箱" pattern="^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$" />
+				</label>
+			</p>
+			<p>
+				<label>
+					人机验证：
+					<br />
+					<div id="geetest-subscribe"></div><br />
+				</label>
+			</p>
+			<div id="subscribe-submit">
+				<label>
 					<input type="submit" name="submit" id="submit" value="订阅" />
-				</div>
+				</label>
 			</div>
 		</form>
 		<?php else: ?>

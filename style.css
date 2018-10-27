@@ -82,7 +82,28 @@ table caption {
 #subscribe-form {
 	display:inline-block;
 	text-align:left;
-	width: 270px;
+	width: 320px;
+	padding: 26px 24px 46px;
+}
+
+#subscribe-form * {
+	margin: 0;
+    margin-bottom: 0px;
+}
+
+#subscribe-form p * {
+	width: 100%;
+}
+
+#subscribe-form #subscribe-submit {
+	width: 100%;
+	text-align: right;
+}
+
+
+#subscribe-form p {
+	text-indent: unset;
+	margin-bottom: 0;
 }
 
 @media (min-width: 1200px) {
@@ -109,6 +130,21 @@ table caption {
 		display:inline-block;
 		text-align:left;
 		width: 100%;
+		padding: 26px 24px 46px;
+	}
+	#subscribe-form p * {
+		width: 100%;
+	}
+
+	#subscribe-form #subscribe-submit {
+		width: 100%;
+		text-align: right;
+	}
+
+
+	#subscribe-form p {
+		text-indent: unset;
+		margin-bottom: 0;
 	}
 }
 
