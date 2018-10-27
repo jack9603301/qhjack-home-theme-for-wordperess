@@ -400,7 +400,7 @@ function qh_subscribe_send_mail($nickname,$email) {
 	try {
 		global $wpdb;
 		$table = $wpdb->prefix."subscribe";
-		if($wpdb->query("SELECT * FROM $table WHERE email = $email") == 0) {
+		if($wpdb->query("SELECT * FROM $table WHERE email = \'$email\'") == 0) {
 			$key = md5($email . date("Y-m-d h:i:sa"));
 			$redis->setex($key,$redis_ttl,$nickname . '|' . $email);
 		
@@ -427,7 +427,7 @@ function qh_subscribe_send_mail($nickname,$email) {
 			$message .= '<div style="font-size: 12px; border-top-color: rgb(204, 204, 204); border-top-width: 1px; border-top-style: solid; height: 35px; width: 500px; color: rgb(102, 102, 102); line-height: 35px; background-color: rgb(245, 245, 245);">';
 			$message .= '该邮件为系统发送邮件，请勿直接回复！如有打扰，请向博主留言反映。灰常感谢您的阅读！</div></div></body></html>';
 			wp_mail($to, $subject, $message);
-			echo "恭喜$nickname，您的订阅申请确认邮件已发送至$email，请登录您的邮箱，根据邮件要求完成订阅。";
+			echo "恭喜".$nickname."，您的订阅申请确认邮件已发送至".$email."，请登录您的邮箱，根据邮件要求完成订阅。";
 		} else {
 			echo "您已经订阅完成，请不要重复订阅";
 		}
