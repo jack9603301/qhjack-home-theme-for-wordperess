@@ -7,13 +7,6 @@
 
 ?>
 
-<?php 
-    wp_get_current_user();
-	if(is_user_logged_in()) {
-		header("location:/wp-admin/profile.php");
-	}
-?>
-
 <article id="post-<?php the_ID(); ?>"  <?php post_class( 'post-content' ); ?>>
 
 	<header class="entry-header">
@@ -26,6 +19,12 @@
 	<div class="entry-content" style="text-align: center">
 		<?php if(!isset($_POST['submit'])): ?>
 		<?php if(!isset($wp_query->query_vars['key'])): ?>
+<?php 
+    	wp_get_current_user();
+		if(is_user_logged_in()) {
+			header("location:/wp-admin/profile.php");
+		}
+?>
 		<form action="" method="post">
 			<label>网名：</label>
 			<input type="input" name="nickname" id="nickname" />
