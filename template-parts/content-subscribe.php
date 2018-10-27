@@ -7,6 +7,13 @@
 
 ?>
 
+<?php 
+    wp_get_current_user();
+	if(is_user_logged_in()) {
+		header("location:/wp-admin/profile.php");
+	}
+?>
+
 <article id="post-<?php the_ID(); ?>"  <?php post_class( 'post-content' ); ?>>
 
 	<header class="entry-header">
