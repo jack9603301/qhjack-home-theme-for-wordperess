@@ -22,15 +22,42 @@
 <?php 
     	wp_get_current_user();
 		if(is_user_logged_in()) {
-			header("location:/wp-admin/profile.php");
+			//header("location:/wp-admin/profile.php");
 		}
 ?>
 		<form action="" method="post">
-			<label>网名：</label>
-			<input type="input" name="nickname" id="nickname" />
-			<label>电子邮箱：</label>
-			<input type="input" name="email" id="email" />
-			<input type="submit" name="submit" id="submit" value="订阅" />
+			<table id="subscribe-form" style="margin:auto;width:50%;">
+				<tr>
+					<th>
+						<label>网名：</label>
+					</th>
+					<td>
+						<input type="input" name="nickname" id="nickname" />
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<label>电子邮箱：</label>
+					</th>
+					<td>
+						<input type="input" name="email" id="email" />
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<label>人机验证：</label>
+					</th>
+					<td>
+						<div id="geetest-subscribe"></div>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" style="text-align:right;">
+						<input type="reset" name="reset" id="reset" value="重置" />
+						<input type="submit" name="submit" id="submit" value="订阅" />
+					</td>
+				</tr>
+			</table>
 		</form>
 		<?php else: ?>
 			<?php home_subscribe_no_author($wp_query->query_vars['key']); ?>
