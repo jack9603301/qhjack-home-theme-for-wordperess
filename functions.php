@@ -15,6 +15,8 @@ require get_theme_root().'/home/user_email.php';  //user_email
 require get_theme_root().'/home/other.php';  //other
 require get_theme_root().'/home/wp-login-ext.php'; //login-ext
 require get_theme_root().'/home/widget/widget_user.php'; //widget_user
+require get_theme_root().'/home/inc/subscribe.php'; //widget_user
+require get_theme_root().'/home/user_profile.php'; //user_profile
 
 //百度提交
 
@@ -55,6 +57,8 @@ add_filter('term_link','home_term_link',2,3);
 
 add_filter('wp_link_pages','home_wp_link_pages_filter',2,2);
 
+add_filter('query_vars', 'home_query_vars');
+
 add_action('do_feed', 'disable_fedd', 1);
 add_action('do_feed_rdf', 'disable_fedd', 1);
 add_action('do_feed_rss', 'disable_fedd', 1);
@@ -65,8 +69,6 @@ add_action('wp_head','disable_feed_url',1);
 //user_email.php
 
 add_filter('retrieve_password_message', 'reset_password_message', null, 2);
-add_action( 'submitpost_box', 'qh_submit_box');
-add_action( 'publish_post', 'qh_emaill_report_users' );
 add_action( 'publish_post', 'qh_publish_post_report_email' );
 add_filter('wp_new_user_notification_email','qh_new_user_notification_email',2,3);
 add_filter('wp_new_user_notification_email_admin','qh_new_user_notification_email_admin',2,3);
@@ -114,6 +116,21 @@ add_action('after_setup_theme', 'home_theme_setup');
 // Load Google Font
 
 add_action( 'wp_enqueue_scripts', 'home_google_fonts' );
+
+// Auto Loader pRedis
+
+add_action( 'show_user_profile', 'extra_user_profile_fields' );
+add_action( 'edit_user_profile', 'extra_user_profile_fields' );
+add_action( 'personal_options_update', 'save_extra_user_profile_fields' );
+add_action( 'edit_user_profile_update', 'save_extra_user_profile_fields' );
+
+auto_loader_predis();
+
+function auto_loader_predis() {
+	if(!class_exists('Predis\Client')) {
+		require_once __DIR__ . 'predis/autoload.php';
+	}
+}
 
 function home_google_fonts() {
 	wp_register_style( 'nisarggooglefonts', '/wp-content/themes/home/google_font/css/google_font.css', array(), null );
@@ -345,6 +362,38 @@ function home_widget_init() {
     unregister_widget('WP_Widget_Meta');
     /*注册自己的Meta小工具*/
     register_widget('WP_Widget_User_Meta');
+}
+
+function get_redis_params() {
+	$redis_ip = '127.0.0.1';
+	$redis_port = 6379;
+	$redis_db = 0;
+	$redis_ttl = 3600;
+	
+	//Load wp-config.php Settings
+	
+	if(defined('WP_REDIS_HOST')) {
+		$redis_ip = WP_REDIS_HOST;
+	}
+	
+	if(defined('WP_REDIS_PORT')) {
+		$redis_port = WP_REDIS_PORT;
+	}
+	
+	if(defined('SUBSCRIBE_REDIS_TTL')) {
+		$redis_ttl = SUBSCRIBE_REDIS_TTL;
+	}
+	
+	if(defined('SUBSCRIBE_REDIS_DB')) {
+		$redis_db = SUBSCRIBE_REDIS_DB;
+	}
+	
+	return array(
+		'ip' => $redis_ip,
+		'port' => $redis_port,
+		'subscribe_db' => $redis_db,
+		'subscribe_ttl' => $redis_ttl
+	);
 }
 
 function output_filter($content) {

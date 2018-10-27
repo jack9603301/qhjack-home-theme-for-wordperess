@@ -8,7 +8,7 @@
  
     	function widget( $args, $instance ) {
 			global $current_user, $display_name , $user_email;
-			get_currentuserinfo();
+			wp_get_current_user();
 			extract($args);
         	$title = apply_filters('widget_title', empty($instance['title']) ? __('User') : $instance['title'], $instance, $this->id_base);
         	echo $before_widget;
@@ -29,6 +29,7 @@
 				<p>
 					您尚未登录，属于匿名访问，您可以注册或登录进入网站，成为网站的用户,留下您的足迹，谢谢。
 				</p>
+				<li><a href='/subscribe.html?action=subscribe' title="订阅">订阅本站</a></li>
 				<?php endif; ?>
             	<?php wp_register(); ?>
             	<li><?php wp_loginout(); ?></li>

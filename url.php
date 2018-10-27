@@ -111,6 +111,11 @@ function disable_feed_url() {
 	remove_action('wp_head','feed_links', 2);
 }
 
+function home_query_vars($Vars) {
+	$Vars[] = "key";
+	$Vars[] = "action";
+	return $Vars;
+}
 
 
 ?>
