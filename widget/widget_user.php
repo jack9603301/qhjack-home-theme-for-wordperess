@@ -25,6 +25,7 @@
 				<p>
 					尊敬的<?php echo $current_user->display_name; ?>，欢迎您的再次登录，谢谢。
 				</p>
+				<li><a href='/wp-admin/profile.php' title="订阅">个人资料</a></li>
 				<?php else: ?>
 				<p>
 					您尚未登录，属于匿名访问，您可以注册或登录进入网站，成为网站的用户,留下您的足迹，谢谢。
