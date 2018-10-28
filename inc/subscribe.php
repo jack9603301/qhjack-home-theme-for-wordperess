@@ -78,7 +78,7 @@ function home_unsubscribe($key) {
 	if($result >= 1 ) {
 		echo "订阅已经被解除。";
 	} else {
-		echo "反订阅链接无效。";
+		echo "取消订阅的链接无效。";
 	}
 }
 

@@ -28,7 +28,7 @@
 		<form action="" method="post" id="subscribe-form">
 			<p>
 				<label for="nickname">
-					网名：
+					昵称：
 					<br />
 					<input type="text" name="nickname" id="nickname" required="required" placeholder="请输入一个网名" />
 				</label>
