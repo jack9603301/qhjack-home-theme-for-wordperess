@@ -400,7 +400,7 @@ function qh_subscribe_send_mail($nickname,$email) {
 	try {
 		global $wpdb;
 		$table = $wpdb->prefix."subscribe";
-		if($wpdb->query("SELECT * FROM $table WHERE email = \'$email\'") == 0) {
+		if($wpdb->query($wpdb->prepare("SELECT * FROM $table WHERE email = %s",$email)) == 0) {
 			$key = md5($email . date("Y-m-d h:i:sa"));
 			$redis->setex($key,$redis_ttl,$nickname . '|' . $email);
 		

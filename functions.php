@@ -19,6 +19,7 @@ require get_theme_root().'/home/widget/widget_user.php'; //widget_user
 require get_theme_root().'/home/inc/subscribe.php'; //widget_user
 require get_theme_root().'/home/user_profile.php'; //user_profile
 
+
 //百度提交
 
 add_action('publish_post', 'BaiduSubmit', 2,1);
