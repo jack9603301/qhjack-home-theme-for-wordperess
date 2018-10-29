@@ -2,7 +2,7 @@
 
 if(!function_exists('BaiduSubmit')){
     function BaiduSubmit($post_ID) {
-        $WEB_TOKEN  = 'AOksut8H5leAh3US';  //这里请换成你的网站的百度主动推送的token值
+        $WEB_TOKEN  = get_option('baidu_submit_token');  //这里请换成你的网站的百度主动推送的token值
         $WEB_DOMAIN = home_url();
         //已成功推送的文章不再推送
         if(get_post_meta($post_ID,'BaiduSubmit',true) == "OK") {
@@ -31,8 +31,8 @@ if(!function_exists('BaiduSubmit')){
 }
 if(!function_exists('BeraSubmit')) {
 	function BeraSubmit($post_ID) {
-		$WEB_APPID= "1593262731483703";
-		$WEB_TOKEN= "WiPygUzgs7XB7da3";
+		$WEB_APPID= get_option('bera_submit_appid');
+		$WEB_TOKEN= get_option('bera_submit_token');
         //已成功推送的文章不再推送
         if(get_post_meta($post_ID,"BeraSubmitType",true) == "batch") {
 			//历史接口

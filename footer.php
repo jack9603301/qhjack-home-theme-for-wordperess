@@ -41,9 +41,13 @@
 			</strong>
 			| 公网备案许可证号：
 			<strong>
-		 		<a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44060502000700" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;">
+		 		<a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=<?php echo get_option( 'public_net_for_record_num' ); ?>" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;">
 		 			<img src="<?php echo get_theme_root_uri(); ?>/home/images/RecordIcon.png" style="float:left;"/>
-		 			<div style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px; color:#939393;">粤公网安备 44060502000700号</div>
+		 			<div style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px; color:#939393;">
+						<?php
+							echo get_option( 'public_net_for_record_prefix' ) . ' '.get_option( 'public_net_for_record_num' ). '号';
+						?>
+					</div>
 		 		</a>
 			</strong>
 			| 站长统计：

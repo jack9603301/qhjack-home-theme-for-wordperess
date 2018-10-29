@@ -26,27 +26,27 @@
 		}
 ?>
 		<form action="" method="post" id="subscribe-form">
-			<p>
+			<div class="form-label">
 				<label for="nickname">
 					昵称：
 					<br />
 					<input type="text" name="nickname" id="nickname" required="required" placeholder="请输入一个网名" />
 				</label>
-			</p>
-			<p>
+			</div>
+			<div class="form-label">
 				<label for="email">
 					电子邮箱：
 					<br />
 					<input type="text" name="email" id="email" required="required" placeholder="请输入一个合法有效的电子邮箱" pattern="^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$" />
 				</label>
-			</p>
-			<p>
+			</div>
+			<div class="form-geetest">
 				<label>
 					人机验证：
 					<br />
 					<div id="geetest-subscribe"></div><br />
 				</label>
-			</p>
+			</div>
 			<div id="subscribe-submit">
 				<label>
 					<input type="submit" name="submit" id="submit" value="订阅" />

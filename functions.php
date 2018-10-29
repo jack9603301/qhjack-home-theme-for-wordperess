@@ -11,6 +11,7 @@ require get_theme_root().'/home/inc/template-tags.php';
 
 require  get_theme_root().'/home/url.php';  //url.php
 require get_theme_root().'/home/push.php';  //push.php
+require get_theme_root().'/home/setting.php';  //setting.php
 require get_theme_root().'/home/user_email.php';  //user_email
 require get_theme_root().'/home/other.php';  //other
 require get_theme_root().'/home/wp-login-ext.php'; //login-ext
@@ -123,6 +124,10 @@ add_action( 'show_user_profile', 'extra_user_profile_fields' );
 add_action( 'edit_user_profile', 'extra_user_profile_fields' );
 add_action( 'personal_options_update', 'save_extra_user_profile_fields' );
 add_action( 'edit_user_profile_update', 'save_extra_user_profile_fields' );
+
+// Load Setting
+
+add_action( 'admin_init', 'global_setting' );
 
 auto_loader_predis();
 

@@ -91,7 +91,7 @@ table caption {
     margin-bottom: 0px;
 }
 
-#subscribe-form p * {
+#subscribe-form .form-label * {
 	width: 100%;
 }
 
@@ -101,9 +101,12 @@ table caption {
 }
 
 
-#subscribe-form p {
-	text-indent: unset;
-	margin-bottom: 0;
+#subscribe-form  .form-label {
+	text-align:left;
+}
+
+#subscribe-form  .form-geetest {
+	text-align:left;
 }
 
 @media (min-width: 1200px) {
@@ -132,7 +135,7 @@ table caption {
 		width: 100%;
 		padding: 26px 24px 46px;
 	}
-	#subscribe-form p * {
+	#subscribe-form .form-label * {
 		width: 100%;
 	}
 
@@ -142,9 +145,12 @@ table caption {
 	}
 
 
-	#subscribe-form p {
-		text-indent: unset;
-		margin-bottom: 0;
+	#subscribe-form .form-label {
+		text-align:left;
+	}
+	
+	#subscribe-form .form-geetest {
+		text-align:left;
 	}
 }
 

@@ -1,6 +1,6 @@
 <?php
 /*
- *   Template Name: 订阅/反订阅
+ *   Template Name: 订阅/取消订阅
  */
 get_header(); ?>
 
