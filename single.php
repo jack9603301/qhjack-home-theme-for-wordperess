@@ -21,6 +21,7 @@ get_header(); ?>
 				</div>
 
 				<?php 
+					$post_id = get_the_ID();	
 					$custom_fields = get_post_custom_keys($post_id);
 					if(in_array('CopyrightType',$custom_fields)):
 				?>

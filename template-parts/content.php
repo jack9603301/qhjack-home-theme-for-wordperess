@@ -123,6 +123,7 @@
 	<footer class="entry-footer">
 		<div style="text-align:center">
 			<?php
+				$post_id = get_the_ID();	
 				$custom_fields = get_post_custom_keys($post_id);
 				if ((!in_array ('ReprintURL', $custom_fields)) and (!in_array ('ReprintTitle', $custom_fields))) :
 			?>
