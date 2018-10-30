@@ -12,6 +12,8 @@ get_header(); ?>
 				$type=isset($wp_query->query_vars['action'])?$wp_query->query_vars['action']:'subscribe';
 				if($type === 'subscribe' || $type === 'unsubscribe') {
 					get_template_part( 'template-parts/content',$type );
+				} else {
+					get_template_part( 'template-parts/content','none' );
 				}
 ?>
 			</main><!-- #main -->
