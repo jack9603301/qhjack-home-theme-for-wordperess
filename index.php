@@ -22,6 +22,10 @@ get_header(); ?>
 						<header>
 							<h1 class="page-title screen-reader-text"><?php single_post_title(); ?></h1>
 						</header>
+                    <?php else: ?>
+                        <header class="archive-page-header archive-page-title-background">
+                            <h3 class="archive-page-title archive-page-title-background">文章列表</h3>
+                        </header><!-- .page-header -->
 					<?php endif; ?>
 
 					<?php /* Start the Loop */ ?>

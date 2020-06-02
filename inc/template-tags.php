@@ -55,9 +55,9 @@ function home_posts_navigation() {
 		<div class="nav-links">
 
 			<div class="row">
-				<?php if ( get_next_posts_link() ) { ?>	
+				<?php if ( get_previous_posts_link() ) { ?>	
 				<div class="col-md-6 prev-post">		
-				<?php next_posts_link('<i class="fa fa-angle-double-left"></i>'.'上一页'); ?>
+				<?php previous_posts_link('<i class="fa fa-angle-double-left"></i>'.'上一页'); ?>
 				</div>
 				<?php }	else{
 					echo '<div class="col-md-6">';
@@ -65,9 +65,9 @@ function home_posts_navigation() {
 					echo '</div>';
 				} ?>
 				
-				<?php if ( get_previous_posts_link() ) { ?>
+				<?php if ( get_next_posts_link() ) { ?>
 				<div class="col-md-6 prev-post">
-				<?php previous_posts_link( '下一页'.'<i class="fa fa-angle-double-right"></i>' ); ?>
+				<?php next_posts_link('下一页'.'<i class="fa fa-angle-double-right"></i>' ); ?>
 				</div>
 				<?php } else {
 					echo '<div class="col-md-6">';
@@ -168,6 +168,50 @@ $entry_meta = '<i class="fa fa-calendar-o"></i> <a href="%1$s" title="%2$s" rel=
 		printf(' <i class="fa fa-comments-o"></i><span class="screen-reader-text">%1$s </span> ',_x( 'Comments', 'Used before post author name.', 'nisarg' ));
 		comments_popup_link( __('0 Comment','nisarg'), __('1 comment','nisarg'), '% 条评论', 'comments-link', '');
 	}
+	
+	$postID = get_the_ID();
+	$thumbsUpCount = getThumbsUpCount($postID);
+	$viewsCount = getPostViews($postID);
+	echo '<span class="fa fa-eye page-views">'.$viewsCount.' 已阅读</span>';
+	echo '<span class="fa fa-thumbs-o-up thumbs-up" data-post-id="'.$postID.'">'.$thumbsUpCount.' 点赞</span>';
+	echo edit_post_link( esc_html__( 'Edit', 'nisarg' ), '<span style="text-decoration: underline; padding-left: 0.2em;">', '</span>' );
+}
+endif;
+
+
+if ( ! function_exists( 'nisarg_entry_footer' ) ) :
+/**
+ * Prints HTML with meta information for the categories, tags and comments.
+ */
+function nisarg_entry_footer() {
+
+	if(is_single())
+		echo '<hr>';
+	
+ 	if(!is_home() && !is_search() && !is_archive()){
+			
+			if ( 'post' == get_post_type() ) {
+				/* translators: used between list items, there is a space after the comma */
+				$categories_list = get_the_category_list( esc_html__( ', ', 'nisarg' ) );
+				echo '<div class="row">';
+				if ( $categories_list && nisarg_categorized_blog() ) {
+					printf( '<div class="col-md-6 cattegories"><span class="cat-links"><i class="fa fa-folder-open"></i>
+		 ' . esc_html__( '%1$s', 'nisarg' ) . '</span></div>', $categories_list ); // WPCS: XSS OK.
+				}
+				else{
+					echo '<div class="col-md-6 cattegories"><span class="cat-links"><i class="fa fa-folder-open"></i></span></div>'; 
+				}
+
+				
+				$tags_list = get_the_tag_list( '', esc_html__( ', ', 'nisarg' ) );
+				if ( $tags_list ) {
+					printf( '<div class="col-md-6 tags"><span class="tags-links"><i class="fa fa-tags"></i>' . esc_html__( ' %1$s', 'nisarg' ) . '</span></div>', $tags_list ); // WPCS: XSS OK.
+				}
+				
+				echo '</div>';
+			}
+	}
+		
 }
 endif;
 ?>

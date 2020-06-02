@@ -10,7 +10,7 @@ function reset_password_message( $message, $key ) {
     $user_name = $user_data->user_name;
     $message = '<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body><div>';
     $message .= '<p style="text-indent:2em">'.$user_name.'恭喜您提出用户注册申请。</p>';
-    $message .= '<p style="text-indent:2em">您收到这份邮件是因为你发出了忘记密码申请，请<a href=\''.network_site_url("wp-login.php?action=rp&key=$key&login=" . rawurlencode($user_login), 'login').'\'>单击此处重置密码</a>。';
+    $message .= '<p style="text-indent:2em">您收到这份邮件是因为你发出了忘记密码申请，请<a href=\''.network_site_url("wp-login.php?action=rp&key=$key&login=$user_name", 'login').'\'>单击此处重置密码</a>。';
     $message .= '<p style="text-indent:2em">您可以扫描以下二维码关注公众号和网站：</p>';
     $message .= '<p style="text-indent:2em">扫描以下二维码，关注公众号：</p>';
     $message .= '<p style="text-indent:2em"><img src=\''.network_site_url("wp-content/uploads/2018/02/weixin.jpg","http").'\' /></p>';
@@ -62,7 +62,7 @@ function qh_new_user_notification_email($wp_new_user_notification_email,$user,$b
 function qh_new_user_notification_email_admin($wp_new_user_notification_email,$user,$blogname) {
 	$user_login = stripslashes($user->user_login);
     $user_name = stripslashes($user->user_name);
-    $user_email = stripslashes($user->user_email);
+    $user_email = stripslashes(get_option("admin_email"));
 	$user_nickname = stripslashes($user->nickname);
 	//获取Key和博客名称
     $key = get_password_reset_key( $user );
@@ -388,14 +388,14 @@ function qh_comment_mail_notify_unapprove($comment_id, $comment_status) {
 
 function qh_subscribe_send_mail($nickname,$email) {
 	$redis_params = get_redis_params();
-	$redis_ttl = $redis_params['subscribe_ttl'];
-	
-	$server = array(
-    	'host'     => $redis_params['ip'],
-    	'port'     => $redis_params['port'],
-    	'database' => $redis_params['subscribe_db']
-	);
-	$redis = new Predis\Client($server);
+	$server = $redis_params['servers'];
+	$option = [
+		'cluster' => 'redis',
+		'parameters' => [
+			'password' => $redis_params['password']
+		]
+	];
+	$redis = new Predis\Client($server,$option);
 	
 	try {
 		global $wpdb;
@@ -408,7 +408,7 @@ function qh_subscribe_send_mail($nickname,$email) {
 			// 获取博客URL
 			$blogurl = get_bloginfo("siteurl");
 		
-			$to = get_option('admin_email');
+			$to = $email;
 			$subject = '[' . $blogname . ']订阅确认申请';
 		
 			$message = '<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body>';

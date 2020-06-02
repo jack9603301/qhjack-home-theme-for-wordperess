@@ -10,6 +10,73 @@ Version:        3.7
 
 @import url("../nisarg/style.css");
 
+.loader-background {
+	overflow: hidden;
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	z-index: 9999999;
+	top: 0;
+	pointer-events: none;
+	background: rgba(255,255,255,0.5);
+}
+.spinner {
+	margin: 100px auto;
+	width: 40px;
+	height: 40px;
+	position: relative;
+	text-align: center;
+	-webkit-animation: sk-rotate 2.0s infinite linear;
+	animation: sk-rotate 2.0s infinite linear;
+}
+.dot1,.dot2 {
+	width: 60%;
+	height: 60%;
+	display: inline-block;
+	position: absolute;
+	top: 0;
+	background-color: #0da872;
+	border-radius: 100%;
+	-webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+	animation: sk-bounce 2.0s infinite ease-in-out;
+}
+.dot2 {
+	top: auto;
+	bottom: 0;
+	-webkit-animation-delay: -1.0s;
+	animation-delay: -1.0s;
+}
+@-webkit-keyframes sk-rotate {
+	100% {
+	    -webkit-transform: rotate(360deg)
+    }
+}
+@keyframes sk-rotate {
+	100% {
+	    transform: rotate(360deg);
+	    -webkit-transform: rotate(360deg)
+    }
+}
+@-webkit-keyframes sk-bounce {
+	0%,100% {
+	    -webkit-transform: scale(0.0)
+    }
+    50% {
+	    -webkit-transform: scale(1.0)
+    }
+}
+@keyframes sk-bounce {
+	0%,100% {
+	    transform: scale(0.0);
+	    -webkit-transform: scale(0.0);
+    }
+    50% {
+	    transform: scale(1.0);
+	    -webkit-transform: scale(1.0);
+    }
+}
+
+
 .post-copyright {
 	margin-bottom: 2em;
 }
@@ -204,4 +271,31 @@ p .btn-default {
 }
 .login_input {
 	width: 50%;
+}
+
+#main article .fa-eye:before {
+    color: #009688;
+}
+#main article .page-views {
+    color: #727272;
+    padding-left: 0.2em;
+}
+
+#main article .fa-eye:before,#main article .thumbs-up:before {
+    color: #009688;
+}
+#main article .page-views, #main article .thumbs-up{
+    color: #727272;
+    padding-left: 0.2em;
+}
+
+#main article .thumbs-up:before{
+    cursor: pointer;
+}
+#main article .entry-meta {
+    letter-spacing: 1px;
+    font-size: 0.78em;
+}
+#masthead {
+    margin-bottom: 2em;
 }

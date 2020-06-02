@@ -7,7 +7,8 @@ function home_subscribe_no_author($key) {
 	$server = array(
     	'host'     => $redis_params['ip'],
     	'port'     => $redis_params['port'],
-    	'database' => $redis_params['subscribe_db']
+    	'database' => $redis_params['subscribe_db'],
+		'password' => $redis_params['password']
 	);
 	$redis = new Predis\Client($server);
 	try {

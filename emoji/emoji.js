@@ -40,7 +40,7 @@ Array.prototype.in_array = function(needle)
             var tmpArr = needle.split(' ');
             for (j=0; j < tmpArr.length; j++) {
                 //递归调用自己
-                if(this.in_array(tmpArr[i])){
+                if(this.in_array(tmpArr[j])){
                     return true;
                 }
             }

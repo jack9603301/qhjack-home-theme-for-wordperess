@@ -7,6 +7,9 @@
 use home\phpqrcode\QRcode;
 
 require get_theme_root().'/home/inc/template-tags.php';
+require get_theme_root().'/home/inc/head-seo.php';
+require get_theme_root().'/home/inc/sitemap.php';
+
 
 
 require  get_theme_root().'/home/url.php';  //url.php
@@ -28,6 +31,8 @@ add_action('publish_post','BeraSubmit',2,1);
 add_action('publish_page','BeraSubmit',2,1);
 
 //URL重写
+
+add_filter('wp_link_pages_link','home_wp_link_pages_link',10,2);
 
 add_filter('search_rewrite_rules', 'home_search_rewrite_rules',1);
 
@@ -119,6 +124,10 @@ add_action('after_setup_theme', 'home_theme_setup');
 
 add_action( 'wp_enqueue_scripts', 'home_google_fonts' );
 
+// Load Copy Script
+
+add_action( 'wp_enqueue_scripts', 'home_copy_script' );
+
 // Auto Loader pRedis
 
 add_action( 'show_user_profile', 'extra_user_profile_fields' );
@@ -129,6 +138,48 @@ add_action( 'edit_user_profile_update', 'save_extra_user_profile_fields' );
 // Load Setting
 
 add_action( 'admin_init', 'global_setting' );
+
+// Load REST Init
+
+add_action('rest_api_init', 'RestInit');
+
+// Unset Update
+
+function filter_plugin_updates( $value ) {
+	unset( $value->response['wx-custom-share-pro/wx-custom-share-pro.php'] );
+	unset( $value->response['redis-cache/redis-cache.php'] );
+    unset( $value->response['wp-editormd/wp-editormd.php'] );
+    return $value;
+}
+
+add_filter( 'site_transient_update_plugins', 'filter_plugin_updates' );
+
+// function
+
+function RestInit() {
+	//register_rest_route参数顺序：namespace、route、args、(bool)$override
+	register_rest_route('postViews', 'postViews',[
+		'methods' => 'POST',
+		'callback' => 'setPostViews',
+	]);
+	//register_rest_route参数顺序：namespace、route、args、(bool)$override
+	register_rest_route('like', 'thumbsUp',[
+		'methods' => 'POST',
+		'callback' => 'incrThumbsUpCount',
+	]);
+	register_rest_route('like', 'cancelThumbsUp',[
+		'methods' => 'POST',
+		'callback' => 'decrThumbsUpCount',
+	]);
+}
+
+// Load Scrpt
+add_action( 'wp_enqueue_scripts', 'loadScript');
+
+function loadScript() {
+	wp_enqueue_script( 'custom', get_stylesheet_directory_uri() . '/js/custom.js', array('jquery'), '1.0', true);
+	wp_localize_script('custom', 'jsVar', ['id'=>get_the_ID(),'is_not_home'=>(int)(is_single() || is_page())]);
+}
 
 auto_loader_predis();
 
@@ -142,8 +193,237 @@ function home_google_fonts() {
 	wp_register_style( 'nisarggooglefonts', '/wp-content/themes/home/google_font/css/google_font.css', array(), null );
 }
 
+function home_copy_script() {
+	wp_enqueue_script('copy','/wp-content/themes/home/copy/copy.js',array('jquery'),null,true);
+	
+}
+
 function home_theme_setup(){
     load_theme_textdomain('home', get_template_directory() . '/languages');
+}
+
+/**
+ * Get Redis instance
+ * @return Redis
+ */
+function getRedisInstance(){
+	$redis_params = get_redis_params();
+	$server = $redis_params['servers'];
+	$option = [
+		'cluster' => 'redis',
+		'parameters' => [
+			'password' => $redis_params['password'],
+		]
+	];
+	$redis = new Predis\Client($server,$option);
+	return $redis;
+}
+
+/**
+ * 设置浏览数，并返回设置后的浏览数，调用方式：在header.php文件的html标签之前中使用：
+ * $GLOBALS['pageView'] = setPostViews(get_the_ID());
+ * 然后在content.php页面你要显示的位置打印 $GLOBALS['pageView'] 变量。
+ *
+ * @param $postID
+ *
+ * @return int|mixed
+ */
+	function setPostViews() {
+	$postID = $_POST['post_ID'] ?? 0;
+	if($postID===0){
+		return ['code'=>-1,'msg'=>'缺少post_ID'];
+	}
+		
+	$redis = getRedisInstance();
+	$ip_key = 'post_views_ip_count_'.$postID.'_'.$_SERVER['REMOTE_ADDR'];
+	$ipCount = $redis->get($ip_key);
+		//1分钟内同一个ip对同一篇文章浏览量超过15次，则有可能是机器人，也有
+		//可能一个公司外网ip只有一个，但公司内有15个人浏览，不过这种可能性比较少。
+	if($ipCount!==false && $ipCount>15){
+		return ['code'=>-2,'msg'=>'浏览太频繁，ip已被禁止添加浏览量'];
+	}
+		
+	$count_key = 'post_views_count';
+	$redis_key = $count_key.'_'.$postID;
+	$count = $redis->get($redis_key);
+	$redis_count_not_exists = false;
+	if($count===null){
+		$count = get_post_meta($postID, $count_key, true);
+		$redis_count_not_exists = true;
+	}
+	
+	//如果为空字符串，则表示没有这条记录，添加一条，同时初始数字为1，因为浏览了肯定就是1，而不可能是0
+	if($count===''){
+		$count = 1;
+		add_post_meta($postID, $count_key, $count);
+	}else{
+		//如果不为空，理论上肯定是数字，直接自加1就行，但为了安全，还是强转成数字
+		$count = (int)$count;
+		$count++;
+		update_post_meta($postID, $count_key, $count);
+	}
+	
+	if($redis_count_not_exists){
+		//有效期一个月
+		$redis->setex($redis_key, 2592000,$count );
+	}else{
+		$redis->incr($redis_key);
+	}
+	
+	//控制同一个ip在一定时间内对同一篇文章点赞次数，防止被攻击
+	if($ipCount===false){
+		$redis->set($ip_key,1,60);
+	}else{
+		$redis->incr($ip_key);
+	}
+	return ['code'=>0, 'count'=>$count, 'msg'=>'浏览量+1成功'];
+}
+
+/**
+ * 获取浏览器数，列表页(即首页)专用（实际上要在content-excerpt.php里调用），详情页请使用
+ * setPostViews，因为详情页本来就要设置，设置的时侯已经可以直接返回浏览量，就没必要再去获取一次了。
+ *
+ * @param $postID
+ *
+ * @return int
+ */
+function getPostViews($postID){
+	$count_key = 'post_views_count';
+	$redis_key = $count_key.'_'.$postID;
+	$redis = getRedisInstance();
+	$count = $redis->get($redis_key);
+	if($count===false){
+		//$count为false表示未设置redis缓存，这种情况非常少，所以一般不会进来这里
+		$count = get_post_meta($postID, $count_key, true);
+	}
+	return (int)$count;
+}
+
+/**
+ * 设置点赞数
+ *
+ * @return bool|int|mixed|string
+ */
+function incrThumbsUpCount() {
+	$postID = $_POST['post_ID'] ?? 0;
+	if($postID===0){
+		return ['code'=>-1,'msg'=>'缺少post_ID'];
+	}
+		
+	$redis = getRedisInstance();
+	$ip_key = 'thumbsup_ip_count_'.$postID.'_'.$_SERVER['REMOTE_ADDR'];
+	$ipCount = $redis->get($ip_key);
+	//1分钟内同一个ip对同一篇文章点赞数超过10次，则有可能是机器人，也有
+	//可能一个公司外网ip只有一个，但公司内有10个人点，不过这种可能性比较少。
+	if($ipCount!==false && $ipCount>10){
+		return ['code'=>-2,'msg'=>'对不起，系统检查到点赞太频繁,疑似机器人，您的ip已被禁止点赞'];
+	}
+	$count_key = 'thumbsup_count';
+	$redis_key = $count_key.'_'.$postID;
+	$count = $redis->get($redis_key);
+	$redis_count_not_exists = false;
+	if($count===null){
+		$count = get_post_meta($postID, $count_key, true);
+		$redis_count_not_exists = true;
+	}
+	
+	//如果为空字符串，则表示没有这条记录，添加一条，同时初始数字为1，因为浏览了肯定就是1，而不可能是0
+	if($count===''){
+		$count = 1;
+		add_post_meta($postID, $count_key, $count);
+	}else{
+		//如果不为空，理论上肯定是数字，直接自加1就行，但为了安全，还是强转成数字
+		$count = (int)$count;
+		$count++;
+		update_post_meta($postID, $count_key, $count);
+	}
+	
+	if($redis_count_not_exists){
+		//有效期一个月
+		$redis->setex($redis_key, 2592000,$count );
+	}else{
+		$redis->incr($redis_key);
+	}
+	
+	//控制同一个ip在一定时间内对同一篇文章点赞次数，防止被攻击
+	if($ipCount===false){
+		$redis->setex($ip_key,60,1);
+	}else{
+		$redis->incr($ip_key);
+	}
+	return ['code'=>0, 'count'=>$count, 'msg'=>'点赞成功'];
+}
+
+/**
+ * 取消点赞（我一直都讨厌那种我不小心点了选但无法取消的，因为我真有可能不小心点到了，但其实不想赞的）
+ * @return array
+ */
+function decrThumbsUpCount(){
+	$postID = $_POST['post_ID'] ?? 0;
+	if($postID===0){
+		return ['code'=>-1,'msg'=>'缺少post_ID'];
+	}
+	
+	$redis = getRedisInstance();
+	$ip_key = 'thumbsup_ip_count_'.$postID.'_'.$_SERVER['REMOTE_ADDR'];
+	$ipCount = $redis->get($ip_key);
+	//1分钟内同一个ip对同一篇文章点赞数超过10次，则有可能是机器人，也有
+	//可能一个公司外网ip只有一个，但公司内有10个人点，不过这种可能性比较少。
+	if($ipCount!==false && $ipCount>10){
+		return ['code'=>-2,'msg'=>'对不起，系统检查到取消点赞太频繁,疑似机器人，您的ip已被禁止点赞'];
+	}
+		
+	$count_key = 'thumbsup_count';
+	$redis_key = $count_key.'_'.$postID;
+	$count = $redis->get($redis_key);
+	$redis_count_not_exists = false;
+	if($count===null){
+		$count = get_post_meta($postID, $count_key, true);
+		$redis_count_not_exists = true;
+	}
+		
+	//如果为空字符串，则表示没有这条记录，添加一条，同时初始数字为1，因为浏览了肯定就是1，而不可能是0
+	if($count===''){
+		return ['code'=>-3, 'msg'=>'该文章点击数为零，无需取消点赞'];
+	}else{
+		//如果不为空，理论上肯定是数字，直接自减1就行，但为了安全，还是强转成数字
+		$count = (int)$count;
+		$count--;
+		update_post_meta($postID, $count_key, $count);
+	}
+		
+	if($redis_count_not_exists){
+		//有效期一个月
+		$redis->setex($redis_key, 2592000,$count );
+	}else{
+		$redis->decr($redis_key);
+	}
+	
+	//控制同一个ip在一定时间内对同一篇文章点赞次数，防止被攻击
+	if($ipCount===false){
+		$redis->set($ip_key,1,60);
+	}else{
+		$redis->incr($ip_key);
+	}
+	return ['code'=>0, 'count'=>$count, 'msg'=>'取消点赞成功'];
+}
+
+/**
+ * 获取文章点赞数
+ * @param $postID
+ *
+ * @return int
+ */
+function getThumbsUpCount($postID){
+	$count_key = 'thumbsup_count';
+	$redis_key = $count_key.'_'.$postID;
+	$redis = getRedisInstance();
+	$count = $redis->get($redis_key);
+	if($count===false){
+		//$count为false表示未设置redis缓存，这种情况非常少，所以一般不会进来这里
+		$count = get_post_meta($postID, $count_key, true);
+	}
+	return (int)$count;
 }
 
 function isMobile() { 
@@ -187,11 +467,31 @@ function home_post_imgs(){
             if($n > 0){ // 提取首图
                 $src = $strResult[1][0];
             } else {
-				$src = "/wp-content/uploads/2018/09/logo.png";
+				$src = "";
 			}
         }
     }
     return $src;
+}
+
+function home_post_imgs_has() {
+	global $post;
+    $content = $post->post_content;
+    preg_match_all('/<img .*?src=[\"|\'](.+?)[\"|\'].*?>/', $content, $strResult, PREG_PATTERN_ORDER);  
+    $n = count($strResult[1]);  
+    if($n >= 3){
+        return true;
+    }else{
+        if( has_post_thumbnail() ){   //如果有特色缩略图，则输出缩略图地址
+            return true;
+        } else {    //文章中获取
+            if($n > 0){ // 提取首图
+                return true;
+            } else {
+				return false;
+			}
+        }
+    }
 }
 
 function home_excerpt($len=220){
@@ -294,6 +594,7 @@ function home_post_columns($columns) {
 	$newcolumns['cb'] = $columns['cb'];
 	$newcolumns['id'] = __('ID');
 	$newcolumns['title'] = $columns['title'];
+	$newcolumns['author'] = __('Article author','home');
 	$newcolumns['original'] = __('Original article','home');
 	$newcolumns['categories'] = $columns['categories'];
 	$newcolumns['tags'] = $columns['tags'];
@@ -326,6 +627,26 @@ function home_post_column_value($column_name, $id) {
 			}
 		}
 		break;
+	case 'author':
+		$custom_fields = get_post_custom_keys($id);
+		if(in_array('CopyrightType',$custom_fields)) {
+			$custom = get_post_custom($id);
+			$CopyrightType = $custom['CopyrightType'][0];
+			if($CopyrightType == "Original") {
+				echo  get_post($id)->post_title;
+			} else {
+				$DisplayAuthor = $custom['DisplayAuthor'][0];
+				if($DisplayAuthor) {
+					$Author = $custom['Author'][0];
+					$ReprintURL = $custom['ReprintURL'][0];
+					$ReprintTitle = $custom['ReprintTitle'][0];
+					echo '<a href="' . $ReprintURL . '" title=\"'.$ReprintTitle . '">'. $Author .'</a>';
+				} else {
+					echo __("Not display",'home');
+				}
+			}
+		}
+		break;
 	default:
         break;
     }
@@ -355,7 +676,11 @@ function home_disable_plugin_updates($value) {
 
 function GenerateQrcode($data,$level=3,$size=3) {
 	require_once(get_stylesheet_directory() . '/phpqrcode/phpqrcode.php');
-	$filePath = WP_CONTENT_DIR.'/cache/tmp.png';
+	$file_cache_path = WP_CONTENT_DIR.'/cache/';
+	$filePath = $file_cache_path.'tmp.png';
+	if(!is_dir($file_cache_path)) {
+		@mkdir($file_cache_path, 0775);
+	}
 	QRcode::png($data,$filePath,$level,$size);
 	$imageString = base64_encode(file_get_contents($filePath));
 	@unlink($filePath);
@@ -371,48 +696,30 @@ function home_widget_init() {
 }
 
 function get_redis_params() {
-	$redis_ip = '127.0.0.1';
-	$redis_port = 6379;
-	$redis_db = 0;
-	$redis_ttl = 3600;
 	
 	//Load wp-config.php Settings
 	
-	if(defined('WP_REDIS_HOST')) {
-		$redis_ip = WP_REDIS_HOST;
+	if(defined('WP_REDIS_CLUSTER')) {
+		$redis_servers = WP_REDIS_CLUSTER;
 	}
-	
-	if(defined('WP_REDIS_PORT')) {
-		$redis_port = WP_REDIS_PORT;
+
+	if(defined('WP_REDIS_PASSWORD')) {
+		$redis_password = WP_REDIS_PASSWORD;
 	}
 	
 	if(defined('SUBSCRIBE_REDIS_TTL')) {
 		$redis_ttl = SUBSCRIBE_REDIS_TTL;
 	}
 	
-	if(defined('SUBSCRIBE_REDIS_DB')) {
-		$redis_db = SUBSCRIBE_REDIS_DB;
-	}
-	
 	return array(
-		'ip' => $redis_ip,
-		'port' => $redis_port,
-		'subscribe_db' => $redis_db,
-		'subscribe_ttl' => $redis_ttl
+		'servers' => $redis_servers,
+		'password' => $redis_password,
+		'subscribe_ttl' => $redis_ttl,
 	);
 }
 
-function output_filter($content) {
-	$content = preg_replace('/(http|https):\/\/([^\/]+)\/author\/([^\/]+)\.html\/page\/(\d{1,})/', '$1://$2/author/$3.html?paged=$4', $content);
-	$content = preg_replace('/(http|https):\/\/([^\s]+)\.html(\?)([^\s]+)(\?)([^\s]+)/', '$1://$2.html$3$4&$6', $content);
-	return $content;
-}
 
-ini_set('pcre.backtrack_limit', 999999999);
-ini_set('pcre.recursion_limit', 99999);
-ob_start('output_filter');
-
-
+add_filter('use_block_editor_for_post', '__return_false');
 
 ?>
 

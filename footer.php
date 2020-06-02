@@ -31,41 +31,81 @@
     </div>
 	<footer id="colophon" class="site-footer" role="contentinfo">
 		<div class="row site-info">
-			ICP许可证：
-			<strong>
-				<a target="_blank" href="http://www.miitbeian.gov.cn/publish/query/indexFirst.action"	>
-				<?php
-					echo get_option( 'zh_cn_l10n_icp_num' );
-				?>
-			</a>
-			</strong>
-			| 公网备案许可证号：
-			<strong>
-		 		<a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=<?php echo get_option( 'public_net_for_record_num' ); ?>" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;">
-		 			<img src="<?php echo get_theme_root_uri(); ?>/home/images/RecordIcon.png" style="float:left;"/>
-		 			<div style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px; color:#939393;">
-						<?php
-							echo get_option( 'public_net_for_record_prefix' ) . ' '.get_option( 'public_net_for_record_num' ). '号';
-						?>
-					</div>
-		 		</a>
-			</strong>
-			| 站长统计：
-			<script type="text/javascript">
-				var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-				document.write(unescape("%3Cspan id='cnzz_stat_icon_1272311276'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1272311276%26show%3Dpic2' type='text/javascript'%3E%3C/script%3E"));
-			</script>
-			<br />
+                        <div>
+                                <img width="100px" src="/wp-content/uploads/2018/12/youpai.png" title="又拍云" alt="又拍云" ></img>
+                        <div />
+						<br />
 			版权授权协议：
 			<strong>
 				<a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="著名-非商业使用-相同形式共享">BY-NC-SA</a>
 			</strong>
-			| 网站安全：
-			<a target="_blank" href="http://webscan.360.cn/index/checkwebsite/url/www.qhjack.cn">
-				<img border="0" src="https://webscan.360.cn/status/pai/hash/16936cc7181e9f338e3f8c3a5cd47cb9"/>
-			</a>
 			| <a target="_blank" href="https://myssl.com/<?php echo $_SERVER['HTTP_HOST']; ?>">SSL认证</a>
 			<br />
+            感谢您的支持与信任！本博客已正常运行<a id="days"></a>
+			<br />
+            <?php printf(' 耗时 %.3f 秒 | 查询 %d 次 | 内存 %.2f MB',timer_stop( 0, 3 ),get_num_queries(),memory_get_peak_usage() / 1024 / 1024);?>
+            <script>
+                var start = '2018-01-23';//设置为你的建站时间
+                start = new Date(start.replace(/-/g, "/"));
+
+				show_date_time();
+
+				function isLeapYear(year) {
+					if((year%4==0 && year%100!=0)||(year%100==0 && year%400==0)) {
+						return true;
+					} else {
+						return false;
+					}
+				}
+
+				function show_date_time(){
+					//周期性调用show_date_time()方法
+					setTimeout("show_date_time()", 1000);
+
+					var current = new Date();
+					//总秒数
+					var millisecond = Math.floor((current.getTime() - start.getTime())/1000);
+	
+					//总天数
+					var allDay = Math.floor(millisecond/(24*60*60));
+
+					//注意同getYear的区别
+					var startYear = start.getFullYear();
+					var currentYear = current.getFullYear();
+	
+					//闰年个数
+					var leapYear = 0;
+					for(var i=startYear;i<currentYear;i++){
+						if(isLeapYear(i)){
+							leapYear++;
+						}
+					}
+
+					//年数
+					var year = Math.floor((allDay - leapYear*366)/365 + leapYear);;
+					//天数
+        			var day;
+        			if(allDay > 366){
+	        			day = (allDay - leapYear*366)%365;
+       				}else{
+                		day = allDay;
+        			}
+					//取余数(秒)
+					var remainder = millisecond%(24*60*60);
+					//小时数
+					var hour = Math.floor(remainder/(60*60));
+					//分钟数
+					var minute = Math.floor(remainder%(60*60)/60);
+					//秒数
+					var second = remainder - hour*60*60 - minute*60; 
+					var span = (year>0 ? (year + "年"):"") + day + "天" + hour + "小时" + minute + "分" + second + "秒" ; 
+					$("#days").each(function() {
+						$this = $(this);
+						$this.text(span);
+					});
+				}
+            </script>
+            <br />
 			<?php echo 'Copyright &copy; '.date( 'Y' ).' 起航天空 版权所有'; ?>
 			<br />
 			
@@ -78,7 +118,7 @@
 					} else {
 						bp.src = 'http://push.zhanzhang.baidu.com/push.js';
 					}
-					var s = document.getElementsByTagName("script")[0];
+					var s = document.getE("script")[0];
 					s.parentNode.insertBefore(bp, s);
 				})();
 		</script>
@@ -88,6 +128,16 @@
 		</div><!-- .site-info -->
 	</footer><!-- #colophon -->
 </div><!-- #page -->
+<!-- Start of Rocket.Chat Livechat Script -->
+<script type="text/javascript">
+(function(w, d, s, u) {
+	w.RocketChat = function(c) { w.RocketChat._.push(c) }; w.RocketChat._ = []; w.RocketChat.url = u;
+	var h = d.getElementsByTagName(s)[0], j = d.createElement(s);
+	j.async = true; j.src = 'https://chat.qhjack.cn/livechat/rocketchat-livechat.min.js?_=201903270000';
+	h.parentNode.insertBefore(j, h);
+})(window, document, 'script', 'https://chat.qhjack.cn/livechat');
+</script>
+<!-- End of Rocket.Chat Livechat Script -->
 <?php wp_footer(); ?>
 </body>
 </html>

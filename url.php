@@ -117,5 +117,11 @@ function home_query_vars($Vars) {
 	return $Vars;
 }
 
+function home_wp_link_pages_link($output,$i) {
+    $output = preg_replace('/(http|https):\/\/([^\/]+)\/author\/([^\/]+)\.html\/page\/(\d{1,})/', '$1://$2/author/$3.html?paged=$4', $output);
+    $output = preg_replace('/(http|https):\/\/([^\s]+)\.html(\?)([^\s]+)(\?)([^\s]+)/', '$1://$2.html$3$4&$6', $output);
+    return $output;
+}
+
 
 ?>

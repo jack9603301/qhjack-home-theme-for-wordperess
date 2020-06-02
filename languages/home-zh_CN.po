@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 起航天空\n"
-"POT-Creation-Date: 2018-10-25 00:11+0800\n"
-"PO-Revision-Date: 2018-10-28 03:05+0800\n"
+"POT-Creation-Date: 2020-06-02 19:52+0800\n"
+"PO-Revision-Date: 2020-06-02 19:53+0800\n"
 "Last-Translator: jack9603301 <jack9603301@163.com>\n"
 "Language-Team: jack9603301 <jack9603301@163.com>\n"
 "Language: zh\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2\n"
+"X-Generator: Poedit 2.2.4\n"
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
@@ -35,23 +35,31 @@ msgstr "看起来这个位置找不到任何东西。也许试试下面的链接
 msgid "Browsed by"
 msgstr "浏览"
 
-#: functions.php:252 functions.php:264
+#: functions.php:583 functions.php:595
 msgid "ID"
 msgstr "ID"
 
-#: functions.php:266
+#: functions.php:597
+msgid "Article author"
+msgstr "文章作者"
+
+#: functions.php:598
 msgid "Original article"
 msgstr "原创文章"
 
-#: functions.php:292
+#: functions.php:624
 msgid "Yes"
 msgstr "是"
 
-#: functions.php:294
+#: functions.php:626
 msgid "No"
 msgstr "否"
 
-#: header.php:56
+#: functions.php:645
+msgid "Not display"
+msgstr "不显示"
+
+#: header.php:61
 msgid "home page"
 msgstr "首页"
 
@@ -108,6 +116,26 @@ msgstr "没有评论"
 msgid "1 comment"
 msgstr "1 条评论"
 
+#: inc/template-tags.php:177
+msgid "Edit"
+msgstr "编辑"
+
+#. translators: used between list items, there is a space after the comma
+#: inc/template-tags.php:195 inc/template-tags.php:206
+#: template-parts/content.php:46 template-parts/content.php:57
+msgid ", "
+msgstr ", "
+
+#: inc/template-tags.php:199 template-parts/content.php:50
+#, php-format
+msgid "%1$s"
+msgstr "%1$s"
+
+#: inc/template-tags.php:208
+#, php-format
+msgid " %1$s"
+msgstr "%1$s"
+
 #: other.php:5
 msgid "File grouping:"
 msgstr "文件分组:"
@@ -153,9 +181,13 @@ msgctxt "submit button"
 msgid "Search"
 msgstr "搜索"
 
-#: single.php:68
+#: single.php:69
 msgid "Comments are closed."
 msgstr "评论已被关闭"
+
+#: template-parts/content-excerpt.php:14 template-parts/content.php:14
+msgid "Featured"
+msgstr "特色"
 
 #: template-parts/content-none.php:13 template-parts/content-none.php:14
 msgid "Nothing Found"
@@ -179,26 +211,12 @@ msgid ""
 "searching can help."
 msgstr "看来我们找不到你要找的东西了。也许搜索可以帮助。"
 
-#: template-parts/content.php:14
-msgid "Featured"
-msgstr "特色"
-
-#. translators: used between list items, there is a space after the comma
-#: template-parts/content.php:44 template-parts/content.php:55
-msgid ", "
-msgstr ", "
-
-#: template-parts/content.php:48
-#, php-format
-msgid "%1$s"
-msgstr "%1$s"
-
-#: template-parts/content.php:57
+#: template-parts/content.php:59
 #, php-format
 msgid " \t%1$s"
 msgstr "\t%1$s"
 
-#: template-parts/content.php:115
+#: template-parts/content.php:117
 msgid " Read More"
 msgstr "继续阅读"
 
@@ -210,7 +228,7 @@ msgstr "登录/注销, 管理员, 用户"
 msgid "User"
 msgstr "用户"
 
-#: widget/widget_user.php:52
+#: widget/widget_user.php:54
 msgid "Title:"
 msgstr "标题："
 
@@ -227,12 +245,12 @@ msgid "Please input the password again."
 msgstr "请再次输入密码。"
 
 #: wp-login-ext.php:35 wp-login-ext.php:38 wp-login-ext.php:41
-#: wp-login-ext.php:44
+#: wp-login-ext.php:44 wp-login-ext.php:49
 msgid "Error"
 msgstr "错误"
 
 #: wp-login-ext.php:35 wp-login-ext.php:38 wp-login-ext.php:41
-#: wp-login-ext.php:44
+#: wp-login-ext.php:44 wp-login-ext.php:49
 msgid ":"
 msgstr "："
 
@@ -248,22 +266,23 @@ msgstr "请输入密码。"
 msgid "The password entered must match exactly."
 msgstr "输入的密码必须完全匹配。"
 
-#. Theme Name of the plugin/theme
-msgid "起航天空"
-msgstr "起航天空"
+#: wp-login-ext.php:49
+msgid ""
+"The data submission is invalid because it fails to pass human-computer "
+"verification."
+msgstr "数据提交无效，因为它无法通过人机验证。"
 
-#. Theme URI of the plugin/theme
-#. Author URI of the plugin/theme
-msgid "http://www.qhjack.cn"
-msgstr "http://www.qhjack.cn"
+#~ msgid "起航天空"
+#~ msgstr "起航天空"
 
-#. Description of the plugin/theme
-msgid "起航天空主题，继承于nisarg"
-msgstr "起航天空主题, 继承于nisarg"
+#~ msgid "http://www.qhjack.cn"
+#~ msgstr "http://www.qhjack.cn"
 
-#. Author of the plugin/theme
-msgid "杰克"
-msgstr "祷文"
+#~ msgid "起航天空主题，继承于nisarg"
+#~ msgstr "起航天空主题, 继承于nisarg"
+
+#~ msgid "杰克"
+#~ msgstr "祷文"
 
 #~ msgid "%c comments"
 #~ msgstr "%c 条评论"

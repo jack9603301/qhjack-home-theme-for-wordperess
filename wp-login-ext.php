@@ -43,6 +43,11 @@ function register_field_validate($sanitized_user_login, $user_email, $errors) {
 	if (trim($_POST[ 'confirm_password' ]) != trim($_POST[ 'password' ] )) {
 		return $errors->add( 'password_mismatch', '<strong>'.__('Error','home').'</strong>'.__(':','home').__('The password entered must match exactly.','home'  ));
 	}
+	if ((!isset($_POST[ 'geetest_challenge' ]) || empty($_POST[ 'geetest_challenge' ])) &&
+	(!isset($_POST[ 'geetest_validate' ]) || empty($_POST[ 'geetest_validate' ])) &&
+	(!isset($_POST[ 'geetest_seccode' ]) || empty($_POST[ 'geetest_seccode' ]))) {
+		return $errors->add( 'geetest', '<strong>'.__('Error','home').'</strong>'.__(':','home').__('The data submission is invalid because it fails to pass human-computer verification.','home'  ));
+	}
 }
 
 function update_register_fields( $user_id ) {

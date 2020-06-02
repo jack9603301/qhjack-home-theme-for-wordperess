@@ -8,11 +8,11 @@
  */
 ?>
 <!DOCTYPE html>
-
 <!--[if IE 8]>
 <html id="ie8" <?php language_attributes(); ?>>
 <![endif]-->
 <!--[if !(IE 8) ]><!-->
+
 <html <?php language_attributes(); ?>>
 <!--<![endif]-->
 <head>
@@ -31,7 +31,9 @@
 		"@id": "<?php echo get_the_permalink(); ?>",
 		"appid": "1593262731483703",
 		"title": "<?php echo wp_title('|',false,'right').get_option('blogname'); ?>",
+<?php if(home_post_imgs_has()): ?>
 		"images": ["<?php echo home_post_imgs(); ?>"],
+<?php endif; ?>
 		"description": "<?php echo home_excerpt(); ?>",
 		"pubDate": "<?php echo get_the_time('Y-m-d\TH:i:s'); ?>",
 		"isOriginal":"<?php echo home_Post_isOriginal(); ?>"
@@ -44,17 +46,23 @@
 		"@id": "<?php echo get_the_permalink(); ?>",
 		"appid": "1593262731483703",
 		"title": "<?php echo wp_title('|',false,'right').get_option('blogname'); ?>",
+		"pubDate": "<?php echo get_the_time('Y-m-d\TH:i:s'); ?>",
+<?php if(home_post_imgs_has()): ?>
 		"images": ["<?php echo home_post_imgs(); ?>"]
+<?php endif; ?>
 	}
 </script>
 <?php else: ?>
 <script type="application/ld+json">
 	{
 		"@context": "https://zhanzhang.baidu.com/contexts/cambrian.jsonld",
-		"@id": "<?php echo get_the_permalink(); ?>",
+		"@id": "<?php echo site_url('/'); ?>",
 		"appid": "1593262731483703",
 		"title": "<?php echo __("home page",'home')." | ".get_bloginfo('name'); ?>",
+		"pubDate": "<?php echo get_the_time('Y-m-d\TH:i:s'); ?>",
+<?php if(home_post_imgs_has()): ?>
 		"images": ["<?php echo home_post_imgs(); ?>"]
+<?php endif; ?>
 	}
 </script>
 <?php endif; ?>
@@ -111,7 +119,69 @@
         }
     });
 </script>
+    
 <body <?php body_class(); ?>>
+
+<script src="https://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<link rel='stylesheet' href='/wp-content/themes/home/nprogress.css'/>
+<script src="/wp-content/themes/home/nprogress.js"></script>
+<script type="text/javascript" language="JavaScript">
+	document.body.style.display = 'block';
+
+	_cancelwaitwpadminbar = false;
+
+	jQuery.fn.wait = function (func,cancelsatusfunction, times, interval) {
+    	var _times = times || -1, //100次
+    	_interval = interval || 20, //20毫秒每次 
+    	_self = this,
+    	_selector = this.selector, //选择器
+    	_iIntervalID; //定时器id
+    	if( this.length ){ //如果已经获取到了，就直接执行函数
+        	func && func.call(this);
+    	} else {
+        	_iIntervalID = setInterval(function() {
+				if(cancelsatusfunction && cancelsatusfunction.call(func,times,interval)) { //检测是否应终止检测程序
+					clearInterval(_iIntervalID);
+				}
+            	if(!_times) { //是0就退出
+                	clearInterval(_iIntervalID);
+            	}
+            	_times <= 0 || _times--; //如果是正数就 --
+            
+            	_self = $(_selector); //再次选择
+            	if( _self.length ) { //判断是否取到
+                	func && func.call(_self);
+                	clearInterval(_iIntervalID);
+            	}
+        	}, _interval);
+    	}
+    	return this;
+	}
+
+	jQuery("#wpadminbar").wait(function() {
+		jQuery("#wpadminbar").css("top","2px");
+		_cancelwaitwpadminbar = true;
+	},function(func, times, interval) {
+		if(_cancelwaitwpadminbar) {
+			return true;
+		} else {
+			return false;
+		}
+	})
+
+	NProgress.start();
+
+    //: 判断网页是否加载完成
+	document.onreadystatechange = function() {
+    	if (document.readyState == "complete") {
+			NProgress.done();
+			jQuery("#wpadminbar").css("top","0px");
+			_cancelwaitwpadminbar = true;
+    	}
+	}
+</script>
+<!-- Loader animation stop -->
+
 <div id="page" class="hfeed site">
 <header id="masthead"  role="banner">
 	<nav id="site-navigation" class="main-navigation navbar-fixed-top navbar-left" role="navigation">
@@ -138,14 +208,6 @@
 		</div><!--#container-->
 	</nav>
 	<div id="cc_spacer"></div><!-- used to clear fixed navigation by the themes js -->  
-	<div class="site-header">
-		<div class="site-branding">
-			<a class="home-link" href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home">
-				<h1 class="site-title"><?php bloginfo( 'name' ); ?></h1>
-				<h2 class="site-description"><?php bloginfo( 'description' ); ?></h2>
-			</a>
-		</div><!--.site-branding-->
-	</div><!--.site-header-->
 </header>
 <script type="text/javascript" rel="stylesheet" src="<?php echo get_stylesheet_directory_uri()?>/emoji/emoji.js" ></script>
 <script type="text/javascript" rel="stylesheet" src="/wp-content/themes/home/geetest/static/gt.js"></script>
