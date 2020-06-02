@@ -594,7 +594,7 @@ function home_post_columns($columns) {
 	$newcolumns['cb'] = $columns['cb'];
 	$newcolumns['id'] = __('ID');
 	$newcolumns['title'] = $columns['title'];
-	$newcolumns['author'] = __('Article author','home');
+	$newcolumns['article_author'] = __('Article author','home');
 	$newcolumns['original'] = __('Original article','home');
 	$newcolumns['categories'] = $columns['categories'];
 	$newcolumns['tags'] = $columns['tags'];
@@ -627,20 +627,20 @@ function home_post_column_value($column_name, $id) {
 			}
 		}
 		break;
-	case 'author':
+	case 'article_author':
 		$custom_fields = get_post_custom_keys($id);
 		if(in_array('CopyrightType',$custom_fields)) {
 			$custom = get_post_custom($id);
 			$CopyrightType = $custom['CopyrightType'][0];
 			if($CopyrightType == "Original") {
-				echo  get_post($id)->post_title;
+				echo  get_the_author_meta('display_name',get_post($id)->post_author);
 			} else {
 				$DisplayAuthor = $custom['DisplayAuthor'][0];
 				if($DisplayAuthor) {
 					$Author = $custom['Author'][0];
 					$ReprintURL = $custom['ReprintURL'][0];
 					$ReprintTitle = $custom['ReprintTitle'][0];
-					echo '<a href="' . $ReprintURL . '" title=\"'.$ReprintTitle . '">'. $Author .'</a>';
+					echo '<a href="' . $ReprintURL . '" title="'.$ReprintTitle . '">'. $Author .'</a>';
 				} else {
 					echo __("Not display",'home');
 				}
