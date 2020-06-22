@@ -1,5 +1,5 @@
-.column-id {
-	width: 50px;
+.column-id,.column-postviews,.column-thumbs_up_Count {
+	width: 80px;
 }
 
 .column-original {
