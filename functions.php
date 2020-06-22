@@ -135,6 +135,12 @@ add_action( 'edit_user_profile', 'extra_user_profile_fields' );
 add_action( 'personal_options_update', 'save_extra_user_profile_fields' );
 add_action( 'edit_user_profile_update', 'save_extra_user_profile_fields' );
 
+add_action('restrict_manage_posts','posts_CopyrightType_type_filter',10);
+
+add_action('restrict_manage_posts','posts_Author_type_filter',10);
+
+add_filter( 'parse_query', 'post_filter_request_query' , 10);
+
 // Load Setting
 
 add_action( 'admin_init', 'global_setting' );
@@ -599,6 +605,8 @@ function home_post_columns($columns) {
 	$newcolumns['categories'] = $columns['categories'];
 	$newcolumns['tags'] = $columns['tags'];
 	$newcolumns['comments'] = $columns['comments'];
+	$newcolumns['postviews'] = __('Post Views','home');
+	$newcolumns['thumbs_up_Count'] = __('Thumbs Up Count','home');
 	$newcolumns['date'] = $columns['date'];
 	$columns = $newcolumns;  //根据约定，修改第一参数
 	return $columns;  //返回参数
@@ -646,6 +654,12 @@ function home_post_column_value($column_name, $id) {
 				}
 			}
 		}
+		break;
+	case 'postviews':
+		echo getPostViews($id);
+		break;
+	case 'thumbs_up_Count':
+		echo getThumbsUpCount($id);
 		break;
 	default:
         break;
@@ -720,6 +734,221 @@ function get_redis_params() {
 
 
 add_filter('use_block_editor_for_post', '__return_false');
+
+function posts_CopyrightType_type_filter($post_type) {
+	if('post' !== $post_type) {
+		return;
+	} else {
+		$selected = '';
+		$request_attr = 'CopyrightType';
+		if ( isset($_GET[$request_attr]) ) {
+    		$selected = $_GET[$request_attr];
+  		}
+		$meta_key = 'CopyrightType';
+		global $wpdb;
+   		$results = $wpdb->get_col( 
+   			$wpdb->prepare( "
+     			SELECT DISTINCT pm.meta_value FROM {$wpdb->postmeta} pm
+     			LEFT JOIN {$wpdb->posts} p ON p.ID = pm.post_id
+     			WHERE pm.meta_key = '%s'
+     			AND p.post_status IN ('publish', 'draft')
+     			ORDER BY pm.meta_value", 
+     			$meta_key
+   			)
+  		);
+		
+		echo '<select id="CopyrightType" name="CopyrightType">';
+   		echo '<option value="">' . __( 'Copyright Type', 'home' ) . ' </option>';
+   		foreach($results as $location){
+     		if($location == 'Original') {
+				$select = ($location == $selected) ? ' selected="selected"':'';
+     			echo '<option value="'.$location.'"'.$select.'>' .  __('Original','home') . ' </option>';
+			} else if($location == 'Reprint') {
+				echo $result->ID;
+				$select = ($location == $selected) ? ' selected="selected"':'';
+     			echo '<option value="'.$location.'"'.$select.'>' . __('Reprint','home') . ' </option>';
+			}
+   		}
+   		echo '</select>';
+	}
+}
+
+function posts_Author_type_filter($post_type) {
+	if('post' !== $post_type) {
+		return;
+	} else {
+		$selected = '';
+		$CopyrightType = null;
+		$results = null;
+		$results2 = null;
+		$request_attr = 'Author';
+		$request_attr2 = 'CopyrightType';
+		if ( isset($_GET[$request_attr]) ) {
+    		$selected = $_GET[$request_attr];
+  		}
+		if ( isset($_GET[$request_attr2]) ) {
+    		$CopyrightType = $_GET[$request_attr2];
+		  }
+		 
+		  $matches = [];
+
+		  if(preg_match('/^Original_(.*)$/',$selected,$matches)) {
+			  $selected=$matches[1];
+		  }
+
+		$meta_key = 'Author';
+		$meta_key2 = 'CopyrightType';
+		global $wpdb;
+		if($CopyrightType === "Reprint") {
+			$results = $wpdb->get_col( 
+   				$wpdb->prepare( "
+     				SELECT DISTINCT pm.meta_value FROM {$wpdb->postmeta} pm
+     				LEFT JOIN {$wpdb->posts} p ON p.ID = pm.post_id
+     				WHERE pm.meta_key = '%s'
+     				AND p.post_status IN ('publish', 'draft')
+     				ORDER BY pm.meta_value", 
+     				$meta_key
+   				)
+  			);
+		} else if($CopyrightType === "Original") {
+			$results2 = $wpdb->get_results( 
+   				$wpdb->prepare( "
+     				SELECT DISTINCT pm.ID,pm.display_name FROM {$wpdb->users} pm
+     				LEFT JOIN {$wpdb->posts} p ON p.post_author = pm.ID
+     				WHERE p.post_status IN ('publish', 'draft')
+     				ORDER BY pm.display_name"
+   				)
+  			);
+		} else {
+			$results = $wpdb->get_col( 
+   				$wpdb->prepare( "
+     				SELECT DISTINCT pm.meta_value FROM {$wpdb->postmeta} pm
+     				LEFT JOIN {$wpdb->posts} p ON p.ID = pm.post_id
+     				WHERE pm.meta_key = '%s'
+     				AND p.post_status IN ('publish', 'draft')
+     				ORDER BY pm.meta_value", 
+     				$meta_key
+   				)
+  			);
+			$results2 = $wpdb->get_results( 
+   				$wpdb->prepare( "
+     				SELECT DISTINCT pm.ID,pm.display_name FROM {$wpdb->users} pm
+     				LEFT JOIN {$wpdb->posts} p ON p.post_author = pm.ID
+     				WHERE p.post_status IN ('publish', 'draft')
+     				ORDER BY pm.display_name"
+   				)
+  			);
+		}
+   		
+
+		
+		echo '<select id="Author" name="Author">';
+   		echo '<option value="">' . __( 'Aricale Author', 'home' ) . ' </option>';
+		if($results != null) {
+			foreach($results as $location){
+     			$select = ($location == $selected) ? ' selected="selected"':'';
+     			echo '<option value="'.$location.'"'.$select.'>' . $location . ' </option>';
+   			}
+		}
+   		
+		if($results2 != null) {
+			foreach($results2 as $location){
+     			$select = ($location->ID == $selected) ? ' selected="selected"':'';
+     			echo '<option value="Original_'.$location->ID.'"'.$select.'>' . $location->display_name . ' </option>';
+   			}
+		}
+   		echo '</select>';
+	}
+}
+
+function post_filter_request_query($query){
+    // 只修改后台文章列表页面的主查询
+    if( !(is_admin() AND $query->is_main_query()) ){ 
+      	return $query;
+    }
+	
+    // 如果不是我们需要查询的文章类型，并且设置了自定义查询参数，返回原始查询
+    if( ('post' != $query->query['post_type']) or ((!isset($_REQUEST['CopyrightType'])) and (!isset($_REQUEST['Author']))) ){
+      	return $query;
+    }
+    // 如果自定义筛选条件是默认值，返回原始查询
+    if((!$_GET['CopyrightType']) and (!$_GET['Author'])){
+      	return $query;
+    } else if((!$_GET['CopyrightType']) and ($_GET['Author'])) {
+		
+		$value = $_GET['Author'];
+		
+		$matches = [];
+		
+		if(preg_match('/^Original_(.*)$/',$value,$matches)) {
+			$query->query_vars['author'] = $matches[1];
+			$query->query_vars['meta_query'] =  array(
+				array(
+					'key' => 'CopyrightType',
+					'value' => 'Original',
+					'compare' => '=',
+					'type' => 'CHAR'
+				)
+			);
+		} else {
+			// 修改查询参数
+			$query->query_vars['meta_query'] =  array(
+				array(
+					'key' => 'Author',
+					'value' => $_GET['Author'],
+					'compare' => '=',
+					'type' => 'CHAR'
+				)
+			);
+		}
+		
+		
+	} else if(($_GET['CopyrightType']) and (!$_GET['Author'])) {
+		// 修改查询参数
+    	$query->query_vars['meta_query'] =  array(
+			array(
+				'key' => 'CopyrightType',
+				'value' => $_GET['CopyrightType'],
+				'compare' => '=',
+				'type' => 'CHAR'
+			)
+		);
+	} else {
+		$matches = [];
+		if(preg_match('/^Original_(.*)$/',$value,$matches)) {
+			// 修改查询参数
+			$query->query_vars['author'] = $matches[1];
+			$query->query_vars['meta_query'] =  array(
+				array(
+					'key' => 'CopyrightType',
+					'value' => $_GET['CopyrightType'],
+					'compare' => '=',
+					'type' => 'CHAR'
+				)
+			);
+		} else {
+			// 修改查询参数
+    		$query->query_vars['meta_query'] =  array(
+				array(
+					'key' => 'Author',
+					'value' => $_GET['Author'],
+					'compare' => '=',
+					'type' => 'CHAR'
+				),
+				array(
+					'key' => 'CopyrightType',
+					'value' => $_GET['CopyrightType'],
+					'compare' => '=',
+					'type' => 'CHAR'
+				)
+			);
+		}
+		
+	}
+    // 返回修改后的查询
+    return $query;
+  }
+
 
 ?>
 

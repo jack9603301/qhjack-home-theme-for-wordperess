@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 起航天空\n"
-"POT-Creation-Date: 2020-06-02 19:52+0800\n"
-"PO-Revision-Date: 2020-06-02 19:53+0800\n"
+"POT-Creation-Date: 2020-06-22 17:01+0800\n"
+"PO-Revision-Date: 2020-06-22 17:02+0800\n"
 "Last-Translator: jack9603301 <jack9603301@163.com>\n"
 "Language-Team: jack9603301 <jack9603301@163.com>\n"
 "Language: zh\n"
@@ -35,29 +35,53 @@ msgstr "看起来这个位置找不到任何东西。也许试试下面的链接
 msgid "Browsed by"
 msgstr "浏览"
 
-#: functions.php:583 functions.php:595
+#: functions.php:589 functions.php:601
 msgid "ID"
 msgstr "ID"
 
-#: functions.php:597
+#: functions.php:603
 msgid "Article author"
 msgstr "文章作者"
 
-#: functions.php:598
+#: functions.php:604
 msgid "Original article"
 msgstr "原创文章"
 
-#: functions.php:624
+#: functions.php:608
+msgid "Post Views"
+msgstr "阅读次数"
+
+#: functions.php:609
+msgid "Thumbs Up Count"
+msgstr "点赞次数"
+
+#: functions.php:632
 msgid "Yes"
 msgstr "是"
 
-#: functions.php:626
+#: functions.php:634
 msgid "No"
 msgstr "否"
 
-#: functions.php:645
+#: functions.php:653
 msgid "Not display"
 msgstr "不显示"
+
+#: functions.php:761
+msgid "Copyright Type"
+msgstr "版权类型"
+
+#: functions.php:765
+msgid "Original"
+msgstr "原创文章"
+
+#: functions.php:769
+msgid "Reprint"
+msgstr "转载文章"
+
+#: functions.php:846
+msgid "Aricale Author"
+msgstr "文章作者"
 
 #: header.php:61
 msgid "home page"
