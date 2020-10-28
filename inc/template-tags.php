@@ -150,8 +150,22 @@ function nisarg_posted_on() {
 
 $viewbyauthor_text = __( 'View all posts by', 'nisarg' ).' %s';
 
-$entry_meta = '<i class="fa fa-calendar-o"></i> <a href="%1$s" title="%2$s" rel="bookmark"><time class="entry-date" datetime="%3$s" pubdate>%4$s </time></a><span class="byline"><span class="sep"></span><i class="fa fa-user"></i>
-<span class="author vcard"><a class="url fn n" href="%5$s" title="%6$s" rel="author">%7$s</a></span></span>';
+$entry_meta = <<<EOF
+	<i class="fa fa-calendar-o">发布于</i>
+	<a href="%1\$s" title="%2\$s" rel="bookmark">
+		<time class="entry-date" datetime="%3\$s" pubdate>%4\$s </time>
+	</a>
+	<i class="fa fa-edit">最后编辑</i>
+	<a href="%1\$s" title="%8\$s" rel="bookmark">
+		<time class="entry-date" datetime="%9\$s" pubdate>%10\$s </time>
+	</a>
+	<span class="byline">
+		<i class="fa fa-user"></i>
+		<span class="author vcard">
+			<a class="url fn n" href="%5\$s" title="%6\$s" rel="author">%7\$s</a>
+		</span>
+	</span>
+EOF;
 
 	$entry_meta = sprintf($entry_meta,
 		esc_url( get_permalink() ),
@@ -160,7 +174,11 @@ $entry_meta = '<i class="fa fa-calendar-o"></i> <a href="%1$s" title="%2$s" rel=
         esc_html( get_the_date() ),
         esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ),
         esc_attr( sprintf( $viewbyauthor_text, get_the_author() ) ),
-        esc_html( get_the_author() ));
+        esc_html( get_the_author() ),
+		esc_attr( get_the_modified_time() ),
+		esc_attr( get_the_modified_date('c') ),
+		esc_attr( get_the_modified_date() )
+    );
 
     print $entry_meta;
 
@@ -185,32 +203,39 @@ if ( ! function_exists( 'nisarg_entry_footer' ) ) :
  */
 function nisarg_entry_footer() {
 
-	if(is_single())
-		echo '<hr>';
-	
  	if(!is_home() && !is_search() && !is_archive()){
 			
 			if ( 'post' == get_post_type() ) {
+
 				/* translators: used between list items, there is a space after the comma */
 				$categories_list = get_the_category_list( esc_html__( ', ', 'nisarg' ) );
-				echo '<div class="row">';
-				if ( $categories_list && nisarg_categorized_blog() ) {
-					printf( '<div class="col-md-6 cattegories"><span class="cat-links"><i class="fa fa-folder-open"></i>
-		 ' . esc_html__( '%1$s', 'nisarg' ) . '</span></div>', $categories_list ); // WPCS: XSS OK.
+				/* translators: used between list items, there is a space after the comma */
+				$tags_list = get_the_tag_list( '', esc_html__( ', ', 'nisarg' ) );
+
+				if ( $categories_list || $tags_list  ) {
+					echo '<hr>';
+					echo '<div class="row">';
 				}
-				else{
-					echo '<div class="col-md-6 cattegories"><span class="cat-links"><i class="fa fa-folder-open"></i></span></div>'; 
+				
+				if ( $categories_list ) {
+					/* translators: 1: list of categories. */
+					printf( '<div class="col-md-6 cattegories"><span class="cat-links"><i class="fa fa-folder-open"></i>
+		 ' . esc_html( '%1$s') . '</span></div>', $categories_list ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				}
 
 				
-				$tags_list = get_the_tag_list( '', esc_html__( ', ', 'nisarg' ) );
-				if ( $tags_list ) {
-					printf( '<div class="col-md-6 tags"><span class="tags-links"><i class="fa fa-tags"></i>' . esc_html__( ' %1$s', 'nisarg' ) . '</span></div>', $tags_list ); // WPCS: XSS OK.
-				}
 				
-				echo '</div>';
+				if ( $tags_list ) {
+					/* translators: 1: list of tags. */
+					printf( '<div class="col-md-6 tags"><span class="tags-links"><i class="fa fa-tags"></i>' . esc_html( ' %1$s' ) . '</span></div>', $tags_list ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				}
+				if ( $categories_list || $tags_list  ) {
+					echo '</div>';
+				}
 			}
 	}
+	
+	edit_post_link( esc_html__( 'Edit This Post', 'nisarg' ), '<br><span>', '</span>' );
 		
 }
 endif;

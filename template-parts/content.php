@@ -11,16 +11,15 @@
 
 	<?php
 	if ( is_sticky() && is_home() && ! is_paged() ) {
-		printf( '<span class="sticky-post">%s</span>', __( 'Featured', 'nisarg' ) );
+		printf( '<span class="sticky-post">%s</span>', esc_html__( 'Featured', 'nisarg' ) );
 	} ?>
 
 	<?php nisarg_featured_image_disaplay(); ?>
 
 	<header class="entry-header">
 		<span class="screen-reader-text"><?php the_title();?></span>
-		<?php if ( is_single() ) : { ?>
+		<?php if ( is_single() ) : ?>
 			<h1 class="entry-title"><?php the_title(); ?></h1>
-			<?php echo '<hr>'; }?>
 		<?php else : ?>
 			<h2 class="entry-title">
 				<a href="<?php the_permalink(); ?>" rel="bookmark"><?php the_title(); ?></a>
@@ -29,44 +28,10 @@
 
 		<?php if ( 'post' == get_post_type() ) : ?>
 		<div class="entry-meta">
-			<h5 class="entry-date">
-				<?php nisarg_posted_on(); ?>
-			</h5>
+			<h5 class="entry-date"><?php nisarg_posted_on(); ?></h5>
 		</div><!-- .entry-meta -->
 		<?php endif; ?>
 	</header><!-- .entry-header -->
-
-	
-	<div class="entry-header">
-		<?php
-			if(!is_home() && !is_search() && !is_archive()){
-			
-				if ( 'post' == get_post_type() ) {
-					/* translators: used between list items, there is a space after the comma */
-					$categories_list = get_the_category_list( esc_html__( ', ', 'nisarg' ) );
-					echo '<div class="row">';
-					if ( $categories_list && nisarg_categorized_blog() ) {
-						printf( '<div class="col-md-6 cattegories"><span class="cat-links"><i class="fa fa-folder-open"></i>
-			 ' . esc_html__( '%1$s', 'nisarg' ) . '</span></div>', $categories_list ); // WPCS: XSS OK.
-					}
-					else{
-						echo '<div class="col-md-6 cattegories"><span class="cat-links"><i class="fa fa-folder-open"></i></span></div>'; 
-					}
-
-				
-					$tags_list = get_the_tag_list( '', esc_html__( ', ', 'nisarg' ) );
-					if ( $tags_list ) {
-						printf( '<div class="col-md-6 tags"><span class="tags-links"><i class="fa fa-tags"></i>' . esc_html__( ' 	%1$s', 'nisarg' ) . '</span></div>', $tags_list ); // WPCS: XSS OK.
-					}
-				
-					echo '</div>';
-				}
-			}
-			if(is_single()) {
-				echo '</hr><hr>';
-			}
-		?>
-	</div>
 
 	<div class="entry-content">
 		<div class="bdsharebuttonbox">
@@ -112,16 +77,20 @@
 		</script>
 		<br />
 	</div>
+
 			<div class="entry-content">
 				<?php
 					the_content( '...<p class="read-more"><a class="btn btn-default" href="'. esc_url( get_permalink( get_the_ID() ) ) . '">' . __( ' Read More', 'nisarg' ) . '<span class="screen-reader-text"> '. __( ' Read More', 'nisarg' ).'</span></a></p>' );
 				?>
 
 				<?php
-					home_pages_navigation();
+					wp_link_pages( array(
+						'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'nisarg' ),
+						'after'  => '</div>',
+					) );
 				?>
 			</div><!-- .entry-content -->
-		
+
 	<footer class="entry-footer">
 		<div style="text-align:center">
 			<?php
@@ -143,5 +112,6 @@
             </div>
 			<?php endif; ?>
 		</div>
+        <?php nisarg_entry_footer(); ?>
 	</footer><!-- .entry-footer -->
 </article><!-- #post-## -->

@@ -21,6 +21,7 @@ require get_theme_root().'/home/wp-login-ext.php'; //login-ext
 require get_theme_root().'/home/widget/widget_user.php'; //widget_user
 require get_theme_root().'/home/inc/subscribe.php'; //widget_user
 require get_theme_root().'/home/user_profile.php'; //user_profile
+require get_theme_root().'/home/mattermost.php';  //mattermost
 
 
 //百度提交
@@ -66,6 +67,10 @@ add_filter('wp_link_pages','home_wp_link_pages_filter',2,2);
 
 add_filter('query_vars', 'home_query_vars');
 
+add_filter('slashpress_command_qhjack', 'qh_slashpress_command_qhjack',10,2);
+
+add_action('slashpress_help_qhjack', 'qh_slashpress_help_qhjack',100,2);
+
 add_action('do_feed', 'disable_fedd', 1);
 add_action('do_feed_rdf', 'disable_fedd', 1);
 add_action('do_feed_rss', 'disable_fedd', 1);
@@ -77,13 +82,16 @@ add_action('wp_head','disable_feed_url',1);
 
 add_filter('retrieve_password_message', 'reset_password_message', null, 2);
 add_action( 'publish_post', 'qh_publish_post_report_email' );
+add_action( 'publish_post', 'qh_publish_post_mattermost' );
 add_filter('wp_new_user_notification_email','qh_new_user_notification_email',2,3);
 add_filter('wp_new_user_notification_email_admin','qh_new_user_notification_email_admin',2,3);
 add_filter('email_change_email','qh_password_change_email',2,3);
 add_filter( 'wp_mail_content_type', 'qh_html_content_type' );
 add_action('wp_set_comment_status', 'qh_comment_mail_notify_approve', 20, 2);
+add_action('wp_set_comment_status', 'qh_comment_mattermost_notify', 20, 2);
 add_action('wp_set_comment_status', 'qh_comment_mail_notify_unapprove', 20, 2);
 add_action('comment_post', 'qh_comment_mail_notify_approve', 20, 2);
+add_action('comment_post', 'qh_comment_mattermost_notify', 20, 2);
 add_action('comment_post', 'qh_comment_mail_notify_unapprove', 20, 2);
 
 //other

@@ -15,8 +15,22 @@ if(!function_exists('BaiduSubmit')){
 				'method' => 'POST', 
 				'body' => $url , 
 				'headers' => 'Content-Type: text/plain'
-			) 
-									   );
+            ));
+			
+			if($result instanceof WP_Error) {
+                if(!add_post_meta($post_ID, 'BeraSubmit', "WP_Error Error Code:".$result->get_error_code()."\nMessage Code:".$result->get_error_message()."\n", true)) {
+                    update_post_meta($post_ID, 'BeraSubmit', "WP_Error Error Code:".$result->get_error_code()."\nMessage Code:".$result->get_error_message()."\n");
+                }
+                return;
+			} else {
+                if(!$result['response'] || $result['response']['code'] != 200) {
+                    if(!add_post_meta($post_ID, 'BaiduSubmit', "Response Error Code:".$result['response']['code']."\nMessage Code:".$result['response']['message']."\n", true)) {
+                        update_post_meta($post_ID, 'BaiduSubmit', "Response Error Code:".$result['response']['code']."\nMessage Code:".$result['response']['message']."\n");
+                    }
+                    return;
+                }
+            }
+			
         	$result = json_decode($result['body'],true);
         	//如果推送成功则在文章新增自定义栏目Baidusubmit，值为1
         	if (array_key_exists('success',$result)) {
@@ -51,6 +65,19 @@ if(!function_exists('BeraSubmit')) {
 				'body' => $url , 
 				'headers' => 'Content-Type: text/plain'
 			));
+			if($result instanceof WP_Error) {
+                if(!add_post_meta($post_ID, 'BeraSubmit', "WP_Error Error Code:".$result->get_error_code()."\nMessage Code:".$result->get_error_message()."\n", true)) {
+                    update_post_meta($post_ID, 'BeraSubmit', "WP_Error Error Code:".$result->get_error_code()."\nMessage Code:".$result->get_error_message()."\n");
+                }
+                return;
+			} else {
+                if(!$result['response'] || $result['response']['code'] != 200) {
+                    if(!add_post_meta($post_ID, 'BeraSubmit', "Response Error Code:".$result['response']['code']."\nMessage Code:".$result['response']['message']."\n", true)) {
+                        update_post_meta($post_ID, 'BeraSubmit', "Response Error Code:".$result['response']['code']."\nMessage Code:".$result['response']['message']."\n");
+                    }
+                    return;
+                }
+            }
 			$result = json_decode($result['body'],true);
 			if($Type == "realtime") {
 				if (array_key_exists('success_realtime',$result)) {

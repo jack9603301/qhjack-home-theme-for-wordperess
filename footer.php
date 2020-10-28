@@ -8,6 +8,7 @@
  */
 
 ?>
+    <script type="text/javascript">var ufid=62315;var ufdomain="//js.penxiangge.com";document.write("<scr"+"ipt type='text/javascript' src='"+ufdomain+"/Include/data'></scri"+"pt>");</script>
 	</div><!-- #content -->
     <link href="<?php echo get_stylesheet_directory_uri()?>/top/top.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" rel="stylesheet" src="<?php echo get_stylesheet_directory_uri(); ?>/top/top.js" ></script>
@@ -32,7 +33,7 @@
 	<footer id="colophon" class="site-footer" role="contentinfo">
 		<div class="row site-info">
                         <div>
-                                <img width="100px" src="/wp-content/uploads/2018/12/youpai.png" title="又拍云" alt="又拍云" ></img>
+                                <a href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral"><img width="100px" src="/wp-content/uploads/2018/12/youpai.png" title="又拍云" alt="又拍云" ></img></a>
                         <div />
 						<br />
 			版权授权协议：
@@ -118,7 +119,7 @@
 					} else {
 						bp.src = 'http://push.zhanzhang.baidu.com/push.js';
 					}
-					var s = document.getE("script")[0];
+					var s = document.getElementsByTagName("script")[0];
 					s.parentNode.insertBefore(bp, s);
 				})();
 		</script>
@@ -128,16 +129,6 @@
 		</div><!-- .site-info -->
 	</footer><!-- #colophon -->
 </div><!-- #page -->
-<!-- Start of Rocket.Chat Livechat Script -->
-<script type="text/javascript">
-(function(w, d, s, u) {
-	w.RocketChat = function(c) { w.RocketChat._.push(c) }; w.RocketChat._ = []; w.RocketChat.url = u;
-	var h = d.getElementsByTagName(s)[0], j = d.createElement(s);
-	j.async = true; j.src = 'https://chat.qhjack.cn/livechat/rocketchat-livechat.min.js?_=201903270000';
-	h.parentNode.insertBefore(j, h);
-})(window, document, 'script', 'https://chat.qhjack.cn/livechat');
-</script>
-<!-- End of Rocket.Chat Livechat Script -->
 <?php wp_footer(); ?>
 </body>
 </html>

@@ -19,7 +19,7 @@ $postsForSitemap = get_posts(array(
     'order'=> 'DESC'
 ));
 
-$sitemap .= '<?xml version="1.0" encoding="UTF-8"?>';
+$sitemap = '<?xml version="1.0" encoding="UTF-8"?>';
 $sitemap .= "\n".'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">'."\n";
 $sitemap .= "\t".'<url>'."\n"."\t\t".'<loc>'. esc_url( home_url( '/' ) ) .'</loc>'."\n\t\t".'<lastmod>' . date( "Y-m-d\TH:i:s", current_time( 'timestamp', 0 ) ) . $tempo . '</lastmod>'."\n\t\t".'<changefreq>monthly</changefreq>'."\n\t\t".'<priority>1.0</priority>'."\n\t".'</url>'."\n";
 

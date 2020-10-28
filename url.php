@@ -2,8 +2,8 @@
 
 function home_search_rewrite_rules($search_rewrite) {
 	$search_rewrite = array();
-	$search_rewrite["search/([^/]+)?$"] = 'index.php?s=$matches[1]';
-	$search_rewrite["search/([^/]+)/page/([1-9]\d*)?$"] = 'index.php?s=$matches[1]&paged=$matches[2]';
+	$search_rewrite["search/([^/]+)?$"] = 'index.php?s=$matches[1]&ep_integrate';
+	$search_rewrite["search/([^/]+)/page/([1-9]\d*)?$"] = 'index.php?s=$matches[1]&paged=$matches[2]&ep_integrate';
 	return $search_rewrite;
 }
 
