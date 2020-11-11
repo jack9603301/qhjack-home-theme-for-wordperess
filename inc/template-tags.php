@@ -46,14 +46,41 @@ if ( ! function_exists( 'home_posts_navigation' ) ) :
  */
 function home_posts_navigation() {
 	// Don't print empty markup if there's only one page.
-	if ( $GLOBALS['wp_query']->max_num_pages < 2 ) {
+	global $wp_query;
+	if ( $wp_query->max_num_pages < 2 ) {
 		return;
 	}
 	?>
 	<nav class="navigation posts-navigation" role="navigation">
 		<h2 class="screen-reader-text"><?php esc_html_e( 'Posts navigation', 'nisarg' ); ?></h2>
 		<div class="nav-links">
-
+		<?php
+            if (isset($wp_query->query_vars['tpl'])) {
+                $paged = (get_query_var('paged')) ? (int) get_query_var('paged') : 1;
+                print('<div class="row">');
+                if(get_previous_posts_link()) {
+                    print('<div class="col-md-6 prev-post">');
+                    $new_paged = $paged-1;
+                    print('<a href="'.home_url(add_query_arg(array())).'&paged='.$new_paged.'"><i class="fa fa-angle-double-left"></i>上一页</a>');
+                    print('</div>');
+                } else {
+                    echo '<div class="col-md-6">';
+                    echo '<p> </p>';
+                    echo '</div>';
+                }
+                            
+                if(get_next_posts_link()) {
+                    print('<div class="col-md-6 prev-post">');
+                    $new_paged = $paged+1;
+                    print('<a href="'.home_url(add_query_arg(array())).'&paged='.$new_paged.'">下一页<i class="fa fa-angle-double-right"></i></a>');
+                    print('</div>');
+                } else {
+                    echo '<div class="col-md-6">';
+                    echo '<p> </p>';
+                    echo '</div>';
+                }
+            } else {
+		?>
 			<div class="row">
 				<?php if ( get_previous_posts_link() ) { ?>	
 				<div class="col-md-6 prev-post">		
@@ -74,7 +101,10 @@ function home_posts_navigation() {
 					echo '<p> </p>';
 					echo '</div>';
 				} ?>
-				</div>		
+				</div>	
+        <?php
+            }
+        ?>
 		</div><!-- .nav-links -->
 	</nav><!-- .navigation -->
 	<?php
@@ -160,9 +190,18 @@ $entry_meta = <<<EOF
 		<time class="entry-date" datetime="%9\$s" pubdate>%10\$s </time>
 	</a>
 	<span class="byline">
-		<i class="fa fa-user"></i>
+		<i class="fa fa-user">发布作者</i>
 		<span class="author vcard">
 			<a class="url fn n" href="%5\$s" title="%6\$s" rel="author">%7\$s</a>
+		</span>
+	</span>
+EOF;
+
+$entry_meta_copyright = <<<EOF
+	<span class="byline">
+		<i class="fa fa-user">原创作者</i>
+		<span class="author vcard">
+			<a class="url fn n" href="%1\$s" title="%2\$s" rel="author">%3\$s</a>
 		</span>
 	</span>
 EOF;
@@ -181,6 +220,28 @@ EOF;
     );
 
     print $entry_meta;
+    
+    $post_id = get_the_ID();	
+    $custom_fields = get_post_custom_keys($post_id);
+    if(in_array('CopyrightType',$custom_fields)) {
+        $custom = get_post_custom($post_id);
+        $CopyrightType = $custom['CopyrightType'][0];
+        if($CopyrightType == "Reprint") {
+            $custom = get_post_custom($post_id);
+            $DisplayAuthor = $custom['DisplayAuthor'][0];
+            if($DisplayAuthor) {
+                $Author = $custom['Author'][0];
+                if ($Author != '') {
+                    $entry_meta_copyright = sprintf($entry_meta_copyright,
+                        esc_url('index.php?tpl=reprint_author&amp;original_author='.$Author),
+                        esc_attr( sprintf( $viewbyauthor_text, $Author ) ),
+                        $Author
+                    );
+                    print $entry_meta_copyright;
+                }
+            }
+        }
+    }
 
 	if(comments_open()){	
 		printf(' <i class="fa fa-comments-o"></i><span class="screen-reader-text">%1$s </span> ',_x( 'Comments', 'Used before post author name.', 'nisarg' ));

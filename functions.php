@@ -51,6 +51,8 @@ add_filter('category_rewrite_rules','home_category_rewrite_rules',1);
 
 add_filter('author_link','home_author_link',2, 3);
 
+add_filter( 'rewrite_rules_array','home_custom_rewrite_rules',1);
+
 add_filter('page_link','home_page_link',2,3);
 
 add_filter('attachment_link','home_attachment_link',2,2);
@@ -66,6 +68,8 @@ add_filter('term_link','home_term_link',2,3);
 add_filter('wp_link_pages','home_wp_link_pages_filter',2,2);
 
 add_filter('query_vars', 'home_query_vars');
+
+add_action("template_include", 'home_custom_emplate');
 
 add_filter('slashpress_command_qhjack', 'qh_slashpress_command_qhjack',10,2);
 

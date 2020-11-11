@@ -19,8 +19,15 @@ function home_pages_redirect_filter($redirect_url, $requested_url) {
 	if( is_author() && $wp_query->get( 'paged' ) > 1 ){
 		return false;
 	} else {
-		return true;
-	}
+        if (isset($wp_query->query_vars['tpl'])) {
+            if($wp_query->get( 'paged' ) > 1 ) {
+                return false;
+            } else {
+                return false;
+            }
+            return false;
+        }
+    }
 }
 
 function home_pages_link_trailingslash($url, $type) {
@@ -102,6 +109,12 @@ function home_author_rewrite_rules($author_rules) {
 	return $author_rules;
 }
 
+function home_custom_rewrite_rules($rules) {
+    $newrules = array();
+    $newrules["reprint/author/([^\s]+).html?$"] = 'index.php?tpl=reprint_author&original_author=$matches[1]';
+    return $newrules + $rules;
+}
+
 function disable_fedd() {
 	wp_die('本博客不提供Feed服务');
 }
@@ -114,10 +127,34 @@ function disable_feed_url() {
 function home_query_vars($Vars) {
 	$Vars[] = "key";
 	$Vars[] = "action";
+	$Vars[] = "original_author";
+	$Vars[] = "tpl";
 	return $Vars;
 }
 
+function home_custom_emplate($template){
+    global $wp_query;
+    if (!isset($wp_query->query_vars['tpl'])) {
+    	return $template;
+    }
+
+    $reditectPage =  $wp_query->query_vars['tpl']; 
+    if ($reditectPage == "reprint_author"){
+        $wp_query->is_page = true;
+        $wp_query->is_single = false;
+        $wp_query->is_home = false;
+        $wp_query->comments = false;
+        $newtemplate = locate_template( array( 'reprint_author.php' ) );
+        if ( $newtemplate != '' ) {
+            $template = $newtemplate;
+        }
+        return $template;
+    }
+    return $template;
+}
+
 function home_wp_link_pages_link($output,$i) {
+    $output = preg_replace('/(http|https):\/\/([^\/]+)\/reprint/author\/([^\s\/]+)\.html\/page\/(\d{1,})', '$1://$2/reprint/author/$3.html?paged=$4', $output);
     $output = preg_replace('/(http|https):\/\/([^\/]+)\/author\/([^\/]+)\.html\/page\/(\d{1,})/', '$1://$2/author/$3.html?paged=$4', $output);
     $output = preg_replace('/(http|https):\/\/([^\s]+)\.html(\?)([^\s]+)(\?)([^\s]+)/', '$1://$2.html$3$4&$6', $output);
     return $output;
