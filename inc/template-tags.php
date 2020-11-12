@@ -237,7 +237,7 @@ EOF;
                     esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ),
                     esc_attr( sprintf( $viewbyauthor_text, get_the_author() ) ),
                     esc_html( get_the_author() ),
-                    esc_url('index.php?tpl=reprint_author&amp;original_author='.$Author),
+                    esc_url('/index.php?tpl=reprint_author&amp;original_author='.$Author),
                     esc_attr( sprintf( $viewbyauthor_text, $Author ) ),
                     $Author
                 );
