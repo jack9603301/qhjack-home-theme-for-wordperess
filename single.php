@@ -22,41 +22,30 @@ get_header(); ?>
 
 				<?php 
 					$post_id = get_the_ID();	
-					$custom_fields = get_post_custom_keys($post_id);
-					if(in_array('CopyrightType',$custom_fields)):
+					$CopyrightType = get_field('CopyrightType',$post_id);
 				?>
 				
 				<div id="secondary" class="post-copyright">
 					<aside id="copyright" class='widget'>
 						<h3 class="widget-title">©版权声明</h3>
 						<?php 
-							$custom_fields = get_post_custom_keys($post_id);
-							if(in_array('CopyrightType',$custom_fields)):
-								$custom = get_post_custom($post_id);
-								$CopyrightType = $custom['CopyrightType'][0];
-								if($CopyrightType == "Original"):
+                            if($CopyrightType == "Original"):
 						?>
 						<strong>
 							<p>本文章由<?php the_author(); ?>撰写，采用<a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="著名-非商业使用-相同形式共享">BY-NC-SA</a>授权发布，转载请以链接形式标明<a href="" title="<?php the_title(); ?>">本文地址</a>，非原创(转载)文章版权归作者所有。</p>
 						</strong>
 						<?php 
 								elseif($CopyrightType == "Reprint"):
-									$custom = get_post_custom($post_id);
-									$ReprintURL = $custom['ReprintURL'];
-									$ReprintTitle = $custom['ReprintTitle'];
 						?>
 						<strong>
-							<p>本文为转载文章，由『<a href="<?php echo $ReprintURL[0] ?>" title="<?php the_title(); ?>"><?php echo $ReprintTitle[0] ?></a>』原创发布，已获得转载许可。版权归原作者所有。</p>
+							<p>本文为转载文章，由『<a href="<?php the_field('ReprintURL',$post_id) ?>" title="<?php the_title(); ?>"><?php the_field('ReprintTitle',$post_id) ?></a>』原创发布，已获得转载许可。版权归原作者所有。</p>
 						</strong>
 						<?php
-								endif;
 							endif;
 						?>
 						<br />
 					</aside>
 				</div>
-
-				<?php endif; ?>
 				
 				<div class="post-comments">
 					<?php

@@ -186,22 +186,31 @@ $entry_meta = <<<EOF
 		<time class="entry-date" datetime="%3\$s" pubdate>%4\$s </time>
 	</a>
 	<i class="fa fa-edit">最后编辑</i>
-	<a href="%1\$s" title="%8\$s" rel="bookmark">
-		<time class="entry-date" datetime="%9\$s" pubdate>%10\$s </time>
+	<a href="%1\$s" title="%5\$s" rel="bookmark">
+		<time class="entry-date" datetime="%6\$s" pubdate>%7\$s </time>
 	</a>
-	<span class="byline">
-		<i class="fa fa-user">发布作者</i>
-		<span class="author vcard">
-			<a class="url fn n" href="%5\$s" title="%6\$s" rel="author">%7\$s</a>
-		</span>
-	</span>
 EOF;
 
-$entry_meta_copyright = <<<EOF
+$entry_meta_copyright_original = <<<EOF
 	<span class="byline">
 		<i class="fa fa-user">原创作者</i>
 		<span class="author vcard">
 			<a class="url fn n" href="%1\$s" title="%2\$s" rel="author">%3\$s</a>
+		</span>
+	</span>
+EOF;
+
+$entry_meta_copyright_reprint = <<<EOF
+	<span class="byline">
+		<i class="fa fa-user">转载作者</i>
+		<span class="author vcard">
+			<a class="url fn n" href="%1\$s" title="%2\$s" rel="author">%3\$s</a>
+		</span>
+	</span>
+	<span class="byline">
+		<i class="fa fa-user">原创作者</i>
+		<span class="author vcard">
+			<a class="url fn n" href="%4\$s" title="%5\$s" rel="author">%6\$s</a>
 		</span>
 	</span>
 EOF;
@@ -211,9 +220,6 @@ EOF;
         esc_attr( get_the_time() ),
         esc_attr( get_the_date( 'c' ) ),
         esc_html( get_the_date() ),
-        esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ),
-        esc_attr( sprintf( $viewbyauthor_text, get_the_author() ) ),
-        esc_html( get_the_author() ),
 		esc_attr( get_the_modified_time() ),
 		esc_attr( get_the_modified_date('c') ),
 		esc_attr( get_the_modified_date() )
@@ -222,25 +228,29 @@ EOF;
     print $entry_meta;
     
     $post_id = get_the_ID();	
-    $custom_fields = get_post_custom_keys($post_id);
-    if(in_array('CopyrightType',$custom_fields)) {
-        $custom = get_post_custom($post_id);
-        $CopyrightType = $custom['CopyrightType'][0];
-        if($CopyrightType == "Reprint") {
-            $custom = get_post_custom($post_id);
-            $DisplayAuthor = $custom['DisplayAuthor'][0];
-            if($DisplayAuthor) {
-                $Author = $custom['Author'][0];
-                if ($Author != '') {
-                    $entry_meta_copyright = sprintf($entry_meta_copyright,
-                        esc_url('index.php?tpl=reprint_author&amp;original_author='.$Author),
-                        esc_attr( sprintf( $viewbyauthor_text, $Author ) ),
-                        $Author
-                    );
-                    print $entry_meta_copyright;
-                }
+    if(get_field('CopyrightType',$post_id) == "Reprint") {
+        $DisplayAuthor = get_field('DisplayAuthor',$post_id);
+        if($DisplayAuthor) {
+            $Author = get_field('Author',$post_id);
+            if ($Author != '') {
+                $entry_meta_copyright = sprintf($entry_meta_copyright_reprint,
+                    esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ),
+                    esc_attr( sprintf( $viewbyauthor_text, get_the_author() ) ),
+                    esc_html( get_the_author() ),
+                    esc_url('index.php?tpl=reprint_author&amp;original_author='.$Author),
+                    esc_attr( sprintf( $viewbyauthor_text, $Author ) ),
+                    $Author
+                );
+                print $entry_meta_copyright;
             }
         }
+    } else {
+        $entry_meta_copyright = sprintf($entry_meta_copyright_original,
+            esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ),
+            esc_attr( sprintf( $viewbyauthor_text, get_the_author() ) ),
+            esc_html( get_the_author() )
+        );
+        print $entry_meta_copyright;
     }
 
 	if(comments_open()){	

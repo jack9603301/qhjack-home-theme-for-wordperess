@@ -535,18 +535,13 @@ function home_Post_isOriginal() {
 		global $post;
 		if($post->ID) {
 			$custom_fields = get_post_custom_keys($post_id);
-			if(in_array('CopyrightType',$custom_fields)) {
-				$custom = get_post_custom($post_id);
-				$CopyrightType = $custom['CopyrightType'][0];
-				if($CopyrightType == "Original") {
-					return 1;
-				} else if($CopyrightType == "Reprint") {
-					return 0;
-				} else {
-					return 1;
-				}
+			$CopyrightType = get_field('CopyrightType',$post_id);
+			if($CopyrightType == "Original") {
+                return 1;
+			} else if($CopyrightType == "Reprint") {
+                return 0;
 			} else {
-				return 1;
+                return 1;
 			}
 		}
 	}
@@ -581,17 +576,13 @@ function home_the_excerpt($post_excerpt) {
 
 function home_origin_class_addin($classes,$class,$post_id) {
 	$custom_fields = get_post_custom_keys($post_id);
-	if(in_array('CopyrightType',$custom_fields)) {
-	    $custom = get_post_custom($post_id);
-		$CopyrightType = $custom['CopyrightType'][0];
-		if($CopyrightType == "Original") {
-			if(is_single()) {
-				array_push($classes,"origin");
-			}
-			else {
-				array_push($classes,"origin-archive");
-			}
-		}
+	if(get_field('CopyrightType',$post_id) == "Original") {
+        if(is_single()) {
+            array_push($classes,"origin");
+        }
+        else {
+            array_push($classes,"origin-archive");
+        }
 	}
 	return $classes;
 }
@@ -636,35 +627,22 @@ function home_post_column_value($column_name, $id) {
 		echo $id;
 		break;
 	case 'original':
-		$custom_fields = get_post_custom_keys($id);
-		if(in_array('CopyrightType',$custom_fields)) {
-			$custom = get_post_custom($id);
-			$CopyrightType = $custom['CopyrightType'][0];
-			if($CopyrightType == "Original") {
-				echo __("Yes",'home');
-			} else {
-				echo __("No",'home');
-			}
+		if(get_field('CopyrightType',$id) == "Original") {
+            echo __("Yes",'home');
+		} else {
+            echo __("No",'home');
 		}
 		break;
 	case 'article_author':
 		$custom_fields = get_post_custom_keys($id);
-		if(in_array('CopyrightType',$custom_fields)) {
-			$custom = get_post_custom($id);
-			$CopyrightType = $custom['CopyrightType'][0];
-			if($CopyrightType == "Original") {
-				echo  get_the_author_meta('display_name',get_post($id)->post_author);
-			} else {
-				$DisplayAuthor = $custom['DisplayAuthor'][0];
-				if($DisplayAuthor) {
-					$Author = $custom['Author'][0];
-					$ReprintURL = $custom['ReprintURL'][0];
-					$ReprintTitle = $custom['ReprintTitle'][0];
-					echo '<a href="' . $ReprintURL . '" title="'.$ReprintTitle . '">'. $Author .'</a>';
-				} else {
-					echo __("Not display",'home');
-				}
-			}
+		if(get_field('CopyrightType',$id) == "Original") {
+            echo  get_the_author_meta('display_name',get_post($id)->post_author);
+		} else {
+            if(get_field('DisplayAuthor',$id)) {
+                echo '<a href="' . get_field('ReprintURL',$id) . '" title="'.get_field('ReprintTitle',$id). '">'. get_field('Author',$id) .'</a>';
+            } else {
+                echo __("Not display",'home');
+            }
 		}
 		break;
 	case 'postviews':
