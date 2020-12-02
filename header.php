@@ -21,6 +21,16 @@
 <meta charset="<?php bloginfo( 'charset' ); ?>" />
 <meta name="viewport" content="width=device-width" />
 
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?9723fc506440065b3770a7e7ad821574";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
 <link rel="profile" href="http://gmpg.org/xfn/11" />
 <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
 <script src="//msite.baidu.com/sdk/c.js?appid=1593262731483703"></script>
@@ -122,6 +132,8 @@
     
 <body <?php body_class(); ?>>
 
+<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/cm.js" async="async" defer="defer" ></script>
+
 <script src="https://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 <link rel='stylesheet' href='/wp-content/themes/home/nprogress.css'/>
 <script src="/wp-content/themes/home/nprogress.js"></script>
@@ -208,6 +220,18 @@
 		</div><!--#container-->
 	</nav>
 	<div id="cc_spacer"></div><!-- used to clear fixed navigation by the themes js -->  
+	<div class="adv_frame">
+        <div class="adv">
+            <div class="_w89c7dbjvik"></div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        (window.slotbydup = window.slotbydup || []).push({
+            id: "u6358207",
+            container: "_w89c7dbjvik",
+            async: true
+        });
+    </script>
 </header>
 <script type="text/javascript" rel="stylesheet" src="<?php echo get_stylesheet_directory_uri()?>/emoji/emoji.js" ></script>
 <script type="text/javascript" rel="stylesheet" src="/wp-content/themes/home/geetest/static/gt.js"></script>

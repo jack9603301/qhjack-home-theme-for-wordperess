@@ -303,3 +303,20 @@ p .btn-default {
 #masthead {
     margin-bottom: 2em;
 }
+
+.adv_frame {
+    top: 10px;
+    height: 200px;
+    width: 100%;
+    position: relative;
+}
+
+.adv {
+    position: absolute;
+    margin: auto;
+    width: 1000px;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+}
