@@ -26,7 +26,7 @@ var _hmt = _hmt || [];
 (function() {
   var hm = document.createElement("script");
   hm.src = "https://hm.baidu.com/hm.js?9723fc506440065b3770a7e7ad821574";
-  var s = document.getElementsByTagName("script")[0]; 
+  var s = document.getElementsByTagName("script")[0];
   s.parentNode.insertBefore(hm, s);
 })();
 </script>
@@ -125,11 +125,11 @@ var _hmt = _hmt || [];
 				    jQuery(".navbar-collapse .nav-menu").css("height","");
 			    }
 			});
-			
+
         }
     });
 </script>
-    
+
 <body <?php body_class(); ?>>
 
 <script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/cm.js" async="async" defer="defer" ></script>
@@ -137,6 +137,7 @@ var _hmt = _hmt || [];
 <script src="https://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 <link rel='stylesheet' href='/wp-content/themes/home/nprogress.css'/>
 <script src="/wp-content/themes/home/nprogress.js"></script>
+<script type="text/javascript" rel="stylesheet" src="<?php echo get_stylesheet_directory_uri()?>/js/msg.js" ></script>
 <script type="text/javascript" language="JavaScript">
 	document.body.style.display = 'block';
 
@@ -144,7 +145,7 @@ var _hmt = _hmt || [];
 
 	jQuery.fn.wait = function (func,cancelsatusfunction, times, interval) {
     	var _times = times || -1, //100次
-    	_interval = interval || 20, //20毫秒每次 
+    	_interval = interval || 20, //20毫秒每次
     	_self = this,
     	_selector = this.selector, //选择器
     	_iIntervalID; //定时器id
@@ -159,7 +160,7 @@ var _hmt = _hmt || [];
                 	clearInterval(_iIntervalID);
             	}
             	_times <= 0 || _times--; //如果是正数就 --
-            
+
             	_self = $(_selector); //再次选择
             	if( _self.length ) { //判断是否取到
                 	func && func.call(_self);
@@ -173,6 +174,7 @@ var _hmt = _hmt || [];
 	jQuery("#wpadminbar").wait(function() {
 		jQuery("#wpadminbar").css("top","2px");
 		_cancelwaitwpadminbar = true;
+    msg.loading("起航天空正在载入，请稍候！");
 	},function(func, times, interval) {
 		if(_cancelwaitwpadminbar) {
 			return true;
@@ -186,9 +188,11 @@ var _hmt = _hmt || [];
     //: 判断网页是否加载完成
 	document.onreadystatechange = function() {
     	if (document.readyState == "complete") {
-			NProgress.done();
-			jQuery("#wpadminbar").css("top","0px");
-			_cancelwaitwpadminbar = true;
+			  NProgress.done();
+			  jQuery("#wpadminbar").css("top","0px");
+			  _cancelwaitwpadminbar = true;
+        msg.close()
+        msg.success("起航天空载入完成！")
     	}
 	}
 </script>
@@ -203,7 +207,7 @@ var _hmt = _hmt || [];
 				<?php if ( has_nav_menu( 'primary' ) ) { ?>
 					<button type="button" class="menu-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
 						<span class="sr-only">Toggle navigation</span>
-						<span class="icon-bar"></span> 
+						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
@@ -219,7 +223,7 @@ var _hmt = _hmt || [];
 				) ); } ?>
 		</div><!--#container-->
 	</nav>
-	<div id="cc_spacer"></div><!-- used to clear fixed navigation by the themes js -->  
+	<div id="cc_spacer"></div><!-- used to clear fixed navigation by the themes js -->
 	<div class="adv_frame">
         <div class="adv">
             <div class="_w89c7dbjvik"></div>
