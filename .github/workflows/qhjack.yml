@@ -1,0 +1,40 @@
+name: qhjack deploy
+
+on:
+  push:
+    branches: [ production ]
+  pull_request:
+    branches: [ production ]
+
+jobs:
+  runs-on: ubuntu-latest
+  
+  step:
+  - name: Git Clone this repo
+    uses: actions/checkout@v2.3.4
+    with:
+      ref: production
+  
+  - name: Upload Wordpress Server
+    users: marcodallasanta/ssh-scp-deploy@v.1.0.2
+    with:
+      local: '*'
+      remote: /glusterfs/webroot/qhjack/wp-content/themes/home/
+      host: service1.kvm.qhjack.cn
+      port: 22
+      username: ${{ secrets.QHJACK_DEPLOY_SERVER_USERNAME }}
+      password: ${{ secrets.QHJACK_DEPLOY_SERVER_PASSWORD }}
+      scp_options: -r -o StrictHostKeyChecking=no
+    
+  - name: Apply Deploy
+    env:
+      QHJACK_DEPLOY_SERVER_USERNAME: ${{ secrets.QHJACK_DEPLOY_SERVER_USERNAME }}
+      QHJACK_DEPLOY_SERVER_PASSWORD: ${{ secrets.QHJACK_DEPLOY_SERVER_PASSWORD }}
+    runs: |
+      apt install -y sshpass
+      sshpass -p $QHJACK_DEPLOY_SERVER_PASSWORD ssh '$QHJACK_DEPLOY_SERVER_USERNAME'@'service1.kvm.qhjack.cn' -o StrictHostKeyChecking=no systemctl restart php-fpm && systemctl restart nginx
+      sshpass -p $QHJACK_DEPLOY_SERVER_PASSWORD ssh '$QHJACK_DEPLOY_SERVER_USERNAME'@'service2.kvm.qhjack.cn' -o StrictHostKeyChecking=no systemctl restart php-fpm && systemctl restart nginx
+      sshpass -p $QHJACK_DEPLOY_SERVER_PASSWORD ssh '$QHJACK_DEPLOY_SERVER_USERNAME'@'service3.kvm.qhjack.cn' -o StrictHostKeyChecking=no systemctl restart php-fpm && systemctl restart nginx
+      sshpass -p $QHJACK_DEPLOY_SERVER_PASSWORD ssh '$QHJACK_DEPLOY_SERVER_USERNAME'@'service4.kvm.qhjack.cn' -o StrictHostKeyChecking=no rm -rf /www/services/nginx/cache/proxy/qhjack/* && rm -rf /www/services/nginx/cache/proxy_store/* 
+      sshpass -p $QHJACK_DEPLOY_SERVER_PASSWORD ssh '$QHJACK_DEPLOY_SERVER_USERNAME'@'service4.kvm.qhjack.cn' -o StrictHostKeyChecking=no systemctl restart php-fpm && systemctl restart nginx
+    
