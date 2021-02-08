@@ -85,17 +85,26 @@ add_action('wp_head','disable_feed_url',1);
 //user_email.php
 
 add_filter('retrieve_password_message', 'reset_password_message', null, 2);
-add_action( 'publish_post', 'qh_publish_post_report_email' );
-add_action( 'publish_post', 'qh_publish_post_mattermost' );
+if((!defined('DISABLE_MATTERMOST') or !DISABLE_MATTERMOST) and defined('MATTERMOST_PUSH_URL')) {
+    add_action( 'publish_post', 'qh_publish_post_report_email' );
+    add_action( 'publish_post', 'qh_publish_post_mattermost' );
+    add_action('wp_set_comment_status', 'qh_comment_mattermost_notify', 20, 2);
+    add_action('comment_post', 'qh_comment_mattermost_notify', 20, 2);
+    if(defined('TEST_DEBUG') and TEST_DEBUG) {
+        fwrite(STDOUT,"Mattermost push is enabled\n");
+    }
+} else {
+    if(defined('TEST_DEBUG') and TEST_DEBUG) {
+        fwrite(STDOUT,"Mattermost push is disabled\n");
+    }
+}
 add_filter('wp_new_user_notification_email','qh_new_user_notification_email',2,3);
 add_filter('wp_new_user_notification_email_admin','qh_new_user_notification_email_admin',2,3);
 add_filter('email_change_email','qh_password_change_email',2,3);
 add_filter( 'wp_mail_content_type', 'qh_html_content_type' );
 add_action('wp_set_comment_status', 'qh_comment_mail_notify_approve', 20, 2);
-add_action('wp_set_comment_status', 'qh_comment_mattermost_notify', 20, 2);
 add_action('wp_set_comment_status', 'qh_comment_mail_notify_unapprove', 20, 2);
 add_action('comment_post', 'qh_comment_mail_notify_approve', 20, 2);
-add_action('comment_post', 'qh_comment_mattermost_notify', 20, 2);
 add_action('comment_post', 'qh_comment_mail_notify_unapprove', 20, 2);
 
 //other

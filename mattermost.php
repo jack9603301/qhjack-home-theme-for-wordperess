@@ -34,7 +34,7 @@ function send_data($text) {
     
     $context = stream_context_create($options);
     
-    file_get_contents("https://mattermost.qhjack.cn/hooks/7zfjttpj63ru38f8xrzt19u9dc", false, $context);
+    file_get_contents(MATTERMOST_PUSH_URL, false, $context);
 }
 
 function qh_publish_post_mattermost($post_ID) {

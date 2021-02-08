@@ -1,0 +1,71 @@
+== Changelog ==
+
+=1.2.9 June 20 2020
+* Fixed issue with archieve page's layout in case of no archieved post found 
+* Fixed the header text color issue encountered in case of unset header image
+* Fixed the issue of vey very long post title in mobile
+* Changed the intial height value of site header
+* Changed customizer's default background color value
+* Changed the position of Accent Color section in theme customizer
+* Changed the position of post navigation links - Next post and Previous post
+* Changed the position of page navigation links - Older posts and newer posts
+* Changed the post footer display coding
+* Removed the nisarg_categorized_blog function
+* Removed the nisarg_category_transient_flusher function.
+* Improved escaping, sanitization and translation comments
+* Added new wp_body_open() function for WP 5.2
+
+
+=1.2.8.2 September 13 2018
+* Added support for Jetpack Infinite Scroll
+* Added notificationsection for Nisarg's pro version
+
+=1.2.8.1 April 10 2017
+* Changed the min header height to 120px for screen size less than 768px to accomodate long site title.
+
+=1.2.8 April 9 2017
+* Fixed the header image issue for screen size between 1440px and 1599px.
+
+=1.2.7 April 8 2017
+* Added support for multilevel menu.
+* Added support to display header-image on higher resolution screens(above 1600px).
+* Added anchor tag to featured image on post listing page.
+* Updated archive page to support post excerpt display.
+* Updated nisrag.pot to add new translatable text.
+* Updated rtl.css to add rtl support for mutilevel menu and search form.
+
+=1.2.6 May 21 2016
+* Added option to display post excerpt and full post
+* Updated nisrag.pot to add new translatable text
+* Added code to open top level clickable menu item in new window tab if menu-item is set so.
+
+=1.2.5 April 4 2016
+* Added code to set accent color to any value.
+
+=1.2.4 March 14 2016
+*Changed the screenshot.png
+*Updated readme.txt
+*Added searchform.php
+*Fixed some issues with theme.
+
+=1.2.3 Feb 16 2016
+*Removed editor-style.css from theme root directory
+*Changed readme.txt
+
+=1.2.2 Feb 11 2016
+*Removed some js files. 
+*Removed editor stylesheet for TinyMCE.
+
+=1.2.1 Feb 11 2016
+*Added check for diplaying topbar navigation menu only if it is assigned to that location.
+*Added stylesheet to add style for TinyMCE editor.
+
+=1.2 Jan 21 2016
+*Fixed navigation menu issues.
+*Changed height of header.
+
+= 1.1 Oct 25 2015
+*Changed screenshot.png
+
+= 1.0 - Oct 19 2015 =
+* Initial release

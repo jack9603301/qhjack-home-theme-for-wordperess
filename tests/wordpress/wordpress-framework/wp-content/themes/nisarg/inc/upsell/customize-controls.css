@@ -1,0 +1,29 @@
+#customize-controls .control-section-nisarg-upsell .accordion-section-title {
+	color: #0085ba;
+	font-weight: bolder;
+}
+#customize-controls .control-section-nisarg-upsell .accordion-section-title p {
+	color: #509cba;
+	font-weight: normal;
+	margin: 0.2em 0;
+}
+#customize-controls .control-section-nisarg-upsell .accordion-section-title:hover,
+#customize-controls .control-section-nisarg-upsell .accordion-section-title:focus {
+	background-color: #fff;
+	color: #0085ba;
+}
+
+.control-section-nisarg-upsell .accordion-section-title .button {
+	background: #0085ba;
+	border-color: #0073aa #006799 #006799;
+	color: #fff;
+	margin-top:  -4px;
+	font-weight: 400;
+	margin-left: 8px;
+
+}
+
+.rtl .control-section-nisarg-upsell .accordion-section-title .button {
+	margin-left:  0;
+	margin-right: 8px;
+}
