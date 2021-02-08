@@ -2,9 +2,9 @@ name: qhjack phpuni
 
 on:
   push:
-    branches: [ production ]
+    branches: [ main ]
   pull_request:
-    branches: [ production ]
+    branches: [ main ]
 
 
 jobs:
@@ -14,23 +14,27 @@ jobs:
     steps:
     - name: Git Clone this repo
       uses: actions/checkout@v2.3.4
+      with:
+        submodules: true
+    
+    - name: Setup PHP 7.4
+      uses: nanasess/setup-php@v3.0.6
+      with:
+        php-version: 7.4
   
     - name: Setup Mariadb
       run: |
         curl -LsS https://downloads.mariadb.com/MariaDB/mariadb_repo_setup | sudo bash
         sudo apt update
-        sudo apt-get install -y mariadb-server
+        sudo apt-get install -y mariadb-server-10.5
         sudo systemctl start mariadb
         sudo mysql -uroot -proot -e 'create database wptest;'
         sudo mysql -uroot -proot -e "CREATE USER 'wptest'@'%' IDENTIFIED BY 'wptest';"
         sudo mysql -uroot -proot -e "GRANT ALL ON wptest.* TO 'wptest'@'%';"
     
-    - name: Install Phpunit
+    - name: PHP Composer
       run: |
-        wget https://phar.phpunit.de/phpunit-7.5.9.phar
-        chmod +x phpunit-7.5.9.phar
-        sudo mv phpunit-7.5.9.phar /usr/local/bin/phpunit
-        phpunit --version
+        ./composer.phar install
 
     - name: Pre Test
       run: |
@@ -38,4 +42,4 @@ jobs:
     
     - name: Test
       run: |
-        phpunit
+        php vendor/bin/phpunit 

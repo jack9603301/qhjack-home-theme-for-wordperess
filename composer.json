@@ -1,0 +1,29 @@
+{
+  "name": "jack9603301/qhjack-home-theme-for-wordperess",
+  "description": "起航天空个人主题",
+  "type": "wordpress-theme",
+  "repositories": {
+    "packagist": {
+      "type": "composer",
+      "url": "https://mirrors.aliyun.com/composer/"
+    }
+  },
+  "keywords": [
+    "wordpress"
+  ],
+  "authors": [
+    {
+      "name": "jack9603301",
+      "email": "jack9603301@163.com",
+      "homepage": "https://www.qhjack.cn/"
+    }
+  ],
+  "require": {
+    "php": ">=5.3.0"
+  },
+  "homepage": "https://www.qhjack.cn",
+  "require-dev": {
+    "php-coveralls/php-coveralls": "^2.2",
+    "phpunit/phpunit": "7.*"
+  }
+}
