@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="Plugin Test Suite" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.000669">
+    <testsuite name="Sample" file="/home/jack/SourceCode/qhjack-home-theme-for-wordperess/tests/test.sample.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.000669">
+      <testcase name="test_sample" class="Sample" classname="Sample" file="/home/jack/SourceCode/qhjack-home-theme-for-wordperess/tests/test.sample.php" line="3" assertions="1" time="0.000669"/>
+    </testsuite>
+  </testsuite>
+</testsuites>
