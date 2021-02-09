@@ -170,6 +170,20 @@ add_action( 'admin_init', 'global_setting' );
 
 add_action('rest_api_init', 'RestInit');
 
+// Enable asynchronous JS/CSS loading
+
+add_filter('clean_url', 'asynchronous_loading');
+
+function asynchronous_loading($url) {
+    if(strpos($url, '.js')) {
+        return "$url' async='async";
+    } else if (strpos($url, '.css')) {
+        return "$url' onload=\"this.media='all'\" media='print";
+    }
+    return $url;
+    
+}
+
 // Unset Update
 
 function filter_plugin_updates( $value ) {

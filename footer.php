@@ -11,7 +11,7 @@
     <script type="text/javascript">var ufid=62315;var ufdomain="//js.penxiangge.com";document.write("<scr"+"ipt type='text/javascript' src='"+ufdomain+"/Include/data'></scri"+"pt>");</script>
 	</div><!-- #content -->
     <link href="<?php echo get_stylesheet_directory_uri()?>/top/top.css" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" rel="stylesheet" src="<?php echo get_stylesheet_directory_uri(); ?>/top/top.js" ></script>
+    <script type="text/javascript" rel="stylesheet" src="<?php echo get_stylesheet_directory_uri(); ?>/top/top.js" async='async'></script>
     <div class="go-top dn" id="go-top">
 <?php
 	    if(!isMobile()):

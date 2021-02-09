@@ -33,7 +33,7 @@ var _hmt = _hmt || [];
 
 <link rel="profile" href="http://gmpg.org/xfn/11" />
 <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
-<script src="//msite.baidu.com/sdk/c.js?appid=1593262731483703"></script>
+<script src="//msite.baidu.com/sdk/c.js?appid=1593262731483703" async='async'></script>
 <?php if(is_single() || is_page()): ?>
 <script type="application/ld+json">
 	{
@@ -136,8 +136,8 @@ var _hmt = _hmt || [];
 
 <script src="https://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 <link rel='stylesheet' href='/wp-content/themes/home/nprogress.css'/>
-<script src="/wp-content/themes/home/nprogress.js"></script>
-<script type="text/javascript" rel="stylesheet" src="<?php echo get_stylesheet_directory_uri()?>/js/msg.js" ></script>
+<script src="/wp-content/themes/home/nprogress.js" async='async'></script>
+<script type="text/javascript" rel="stylesheet" src="<?php echo get_stylesheet_directory_uri()?>/js/msg.js" async='async'></script>
 <script type="text/javascript" language="JavaScript">
 	document.body.style.display = 'block';
 
@@ -237,7 +237,7 @@ var _hmt = _hmt || [];
         });
     </script>
 </header>
-<script type="text/javascript" rel="stylesheet" src="<?php echo get_stylesheet_directory_uri()?>/emoji/emoji.js" ></script>
-<script type="text/javascript" rel="stylesheet" src="/wp-content/themes/home/geetest/static/gt.js"></script>
-<script type="text/javascript" rel="stylesheet" src="<?php echo get_stylesheet_directory_uri()?>/geetest/geetest.js" ></script>
+<script type="text/javascript" rel="stylesheet" src="<?php echo get_stylesheet_directory_uri()?>/emoji/emoji.js" async='async'></script>
+<script type="text/javascript" rel="stylesheet" src="/wp-content/themes/home/geetest/static/gt.js" async='async'></script>
+<script type="text/javascript" rel="stylesheet" src="<?php echo get_stylesheet_directory_uri()?>/geetest/geetest.js" async='async'></script>
 <div id="content" class="site-content">
