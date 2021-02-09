@@ -136,8 +136,8 @@ var _hmt = _hmt || [];
 
 <script src="https://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 <link rel='stylesheet' href='/wp-content/themes/home/nprogress.css'/>
-<script src="/wp-content/themes/home/nprogress.js" async='async'></script>
-<script type="text/javascript" rel="stylesheet" src="<?php echo get_stylesheet_directory_uri()?>/js/msg.js" async='async'></script>
+<script src="/wp-content/themes/home/nprogress.js"></script>
+<script type="text/javascript" rel="stylesheet" src="<?php echo get_stylesheet_directory_uri()?>/js/msg.js"></script>
 <script type="text/javascript" language="JavaScript">
 	document.body.style.display = 'block';
 

@@ -175,8 +175,16 @@ add_action('rest_api_init', 'RestInit');
 add_filter('clean_url', 'asynchronous_loading');
 
 function asynchronous_loading($url) {
+    $async_js_list = [
+        get_stylesheet_directory_uri() . '/js/custom.js',
+        '/wp-content/themes/home/copy/copy.js'
+    ];
     if(strpos($url, '.js')) {
-        return "$url' async='async";
+        foreach ($async_js_list as $async_js) {
+            if(strpos($url, $async_js)) {
+                return "$url' async='async";
+            }
+        }
     } else if (strpos($url, '.css')) {
         return "$url' onload=\"this.media='all'\" media='print";
     }
