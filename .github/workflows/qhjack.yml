@@ -63,17 +63,22 @@ jobs:
       env:
         QHJACK_DEPLOY_SERVER_USERNAME: ${{ secrets.QHJACK_DEPLOY_SERVER_USERNAME }}
         QHJACK_DEPLOY_SERVER_PASSWORD: ${{ secrets.QHJACK_DEPLOY_SERVER_PASSWORD }}
+        QHJACK_DEPLOY_SERVER_PUSH: ${{ secrets.QHJACK_DEPLOY_SERVER_PUSH }}
       run: |
-        sshpass -p $QHJACK_DEPLOY_SERVER_PASSWORD scp -o StrictHostKeyChecking=no -r * $QHJACK_DEPLOY_SERVER_USERNAME@'service1.kvm.qhjack.cn':/glusterfs/webroot/qhjack/wp-content/themes/home/
+        sshpass -p $QHJACK_DEPLOY_SERVER_PASSWORD scp -o StrictHostKeyChecking=no -r * $QHJACK_DEPLOY_SERVER_USERNAME@$QHJACK_DEPLOY_SERVER_PUSH:/glusterfs/webroot/qhjack/wp-content/themes/home/
     
     - name: Apply Deploy
       env:
         QHJACK_DEPLOY_SERVER_USERNAME: ${{ secrets.QHJACK_DEPLOY_SERVER_USERNAME }}
         QHJACK_DEPLOY_SERVER_PASSWORD: ${{ secrets.QHJACK_DEPLOY_SERVER_PASSWORD }}
+        QHJACK_DEPLOY_SERVERS: ${{ secrets.QHJACK_DEPLOY_SERVERS }}
+        QHJACK_DEPLOY_SERVER_PUSH: ${{ secrets.QHJACK_DEPLOY_SERVER_PUSH }}
+        QHJACK_DEPLOY_SERVER_PROXY: ${{ secrets.QHJACK_DEPLOY_SERVER_PROXY }}
       run: |
-        sshpass -p $QHJACK_DEPLOY_SERVER_PASSWORD ssh $QHJACK_DEPLOY_SERVER_USERNAME@'service1.kvm.qhjack.cn' -o StrictHostKeyChecking=no 'systemctl restart php-fpm && systemctl restart nginx'
-        sshpass -p $QHJACK_DEPLOY_SERVER_PASSWORD ssh $QHJACK_DEPLOY_SERVER_USERNAME@'service2.kvm.qhjack.cn' -o StrictHostKeyChecking=no 'systemctl restart php-fpm && systemctl restart nginx'
-        sshpass -p $QHJACK_DEPLOY_SERVER_PASSWORD ssh $QHJACK_DEPLOY_SERVER_USERNAME@'service3.kvm.qhjack.cn' -o StrictHostKeyChecking=no 'systemctl restart php-fpm && systemctl restart nginx'
-        sshpass -p $QHJACK_DEPLOY_SERVER_PASSWORD ssh $QHJACK_DEPLOY_SERVER_USERNAME@'service4.kvm.qhjack.cn' -o StrictHostKeyChecking=no 'rm -rf "/www/services/nginx/cache/proxy/qhjack/*" && rm -rf "/www/services/nginx/cache/proxy_store/*"'
-        sshpass -p $QHJACK_DEPLOY_SERVER_PASSWORD ssh $QHJACK_DEPLOY_SERVER_USERNAME@'service4.kvm.qhjack.cn' -o StrictHostKeyChecking=no 'systemctl restart nginx'
+        for service_addr in ${QHJACK_DEPLOY_SERVERS[@]}
+        do
+          sshpass -p $QHJACK_DEPLOY_SERVER_PASSWORD ssh $QHJACK_DEPLOY_SERVER_USERNAME@$service_addr -o StrictHostKeyChecking=no 'systemctl restart php-fpm && systemctl restart nginx'
+        done
+        sshpass -p $QHJACK_DEPLOY_SERVER_PASSWORD ssh $QHJACK_DEPLOY_SERVER_USERNAME@$QHJACK_DEPLOY_SERVER_PROXY -o StrictHostKeyChecking=no 'rm -rf "/www/services/nginx/cache/proxy/qhjack/*" && rm -rf "/www/services/nginx/cache/proxy_store/*"'
+        sshpass -p $QHJACK_DEPLOY_SERVER_PASSWORD ssh $QHJACK_DEPLOY_SERVER_USERNAME@$QHJACK_DEPLOY_SERVER_PROXY -o StrictHostKeyChecking=no 'systemctl restart nginx'
     
