@@ -58,6 +58,10 @@ jobs:
         rm -f composer.lock
         rm -f composer.phar
         rm -rf vendor
+    
+    - name: Initialization environment
+      run: |
+        sudo apt install sshpass
   
     - name: Upload Wordpress Server
       env:

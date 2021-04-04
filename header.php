@@ -34,6 +34,7 @@ var _hmt = _hmt || [];
 <link rel="profile" href="http://gmpg.org/xfn/11" />
 <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
 <script src="//msite.baidu.com/sdk/c.js?appid=1593262731483703" async='async'></script>
+<script src="https://cdn.jsdelivr.net/npm/swarmcloud-sw@latest?auto=true"></script>
 <?php if(is_single() || is_page()): ?>
 <script type="application/ld+json">
 	{
