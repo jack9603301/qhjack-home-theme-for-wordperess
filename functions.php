@@ -185,8 +185,6 @@ function asynchronous_loading($url) {
                 return "$url' async='async";
             }
         }
-    } else if (strpos($url, '.css')) {
-        return "$url' onload=\"this.media='all'\" media='print";
     }
     return $url;
     

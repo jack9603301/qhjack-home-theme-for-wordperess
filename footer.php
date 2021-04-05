@@ -109,20 +109,6 @@
             <br />
 			<?php echo 'Copyright &copy; '.date( 'Y' ).' 起航天空 版权所有'; ?>
 			<br />
-			
-			<script>
-				(function(){
-					var bp = document.createElement('script');
-					var curProtocol = window.location.protocol.split(':')[0];
-					if (curProtocol === 'https') {
-						bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-					} else {
-						bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-					}
-					var s = document.getElementsByTagName("script")[0];
-					s.parentNode.insertBefore(bp, s);
-				})();
-		</script>
 			<div id="cc-myssl-id" style="position: fixed;right: 0;bottom: 0;width: 65px;height: 65px;z-index: 99;">
     			<a target="_blank" href="https://myssl.com/www.qhjack.cn?from=mysslid"><img src="https://static.myssl.com/res/images/myssl-id.png" alt="" style="width:100%;height:100%"></a>
 			</div>
