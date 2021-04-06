@@ -34,7 +34,7 @@ var _hmt = _hmt || [];
 <link rel="profile" href="http://gmpg.org/xfn/11" />
 <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
 <script src="//msite.baidu.com/sdk/c.js?appid=1593262731483703" async='async'></script>
-<script src="https://www.qhjack.cn/swarmcloud-sw.js"></script>
+<script src="https://www.qhjack.cn/swarmcloud-sw.js?auto=true"></script>
 <?php if(is_single() || is_page()): ?>
 <script type="application/ld+json">
 	{
@@ -135,7 +135,6 @@ var _hmt = _hmt || [];
 
 <script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/cm.js" async="async" defer="defer" ></script>
 
-<script src="https://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 <link rel='stylesheet' href='/wp-content/themes/home/nprogress.css'/>
 <script src="/wp-content/themes/home/nprogress.js"></script>
 <script type="text/javascript" rel="stylesheet" src="<?php echo get_stylesheet_directory_uri()?>/js/msg.js"></script>
