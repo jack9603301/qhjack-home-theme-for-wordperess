@@ -12,11 +12,6 @@
  */
 
 get_header(); 
-$query = new WP_Query(array(
-    'ep_integrate' => true,
-    'post_type'    => 'post',
-    'posts_per_page' => 15,
-));
 ?>
 
 	<div class="container">
@@ -35,7 +30,7 @@ $query = new WP_Query(array(
 					<?php endif; ?>
 
 					<?php /* Start the Loop */ ?>
-					<?php while ( $query->have_posts() ) : $query->the_post(); ?>
+					<?php while ( have_posts() ) : the_post(); ?>
 						<?php
 						/*
 						 * If you want to disaplay only excerpt, file content-excerpt.php will be used.

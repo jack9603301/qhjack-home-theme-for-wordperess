@@ -255,9 +255,13 @@ function home_theme_setup(){
  */
 function getRedisInstance(){
 	$redis_params = get_redis_params();
-	$server = $redis_params['servers'];
+	$server = [
+	    'scheme' => 'tcp',
+	    'host' => $redis_params['servers'],
+	    'port' => 6379
+    ];
 	$option = [
-		'cluster' => 'redis',
+		#'cluster' => 'redis',
 		'parameters' => [
 			'password' => $redis_params['password'],
 		]
@@ -732,8 +736,8 @@ function get_redis_params() {
 	
 	//Load wp-config.php Settings
 	
-	if(defined('WP_REDIS_CLUSTER')) {
-		$redis_servers = WP_REDIS_CLUSTER;
+	if(defined('WP_REDIS_HOST')) {
+		$redis_servers = WP_REDIS_HOST;
 	}
 
 	if(defined('WP_REDIS_PASSWORD')) {
