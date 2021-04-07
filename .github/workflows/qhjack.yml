@@ -77,17 +77,13 @@ jobs:
         QHJACK_DEPLOY_SERVER_PASSWORD: ${{ secrets.QHJACK_DEPLOY_SERVER_PASSWORD }}
         QHJACK_DEPLOY_SERVERS: ${{ secrets.QHJACK_DEPLOY_SERVERS }}
         QHJACK_DEPLOY_SERVER_PUSH: ${{ secrets.QHJACK_DEPLOY_SERVER_PUSH }}
-        QHJACK_DEPLOY_SERVER_PROXY: ${{ secrets.QHJACK_DEPLOY_SERVER_PROXY }}
       run: |
         for service_addr in ${QHJACK_DEPLOY_SERVERS[@]}
         do
+          echo "Clear the cache"
+          sshpass -p $QHJACK_DEPLOY_SERVER_PASSWORD ssh $QHJACK_DEPLOY_SERVER_USERNAME@$service_addr -o StrictHostKeyChecking=no 'cd /www/services/nginx/cache/fastcgi/qhjack/ && rm -rf *'
           echo "Restart the service：$service_addr"
           sshpass -p $QHJACK_DEPLOY_SERVER_PASSWORD ssh $QHJACK_DEPLOY_SERVER_USERNAME@$service_addr -o StrictHostKeyChecking=no 'systemctl restart php-fpm'
           sshpass -p $QHJACK_DEPLOY_SERVER_PASSWORD ssh $QHJACK_DEPLOY_SERVER_USERNAME@$service_addr -o StrictHostKeyChecking=no 'systemctl restart nginx'
         done
-        echo "Clear the cache"
-        sshpass -p $QHJACK_DEPLOY_SERVER_PASSWORD ssh $QHJACK_DEPLOY_SERVER_USERNAME@$QHJACK_DEPLOY_SERVER_PROXY -o StrictHostKeyChecking=no 'cd /www/services/nginx/cache/proxy/qhjack/ && rm -rf *'
-        sshpass -p $QHJACK_DEPLOY_SERVER_PASSWORD ssh $QHJACK_DEPLOY_SERVER_USERNAME@$QHJACK_DEPLOY_SERVER_PROXY -o StrictHostKeyChecking=no 'cd /www/services/nginx/cache/proxy_store/ && rm -rf *'
-        echo "Restart load balancing"
-        sshpass -p $QHJACK_DEPLOY_SERVER_PASSWORD ssh $QHJACK_DEPLOY_SERVER_USERNAME@$QHJACK_DEPLOY_SERVER_PROXY -o StrictHostKeyChecking=no 'systemctl restart nginx'
     
