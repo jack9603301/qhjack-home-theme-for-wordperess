@@ -161,7 +161,7 @@ var _hmt = _hmt || [];
             	}
             	_times <= 0 || _times--; //如果是正数就 --
 
-            	_self = $(_selector); //再次选择
+            	_self = jQuery(_selector); //再次选择
             	if( _self.length ) { //判断是否取到
                 	func && func.call(_self);
                 	clearInterval(_iIntervalID);
