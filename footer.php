@@ -100,8 +100,8 @@
 					//秒数
 					var second = remainder - hour*60*60 - minute*60; 
 					var span = (year>0 ? (year + "年"):"") + day + "天" + hour + "小时" + minute + "分" + second + "秒" ; 
-					$("#days").each(function() {
-						$this = $(this);
+					jQuery("#days").each(function() {
+						$this = jQuery(this);
 						$this.text(span);
 					});
 				}
