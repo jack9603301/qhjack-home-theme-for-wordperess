@@ -44,7 +44,7 @@
 			<br />
             感谢您的支持与信任！本博客已正常运行<a id="days">。</a>
             <br />
-            <a>ICP备案号：粤ICP备18050161号</a>
+            <a href="https://beian.miit.gov.cn/#/Integrated/recordQuery">ICP备案号：粤ICP备18050161号</a>
 			<br />
             <?php printf(' 耗时 %.3f 秒 | 查询 %d 次 | 内存 %.2f MB',timer_stop( 0, 3 ),get_num_queries(),memory_get_peak_usage() / 1024 / 1024);?>
             <script>
