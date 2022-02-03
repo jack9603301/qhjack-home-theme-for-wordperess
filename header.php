@@ -224,7 +224,7 @@ var _hmt = _hmt || [];
 		</div><!--#container-->
 	</nav>
 	<div id="cc_spacer"></div><!-- used to clear fixed navigation by the themes js -->
-	<div class="adv_frame">
+	<!--div class="adv_frame">
         <div class="adv">
             <div class="_w89c7dbjvik"></div>
         </div>
@@ -235,7 +235,7 @@ var _hmt = _hmt || [];
             container: "_w89c7dbjvik",
             async: true
         });
-    </script>
+    </script-->
 </header>
 <script type="text/javascript" rel="stylesheet" src="<?php echo get_stylesheet_directory_uri()?>/emoji/emoji.js" async='async'></script>
 <script type="text/javascript" rel="stylesheet" src="/wp-content/themes/home/geetest/static/gt.js" async='async'></script>
