@@ -12,7 +12,7 @@ require get_theme_root().'/home/inc/sitemap.php';
 
 
 
-require  get_theme_root().'/home/url.php';  //url.php
+require get_theme_root().'/home/url.php';  //url.php
 require get_theme_root().'/home/push.php';  //push.php
 require get_theme_root().'/home/setting.php';  //setting.php
 require get_theme_root().'/home/user_email.php';  //user_email
@@ -81,15 +81,7 @@ add_action('do_feed_rss', 'disable_fedd', 1);
 add_action('do_feed_rss2', 'disable_fedd', 1);
 add_action('do_feed_atom', 'disable_fedd', 1);
 add_action('wp_head','disable_feed_url',1);
-add_action( 'init', 'qhjack_block_widget' );
 add_action( 'init', 'qhjack_block_loading' );
-
-// Block widget
-
-function qhjack_block_widget() {
-    register_block_type( __DIR__ );
-}
-
 //user_email.php
 
 add_filter('retrieve_password_message', 'reset_password_message', null, 2);
@@ -764,7 +756,7 @@ function get_redis_params() {
 }
 
 
-add_filter('use_block_editor_for_post', '__return_false');
+//add_filter('use_block_editor_for_post', '__return_false');
 
 function posts_CopyrightType_type_filter($post_type) {
 	if('post' !== $post_type) {

@@ -12,17 +12,7 @@
         edit: function () {
             var content;
             var blockProps = useBlockProps();
-            var posts = useSelect( function ( select ) {
-                return select( 'core' ).getEntityRecords( 'postType', 'post' );
-            }, [] );
-            if ( ! posts ) {
-                content = 'Loading...';
-            } else if ( posts.length === 0 ) {
-                content = 'No posts';
-            } else {
-                var post = posts[ 0 ];
-                content = el( 'a', { href: post.link }, post.title.rendered );
-            }
+            content = '用户信息加载中';
 
             return el( 'div', blockProps, content );
         },
