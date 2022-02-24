@@ -81,6 +81,14 @@ add_action('do_feed_rss', 'disable_fedd', 1);
 add_action('do_feed_rss2', 'disable_fedd', 1);
 add_action('do_feed_atom', 'disable_fedd', 1);
 add_action('wp_head','disable_feed_url',1);
+add_action( 'init', 'qhjack_block_widget' );
+add_action( 'init', 'qhjack_block_loading' );
+
+// Block widget
+
+function qhjack_block_widget() {
+    register_block_type( __DIR__ );
+}
 
 //user_email.php
 

@@ -1,0 +1,8 @@
+{
+    "apiVersion": 2,
+    "title": "用户信息",
+    "name": "qhjack/user",
+    "category": "widgets",
+    "icon": "universal-access-alt",
+    "editorScript": "file:./block.js"
+}
