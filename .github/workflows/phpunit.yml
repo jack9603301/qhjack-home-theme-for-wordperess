@@ -23,14 +23,11 @@ jobs:
         php-version: 7.4
   
     - name: Setup Mariadb
-      run: |
-        curl -LsS https://downloads.mariadb.com/MariaDB/mariadb_repo_setup | sudo bash
-        sudo apt update
-        sudo apt-get install -y mariadb-server-10.6
-        sudo systemctl start mariadb
-        sudo mysql -uroot -proot -e 'create database wptest;'
-        sudo mysql -uroot -proot -e "CREATE USER 'wptest'@'%' IDENTIFIED BY 'wptest';"
-        sudo mysql -uroot -proot -e "GRANT ALL ON wptest.* TO 'wptest'@'%';"
+      uses: getong/mariadb-action@v1.1
+      with:
+        mysql database: wptest
+        mysql user: wptest
+        mysql password: wptest
     
     - name: PHP Composer
       run: |
