@@ -60,7 +60,6 @@
 ?>
 
 <?php
-    <?php
 
 /**
  * Plugin Name: Gutenberg examples dynamic
@@ -89,7 +88,7 @@ function qhjack_block_loading() {
 
     wp_register_script(
         'qhjack_user',
-        plugins_url( '../block.js', __FILE__ ),
+        get_theme_root().'/home/block.js',
         $asset_file['dependencies'],
         $asset_file['version']
     );
