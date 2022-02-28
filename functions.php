@@ -85,21 +85,21 @@ function qhjack_block_loading() {
     $asset_file = include( get_theme_root().'/home/block.asset.php');
 
     wp_register_script(
-        'block',
-        get_theme_root_uri().'/home/block.js',
+        'qhjack_block',
+        get_theme_root_uri().'/home/qhjack_block.js',
         $asset_file['dependencies'],
         $asset_file['version']
     );
 
     register_block_type( 'qhjack/user', array(
         'api_version' => 2,
-        'editor_script' => 'block',
-        'render_callback' => 'qhjack_block_render_callback'
+        'editor_script' => 'qhjack_block',
+        'render_callback' => 'qhjack_user_block_render_callback'
     ) );
-    register_block_type( 'qhjack/user', array(
+    register_block_type( 'qhjack/copyright', array(
         'api_version' => 2,
-        'editor_script' => 'block',
-        'render_callback' => 'qhjack_block_render_callback'
+        'editor_script' => 'qhjack_block',
+        'render_callback' => 'qhjack_copyright_block_render_callback'
     ) );
 
 }
@@ -140,8 +140,6 @@ add_filter('manage_pages_columns','home_page_columns');
 add_action('manage_pages_custom_column','home_page_column_value',10, 2);
 
 add_action('admin_head','add_admin_css',2);
-
-add_action( 'widgets_init', 'home_widget_init' );
 
 add_filter( 'manage_edit-post_sortable_columns', 'add_post_page_sortable_columns' );
 
@@ -731,13 +729,6 @@ function GenerateQrcode($data,$level=3,$size=3) {
 	@unlink($filePath);
 	$dataUrl = 'data:image/png;base64,'.$imageString;
 	return $dataUrl;
-}
-
-function home_widget_init() {
-    /*移除Wordpress自带的Meta小工具*/
-    unregister_widget('WP_Widget_Meta');
-    /*注册自己的Meta小工具*/
-    register_widget('WP_Widget_User_Meta');
 }
 
 function get_redis_params() {

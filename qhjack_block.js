@@ -17,6 +17,19 @@
             return el( 'div', blockProps, content );
         },
     } );
+    registerBlockType( 'qhjack/copyright', {
+        apiVersion: 2,
+        title: '版权声明',
+        icon: 'universal-access-alt',
+        category: 'widgets',
+        edit: function () {
+            var content;
+            var blockProps = useBlockProps();
+            content = '版权声明加载中';
+
+            return el( 'div', blockProps, content );
+        },
+    } );
 } )(
     window.wp.blocks,
     window.wp.element,
