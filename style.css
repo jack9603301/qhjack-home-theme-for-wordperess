@@ -4,11 +4,11 @@ Theme URI:      http://www.qhjack.cn
 Description:    起航天空主题，继承于bricksy，基于Block全站编辑主题而开发的下一代起航天空定制
 Author:         杰克
 Author URI:     http://www.qhjack.cn
-Template:       bricksy
+Template:       ona
 Version:        5.0
 */
 
-@import url("../bricksy/style.css");
+@import url("../ona/style.css");
 
 .ep-autosuggest-container .ep-autosuggest {
     position: inherit !important;
