@@ -6,7 +6,6 @@
 
 use home\phpqrcode\QRcode;
 
-require get_theme_root().'/home/inc/template-tags.php';
 require get_theme_root().'/home/inc/head-seo.php';
 require get_theme_root().'/home/inc/sitemap.php';
 
@@ -21,7 +20,6 @@ require get_theme_root().'/home/wp-login-ext.php'; //login-ext
 require get_theme_root().'/home/widget/widget_user.php'; //widget_user
 require get_theme_root().'/home/inc/subscribe.php'; //widget_user
 require get_theme_root().'/home/user_profile.php'; //user_profile
-require get_theme_root().'/home/mattermost.php';  //mattermost
 
 
 //百度提交
@@ -82,22 +80,32 @@ add_action('do_feed_rss2', 'disable_fedd', 1);
 add_action('do_feed_atom', 'disable_fedd', 1);
 add_action('wp_head','disable_feed_url',1);
 add_action( 'init', 'qhjack_block_loading' );
+function qhjack_block_loading() {
+    // automatically load dependencies and version
+    $asset_file = include( get_theme_root().'/home/block.asset.php');
+
+    wp_register_script(
+        'block',
+        get_theme_root_uri().'/home/block.js',
+        $asset_file['dependencies'],
+        $asset_file['version']
+    );
+
+    register_block_type( 'qhjack/user', array(
+        'api_version' => 2,
+        'editor_script' => 'block',
+        'render_callback' => 'qhjack_block_render_callback'
+    ) );
+    register_block_type( 'qhjack/user', array(
+        'api_version' => 2,
+        'editor_script' => 'block',
+        'render_callback' => 'qhjack_block_render_callback'
+    ) );
+
+}
 //user_email.php
 
 add_filter('retrieve_password_message', 'reset_password_message', null, 2);
-if((!defined('DISABLE_MATTERMOST') or !DISABLE_MATTERMOST) and defined('MATTERMOST_PUSH_URL')) {
-    add_action( 'publish_post', 'qh_publish_post_report_email' );
-    add_action( 'publish_post', 'qh_publish_post_mattermost' );
-    add_action('wp_set_comment_status', 'qh_comment_mattermost_notify', 20, 2);
-    add_action('comment_post', 'qh_comment_mattermost_notify', 20, 2);
-    if(defined('TEST_DEBUG') and TEST_DEBUG) {
-        fwrite(STDOUT,"Mattermost push is enabled\n");
-    }
-} else {
-    if(defined('TEST_DEBUG') and TEST_DEBUG) {
-        fwrite(STDOUT,"Mattermost push is disabled\n");
-    }
-}
 add_filter('wp_new_user_notification_email','qh_new_user_notification_email',2,3);
 add_filter('wp_new_user_notification_email_admin','qh_new_user_notification_email_admin',2,3);
 add_filter('email_change_email','qh_password_change_email',2,3);

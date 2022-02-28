@@ -6,3 +6,11 @@
     "icon": "universal-access-alt",
     "editorScript": "file:./block.js"
 }
+{
+    "apiVersion": 2,
+    "title": "版权声明",
+    "name": "qhjack/copyright",
+    "category": "widgets",
+    "icon": "universal-access-alt",
+    "editorScript": "file:./block.js"
+}

@@ -1,0 +1,167 @@
+{
+        "version": 2,
+        "settings": {
+                "color": {
+			"duotone": [
+				{
+					"colors": [
+						"#000000",
+						"#024478"
+					],
+					"slug": "black-and-primary",
+					"name": "Black and primary"
+				},
+				{
+					"colors": [
+						"#000000",
+						"#034172"
+					],
+					"slug": "black-and-secondary",
+					"name": "Black and secondary"
+				},
+				{
+					"colors": [
+						"#000000",
+						"#03536D"
+					],
+					"slug": "black-and-tertiary",
+					"name": "Black and Tertiary"
+				},
+				{
+					"colors": [
+						"#000000",
+						"#04546F"
+					],
+					"slug": "black-and-quarternary",
+					"name": "Black and Quarternary"
+				},
+				{
+					"colors": [
+						"#000000",
+						"#7ED5F2"
+					],
+					"slug": "black-and-quinary",
+					"name": "Black and Quinary"
+				},
+				{
+					"colors": [
+						"#000000",
+						"#773f46"
+					],
+					"slug": "black-and-senary",
+					"name": "Black and Senary"
+				},
+				{
+					"colors": [
+						"#000000",
+						"#ffffff"
+					],
+					"slug": "black-and-white",
+					"name": "Black and white"
+				},
+				{
+					"colors": [
+						"#161617",
+						"#1E1F22"
+					],
+					"slug": "background-and-background-alt",
+					"name": "Background and Background Alt"
+				}
+			],
+                        "palette": [
+                                {
+                                        "slug": "primary",
+                                        "color": "#024478",
+                                        "name": "Primary"
+                                },
+                                {
+                                        "slug": "secondary",
+                                        "color": "#034172",
+                                        "name": "Secondary"
+                                },
+                                {
+                                        "slug": "tertiary",
+                                        "color": "#03536D",
+                                        "name": "Tertiary"
+                                },
+                                {
+                                        "slug": "quarternary",
+                                        "color": "#04546F",
+                                        "name": "Quarternary"
+                                },
+                                {
+                                        "slug": "quinary",
+                                        "color": "#7ED5F2",
+                                        "name": "Quinary"
+                                },
+                                {
+                                        "slug": "senary",
+                                        "color": "#773f46",
+                                        "name": "Senary"
+                                },
+                                {
+                                        "slug": "foreground",
+                                        "color": "#efefef",
+                                        "name": "Foreground"
+                                },
+                                {
+                                        "slug": "foreground-alt",
+                                        "color": "#C3C4C8",
+                                        "name": "Foreground Alt"
+                                },
+                                {
+                                        "slug": "background",
+                                        "color": "#161617",
+                                        "name": "Background"
+                                },
+                                {
+                                        "slug": "background-alt",
+                                        "color": "#1E1F22",
+                                        "name": "Background Alt"
+                                }
+                        ]
+                }
+        },
+        "styles": {
+                "color": {
+                        "text": "var(--wp--preset--color--foreground-alt)"
+                },
+                "elements": {
+                        "h1": {
+                                "color": {
+                                        "text": "var(--wp--preset--color--foreground)"
+                                }
+                        },
+                        "h2": {
+                                "color": {
+                                        "text": "var(--wp--preset--color--foreground)"
+                                }
+                        },
+                        "h3": {
+                                "color": {
+                                        "text": "var(--wp--preset--color--foreground)"
+                                }
+                        },
+                        "h4": {
+                                "color": {
+                                        "text": "var(--wp--preset--color--foreground)"
+                                }
+                        },
+                        "h5": {
+                                "color": {
+                                        "text": "var(--wp--preset--color--foreground)"
+                                }
+                        },
+                        "h6": {
+                                "color": {
+                                        "text": "var(--wp--preset--color--foreground)"
+                                }
+                        },
+                        "link": {
+                                "color": {
+                                        "text": "var(--wp--preset--color--foreground)"
+                                }
+                        }
+                }
+        }
+}
